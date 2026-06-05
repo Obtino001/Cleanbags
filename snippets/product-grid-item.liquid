@@ -101,14 +101,14 @@
           {{ right_lebels }}
         {% endif %}
         {%- if product.handle contains 'bundle' or product.handle contains 'pakke' -%}
-          <div class="grid-product__tag grid-product__tag--custom" style="background-color: #d82c2c; color: #fff;">
+          <div class="grid-product__tag grid-product__tag--custom grid-product__tag--most-popular">
             Mest Populære
           </div>
-          <div class="grid-product__tag grid-product__tag--sale" style="background-color: #fce2e2; color: #d82c2c; margin-top: 5px;">
+          <div class="grid-product__tag grid-product__tag--sale grid-product__tag--save-bundle">
             Spar 285 kr
           </div>
         {%- elsif product.handle contains 'hanger' or product.handle contains 'shoelace' or product.handle contains 'snørebånd' or product.handle contains 'bøjle' -%}
-          <div class="grid-product__tag grid-product__tag--custom" style="background-color: #1b2f5a; color: #fff;">
+          <div class="grid-product__tag grid-product__tag--custom grid-product__tag--perfect-addon">
             Perfekt Tilkøb
           </div>
         {%- elsif has_custom_label -%}
@@ -367,12 +367,12 @@
       {%- endif -%}
     {% endunless %}
     {%- if product.available -%}
-      <div class="grid-product__atc" style="margin-top: 15px; width: 100%;">
+      <div class="grid-product__atc">
         <form method="post" action="/cart/add" accept-charset="UTF-8" class="product-form" enctype="multipart/form-data" data-product-id="{{ product.id }}">
           <input type="hidden" name="form_type" value="product">
           <input type="hidden" name="utf8" value="✓">
           {%- if product.variants.size > 1 -%}
-            <select name="id" class="grid-product__variant-select" style="width: 100%; margin-bottom: 10px; padding: 10px; border: 1px solid #ccc; border-radius: 4px;">
+            <select name="id" class="grid-product__variant-select">
               {%- for variant in product.variants -%}
                 <option value="{{ variant.id }}" {% if variant == product.selected_or_first_available_variant %}selected="selected"{% endif %}>
                   {{ variant.title }} - {{ variant.price | money }}
@@ -382,7 +382,7 @@
           {%- else -%}
             <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
           {%- endif -%}
-          <button type="button" class="btn btn--full add-to-cart triggerAddToCart" data-product-id="{{ product.variants.first.id }}" style="width: 100%;">
+          <button type="button" class="btn btn--full add-to-cart triggerAddToCart" data-product-id="{{ product.variants.first.id }}">
             <span data-add-to-cart-text>{{ 'products.product.add_to_cart' | t }}</span>
           </button>
         </form>

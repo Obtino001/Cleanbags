@@ -382,15 +382,15 @@
                       {%- endif -%}
                     </div>
 
-                    <div style="display: flex; justify-content: center; align-items: center; margin: -10px 0 15px 0; transform: scale(0.8);">
+                    <div class="emaerket-widget-container">
                       <div id="emaerket-widget-bd9xtvuvbm"></div>
                     </div>
 
                     {% if block.settings.show_shipping_message or block.settings.show_payment_icons %}
                       <div class="sp_message_and_payment_icons">
                         {% if block.settings.show_shipping_message and block.settings.shipping_message != blank %}
-                          <div class="shipping_message" style="display:flex; justify-content: center;align-items:center;"><span class="plusting_green_dot" style="display:none;"></span>
-                            <img src="https://cdn.shopify.com/s/files/1/0633/0682/5798/files/Box_light.png?v=1746388360" style="width: 24px; margin-right: 4px;"/>
+                          <div class="shipping_message shipping-message-container"><span class="plusting_green_dot" style="display:none;"></span>
+                            <img src="https://cdn.shopify.com/s/files/1/0633/0682/5798/files/Box_light.png?v=1746388360" class="shipping-message-icon"/>
                             {{ block.settings.shipping_message }}
                           </div>
                         {% endif %}

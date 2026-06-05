@@ -14408,3 +14408,18 @@ h2.footer__title {
 #shopify-pc__banner__btn-decline{
   display: none
 }
+
+
+/* --- Cleanbags Custom Refactored Styles --- */
+.grid-product__tag--most-popular { background-color: #d82c2c; color: #fff; }
+.grid-product__tag--save-bundle { background-color: #fce2e2; color: #d82c2c; margin-top: 5px; }
+.grid-product__tag--perfect-addon { background-color: #1b2f5a; color: #fff; }
+.grid-product__atc { margin-top: 15px; width: 100%; }
+.grid-product__variant-select { width: 100%; margin-bottom: 10px; padding: 10px; border: 1px solid #ccc; border-radius: 4px; }
+.grid-product__atc .add-to-cart { width: 100%; }
+
+
+.emaerket-widget-container { display: flex; justify-content: center; align-items: center; margin: -10px 0 15px 0; transform: scale(0.8); }
+.shipping-message-container { display: flex; justify-content: center; align-items: center; }
+.shipping-message-icon { width: 24px; margin-right: 4px; }
+
