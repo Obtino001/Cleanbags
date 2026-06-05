@@ -1,0 +1,130 @@
+{% schema %}
+{
+  "name": "Trustpilot Logo",
+  "tag": "section",
+  "class": "trustpilot-logo",
+  "settings": [
+    {
+      "id": "trustpilot_logo",
+      "type": "image_picker",
+      "label": "Trustpilot Logo"
+    },
+    {
+      "id": "star_image",
+      "type": "image_picker",
+      "label": "Star Image"
+    },
+    {
+      "id": "content",
+      "type": "richtext",
+      "label": "Content"
+    },
+    {
+      "id": "trustpilot_link",
+      "type": "url",
+      "label": "Trustpilot Link"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding Top",
+      "unit": "px",
+      "min": 0,
+      "max": 100,
+      "step": 10,
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding Bottom",
+      "unit": "px",
+      "min": 0,
+      "max": 100,
+      "step": 10,
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 0,
+      "label": "Padding Top Mobile"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 0,
+      "label": "Padding Bottom Mobile"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Trustpilot Logo",
+    }
+  ]
+}
+{% endschema %}
+
+
+
+<div class="trustpilot-logo__container section-{{ section.id }}">
+  {% if section.settings.trustpilot_link != blank %}
+    <a href="{{ section.settings.trustpilot_link }}" class="trustpilot-logo__link" target="_blank">
+  {% endif %}
+    <div class="trustpilot-logo__images">
+      {% if section.settings.trustpilot_logo %}
+        {%- render 'image-element',
+          img: section.settings.trustpilot_logo,
+          loading: false,
+          classes: 'review-image trust-logo',
+          animation: 'none',
+        -%}
+      {% endif %}
+      
+      {% if section.settings.star_image %}
+        {%- render 'image-element',
+          img: section.settings.star_image,
+          loading: false,
+          classes: 'review-image',
+          animation: 'none',
+        -%}
+      {% endif %}
+    </div>
+  
+    {% if section.settings.content != blank %}
+      <div class="trustpilot-logo__content">
+        {{ section.settings.content }}
+      </div>
+    {% endif %}
+  {% if section.settings.trustpilot_link != blank %}
+    </a>
+  {% endif %}
+</div>
+{% style %}
+  .trustpilot-logo{ background: #B2CFFC; padding: 15px 0; }
+  .trustpilot-logo .trustpilot-logo__container{ display: flex; align-items: center; gap: 20px;justify-content: center; width: 100% }
+  .trustpilot-logo .trustpilot-logo__container a{ display: flex; align-items: center; gap: 6px;justify-content: center; width: 100% }
+  .trustpilot-logo .trustpilot-logo__images{ display: flex; align-items: center; gap: 5px; }
+  .trustpilot-logo .trustpilot-logo__images img{ max-height: 30px; width: auto; }
+  .trustpilot-logo image-element:nth-child(2) img{ max-height: 20px; margin-top: 4px; }
+  .trustpilot-logo p{ margin: 0;padding-top: 4px; }
+  .trust-logo{margin-right: 5px;}
+  /*.trustpilot-logo__images image-element img.review-image.image-element {width: 127px;}*/
+
+  @media (max-width: 768px){
+    .trustpilot-logo .trustpilot-logo__container{
+      display: block;
+      text-align: center;
+    }
+    .trustpilot-logo .trustpilot-logo__images{
+      justify-content: center;
+    }
+  }
+{% endstyle %}
+

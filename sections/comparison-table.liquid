@@ -1,0 +1,698 @@
+{% if section.blocks.size > 0 %}
+  
+<style>
+  /******************************* COMPARISON TABLE SECTION CSS ********************************/
+.comparison-table-section{ padding-top: {{section.settings.padding_top}}px; padding-bottom: {{section.settings.padding_bottom}}px; }
+.comparison-table-section .page-width{ max-width: 900px; }
+.comparison-table-section .table-container .row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+.comparison-table-section .child_row .child_info:nth-child(2){
+  position: relative;
+  /* opacity: 0.2; */
+}
+.comparison-table-section .child_row:nth-child(even) .child_info:nth-child(2)::before{
+  position: absolute;
+  content:"";
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  opacity: 5%;
+}
+.comparison-table-section .columnone {
+  padding: 0;
+  width: 100%;
+  text-align: center;
+  margin-bottom: 30px;
+}
+.comparison-table-section h3.brand_name.bold {
+  font-weight: 400; font-size: 32px;
+}
+.comparison-table-section h1.product__title.heading-size--page-title {
+  font-size: 24px;
+}
+.comparison-table-section a.btn {
+  background: none;
+  color: #fff;
+  border: solid 2px #000;
+  width: fit-content;
+  padding: 10px 25px !important;
+  border-radius: 50px !important;
+}
+.comparison-table-section .columntwo {
+  width: 100%;
+}
+.comparison-table-section .columntwo .kh_main {
+  /* box-shadow: -3px 7px 9px -2px #a09c9c; */
+  border-radius: 20px;
+  /* background: #F5F4F1; */
+  padding-inline: 30px;
+  /* position: relative; */
+  /* margin-top: 170px; */
+}
+.comparison-table-section .com_row{
+  /*position: absolute;
+  right: 30px;
+  left: 30px;
+  bottom: 100%;*/
+}
+.comparison-table-section .last_row,
+.comparison-table-section .child_row,
+.comparison-table-section .com_row {
+  display: flex;
+  /* background-color: #F5F4F1; */
+}
+.comparison-table-section .com_info:nth-child(1) {
+  /* border-left: 1px solid #a1a1a14d;
+  border-radius: 6px 0 0; */
+}
+.comparison-table-section .child_info:nth-child(3) {
+    margin-right: 20px;
+}
+.comparison-table-section .last_info:nth-child(2),
+.comparison-table-section .child_info:nth-child(2),
+.comparison-table-section .com_info:nth-child(2) {
+  background-color: #F1FAFF;
+  margin: 0 20px;
+  padding: 20px 10px;
+}
+.comparison-table-section .last_info,
+.comparison-table-section .child_info,
+.comparison-table-section .com_info {
+  width: 50%;
+}
+.comparison-table-section .last_info2,
+.comparison-table-section .child_info2,
+.comparison-table-section .com_info2 {
+  width: 25%;
+}
+.comparison-table-section .logo_ex {
+  margin-top: -20px;
+  /* border: 1px solid #a1a1a14d; */
+  border-bottom: 0;
+  padding-top: 30px;
+  padding-bottom: 10px;
+  border-radius: 6px 6px 0 0;
+  background: #F5F4F1;
+}
+.comparison-table-section .logo_com {
+  text-align: center;
+}
+.comparison-table-section .logo_com img {
+  width: 100%;
+  max-width: 140px;
+  margin: -100px auto -20px;
+  display: block;
+}
+.comparison-table-section .com_info:nth-child(3) .logo_com img{
+  /* margin: -80px auto -70px;
+  max-width: 110px; */
+  max-width: 110px;
+  margin: -100px auto -10px;
+}
+.comparison-table-section .com_info:nth-child(3) {
+  /* border-right: 1px solid #a1a1a14d;*/
+  border-radius: 6px 6px 0 0; 
+  /* background: #F9F9F9; */
+}
+.comparison-table-section .com_info:nth-child(3) .logo_ex{
+  background: none;
+  border: none;
+}
+.comparison-table-section .last_info p,
+.comparison-table-section .child_info p {
+  font-size: 16px;
+  margin-bottom: 0 !important;
+  padding-top: 15px !important;
+  padding-bottom: 15px !important;
+  font-weight: 700;
+  color: #3a3a3a;
+}
+.comparison-table-section .com_info:nth-child(1),
+.comparison-table-section .com_info:nth-child(3) {
+  /* border-top: 1px solid #a1a1a14d; */
+}
+.comparison-table-section .child_row {
+  align-items: stretch;
+  border-bottom: 0;
+  /* border-bottom: 0; */
+}
+.comparison-table-section .child_row:last-child{
+  border-bottom: 0;
+}
+.comparison-table-section .last_info,
+.comparison-table-section .child_info {
+  text-align: left;
+}
+.comparison-table-section .table-container p {
+  font-size: 16px;
+  line-height: 30px;
+  font-weight: 500;
+}
+.comparison-table-section .child_info:nth-child(2) {
+  /* border: 1px solid #a1a1a14d; */
+  border-top: 0;
+  border-bottom: 0;
+}
+.comparison-table-section .check_icon {
+  width: 15px;
+  display: inline-block;
+}
+.comparison-table-section
+  .table-container.container--large
+  .child_info.child_info2:last-child {
+  border-bottom: 0 !important;
+  border-left: 0 !important;
+  border-right: 0 !important;
+  background: #F9F9F9; 
+  position: relative;
+}
+  .comparison-table-section
+  .table-container.container--large
+  .child_info.child_info2:last-child::after{
+    height: 1px; 
+  background: #000; 
+  width: 90%; 
+  content:"";
+  left: 5%; 
+  bottom: 0; 
+  position: absolute;
+  }
+.comparison-table-section .child_info2 {
+  display: grid;
+  align-items: center;
+  justify-content: center;
+}
+.comparison-table-section .cross_icon {
+  width: 15px;
+  display: inline-block;
+}
+.comparison-table-section img {
+  opacity: 1;
+}
+.comparison-table-section .child_row {
+  align-items: stretch;
+  /* border: 1px solid #a1a1a14d; */
+  /* border-bottom: 1px solid rgba(29, 29, 31, 0.4); */
+}
+.comparison-table-section .child_row:last-child .child_info.child_info2 {
+  padding-top: 20px;
+  padding-bottom: 30px;
+  margin-bottom: -15px;
+  /* border: 1px solid #a1a1a14d; */
+  border-radius: 0 0 6px 6px;
+}
+.comparison-table-section .display_mobile_only {
+  display: none;
+}
+.comparison-table-section .child_info{
+  border-bottom: 1px solid rgba(29, 29, 31, 0.4);
+}
+.comparison-table-section .child_row:last-child .child_info{
+  border-bottom: 0;
+}
+.comparison-table-section .child_info:first-child{
+  padding-right: 10px;
+}
+.comparison-table-section .child_info:first-child p{
+  line-height: 1.3;
+}
+.comparison-table-section .com_row .com_info{
+  display: flex; 
+  flex-direction: column;
+  justify-content: flex-end;
+}
+.comparison-table-section .com_row .com_heading{ font-size: 16px; margin-bottom: 15px; }
+.comparison-table-section .com_row .com_info:first-child .com_heading{ text-align: left; }
+.comparison-table-section .child_info:nth-child(2){
+  position: relative;
+}
+.comparison-table-section .child_info:nth-child(2)::after{
+  height: 1px; 
+  background: #000; 
+  width: 90%; 
+  content:"";
+  left: 5%; 
+  bottom: 0; 
+  position: absolute;
+}
+
+.comparison-table-section .child_row:last-child .child_info:nth-child(2)::after{
+  display:none;
+}
+.comparison-table-section .child_row:last-child .child_info:nth-child(3)::after{
+  display:none;
+}
+.comparison-table-section .feat_text{
+  padding: 0 8px;
+  font-size: 90%;
+  line-height: 1.25;
+}
+@media (max-width: 761px) {
+  .row.custom-mobile-row {
+    justify-content: center;
+  }
+  .comparison-table-section .table-container .row .columnone {
+    padding-right: 0;
+    padding-left: 0;
+    padding-bottom: 0;
+    text-align: center;
+    margin-bottom: 0px;
+    padding-top:20px;
+  }
+  .comparison-table-section .columnone,
+  .comparison-table-section .columntwo {
+    width: 100%;
+  }
+  .comparison-table-section .display_mobile_only {
+    display: block;
+  }
+  .display_desktop_only {
+    display: none;
+  }
+  .comparison-table-section a.btn {
+    background: none;
+    color: #000;
+    border: solid 2px #000;
+    width: 150px;
+    padding: 9px 17px;
+    font-size: 10px;
+  }
+  .comparison-table-section .logo_com img {
+    max-width: 60px;
+    margin: -60px auto -60px;
+  }
+  .comparison-table-section .com_info:nth-child(3) .logo_com img {
+	margin: -50px auto 0px;
+	max-width: 50px;
+  }
+  .comparison-table-section .columntwo .kh_main{
+    padding-inline: 10px;
+    margin-top: 100px;
+  }
+  .comparison-table-section .com_row{
+    left: 10px;
+    right: 10px;
+  }
+  .comparison-table-section .com_row .com_heading{ display: none; }
+  .comparison-table-section .last_info:nth-child(2), .comparison-table-section .child_info:nth-child(2), .comparison-table-section .com_info:nth-child(2) {
+    margin: 0 5px;
+  }
+
+  .comparison-table-section {
+    padding-top: 8px;
+}
+  .comparison-table-section .table-container .row {
+    padding-top: 6px;
+}
+.comparison-table-section .last_info,
+.comparison-table-section .child_info,
+.comparison-table-section .com_info {
+  width: 33%;
+}
+.comparison-table-section .last_info2,
+.comparison-table-section .child_info2,
+.comparison-table-section .com_info2 {
+  width: 33%;
+}
+  .comparison-table-section .columntwo {
+    width: auto;
+    margin-inline: -20px;
+  }
+}
+@media (max-width: 568px) {
+  .comparison-table-section .table-container p {
+    font-size: 14px;
+  }
+  .comparison-table-section {
+    margin-top: 0 !important;
+  }
+  p#center {
+    margin-bottom: 0;
+  }
+}
+
+  .full--content--section {
+    /* background-color: #f7f6f4; */
+}
+
+  .comparison-table-wrapper {
+  overflow-x: auto;
+}
+
+.comparison-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: center;
+}
+
+.comparison-table th,
+.comparison-table td {
+  padding: 12px;
+  vertical-align: middle;
+}
+
+.comparison-table img {
+  max-height: 40px;
+  display: block;
+  margin: 0 auto;
+}
+
+@media screen and (max-width: 768px) {
+  .comparison-table th,
+  .comparison-table td {
+    padding: 8px;
+    font-size: 14px;
+    min-width: 150px; /* Adjust this value as needed */
+  }
+
+  .comparison-table-wrapper {
+    overflow-x: scroll;
+    -webkit-overflow-scrolling: touch; /* Optional for smoother scrolling on mobile */
+  }
+}
+
+  .comparison-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 24px 0; /* 24px horizontal spacing between columns, 0px vertical */
+    font-family: sans-serif;
+  }
+
+  .comparison-table thead th {
+    text-align: left;
+    padding: 16px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #1d1d1f;
+    border-bottom: 1px solid #e5e5e5;
+  }
+
+  .comparison-table tbody td {
+    padding: 16px;
+    font-size: 14px;
+    color: #333;
+    vertical-align: middle;
+    border-bottom: 1px solid #eaeaea;
+  }
+
+  .comparison-table td:nth-child(2) {
+    background-color: #f4f9ff;
+  }
+  table{
+    background: transparent;
+  }
+  /* Optional: rounded corners for first and last row in column 2 */
+  .comparison-table thead th:nth-child(2) {
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    background-color: #f4f9ff;
+  }
+
+  .comparison-table tbody tr:last-child td:nth-child(2) {
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+    border-bottom: none;
+  }
+
+  .check_icon, .cross_icon {
+    width: 20px;
+    margin-right: 8px;
+    vertical-align: middle;
+  }
+
+  .feat_text {
+    display: inline-block;
+    margin-left: 6px;
+    vertical-align: middle;
+  }
+
+/* Remove border-bottom from last row cells */
+.comparison-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+  {%- assign padding_bottom_mobile = section.settings.padding_bottom_mobile -%}
+  {%- if padding_bottom_mobile == 0 -%}
+    {%- assign padding_bottom_mobile = section.settings.padding_bottom -%}
+  {%- endif -%}
+
+  {%- assign padding_top_mobile = section.settings.padding_top_mobile -%}
+  {%- if padding_top_mobile == 0 -%}
+    {%- assign padding_top_mobile = section.settings.padding_top -%}
+  {%- endif -%}
+
+  #sec-{{ section.id }} {
+    padding-top: {{ padding_top_mobile }}px;
+    padding-bottom: {{ padding_bottom_mobile }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    #sec-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  } 
+
+</style>
+<div class="comparison-table-section full--content--section" id="sec-{{ section.id }}">
+  <div class="page-width feature-row-wrapper">
+<div class="table-container container--large">
+  <div class="columnone">
+    {% if section.settings.title != blank %}
+      <h3 class="brand_name bold">{{ section.settings.title }}</h3>
+    {% endif %}
+    <h1 class="product__title heading-size--page-title">
+      {% if section.settings.subtitle != blank %}
+        {{ section.settings.subtitle }}
+      {% endif %}
+    </h1>
+    <div class="display_desktop_only">
+      {% if section.settings.button_text != blank %}
+        <a class="btn" href="{{section.settings.button_link}}">{{section.settings.button_text}}</a>
+      {% endif %}
+    </div>
+  </div>
+  <div class="comparison-table-wrapper">
+
+  <div class="columntwo">
+    <div class="comparison-table-container">
+      <table class="comparison-table">
+        <thead>
+          <tr>
+            <th></th>
+            {% if section.settings.tb_heading_2 != blank or section.settings.tb_heading_2a != blank %}
+              <th>
+                {% if section.settings.tb_heading_2 != blank %}
+                  <img src="{{ section.settings.tb_heading_2 | img_url:'medium' }}" alt="">
+                {% endif %}
+                {% if section.settings.tb_heading_2a != blank %}
+                  <div>{{ section.settings.tb_heading_2a }}</div>
+                {% endif %}
+              </th>
+            {% endif %}
+            {% if section.settings.tb_heading_3 != blank or section.settings.tb_heading_3a != blank %}
+              <th>
+                {% if section.settings.tb_heading_3 != blank %}
+                  <img src="{{ section.settings.tb_heading_3 | img_url:'medium' }}" alt="">
+                {% endif %}
+                {% if section.settings.tb_heading_3a != blank %}
+                  <div>{{ section.settings.tb_heading_3a }}</div>
+                {% endif %}
+              </th>
+            {% endif %}
+            {% if section.settings.tb_heading_4 != blank or section.settings.tb_heading_4a != blank %}
+              <th>
+                {% if section.settings.tb_heading_4 != blank %}
+                  <img src="{{ section.settings.tb_heading_4 | img_url:'medium' }}" alt="">
+                {% endif %}
+                {% if section.settings.tb_heading_4a != blank %}
+                  <div>{{ section.settings.tb_heading_4a }}</div>
+                {% endif %}
+              </th>
+            {% endif %}
+          </tr>
+        </thead>
+
+        <tbody>
+          {% for block in section.blocks %}
+            {% if block.settings.title != blank %}
+              <tr>
+                <td>{{ block.settings.title }}</td>
+                
+                <td>
+                  {% assign value = block.settings.prd_feature_yes_no | downcase %}
+                  {% if value == 'yes' %}
+                    <img class="check_icon" src="{{ section.settings.check_regular | img_url:'original' }}" alt="Yes">
+                  {% elsif value == 'no' %}
+                    <img class="cross_icon" src="{{ section.settings.cross_regular | img_url:'original' }}" alt="No">
+                  {% else %}
+                    <span class="feat_text">{{ block.settings.prd_feature_yes_no }}</span>
+                  {% endif %}
+                </td>
+
+                <td>
+                  {% assign value = block.settings.other_brand_feature_yes_no | downcase %}
+                  {% if value == 'yes' %}
+                    <img class="check_icon" src="{{ section.settings.check_regular | img_url:'original' }}" alt="Yes">
+                  {% elsif value == 'no' %}
+                    <img class="cross_icon" src="{{ section.settings.cross_regular | img_url:'original' }}" alt="No">
+                  {% else %}
+                    <span class="feat_text">{{ block.settings.other_brand_feature_yes_no }}</span>
+                  {% endif %}
+                </td>
+
+                <td>
+                  {% assign value = block.settings.other_brand_feature_yes_no_2 | downcase %}
+                  {% if value == 'yes' %}
+                    <img class="check_icon" src="{{ section.settings.check_regular | img_url:'original' }}" alt="Yes">
+                  {% elsif value == 'no' %}
+                    <img class="cross_icon" src="{{ section.settings.cross_regular | img_url:'original' }}" alt="No">
+                  {% else %}
+                    <span class="feat_text">{{ block.settings.other_brand_feature_yes_no_2 }}</span>
+                  {% endif %}
+                </td>
+              </tr>
+            {% endif %}
+          {% endfor %}
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+  <div class="row custom-mobile-row">
+      <div class="display_mobile_only">
+        {% if section.settings.button_text != blank %}
+        <a class="btn" href="{{section.settings.button_link}}">{{section.settings.button_text}}</a>
+        {% endif %}
+      </div>
+  </div>
+</div>
+</div>
+</div>
+  {% endif %}
+
+{% schema %}
+  {
+    "name": "Comparison Table",
+    "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Image with text"
+    },
+    {
+      "type": "header",
+       "content":"Check Mark Icons"
+    },
+    {
+      "type": "image_picker",
+      "id": "check_regular",
+      "label": "Check Regular"
+    },
+    {
+      "type": "image_picker",
+      "id": "cross_regular",
+      "label": "Cross Regular"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Label",
+      "default": "Button Text"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding Top",
+      "unit": "px",
+      "min": 0,
+      "max": 100,
+      "step": 10,
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding Bottom",
+      "unit": "px",
+      "min": 0,
+      "max": 100,
+      "step": 10,
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 40,
+      "label": "Padding Top Mobile"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 40,
+      "label": "Padding Bottom Mobile"
+    }
+    ],
+    "blocks": [
+    {
+      "type": "tablerow",
+      "name": "Table Row",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Feature"
+        },
+        {
+          "type": "text",
+          "id": "prd_feature_yes_no",
+          "label": "Product have this feature"
+        },
+        {
+          "type": "text",
+          "id": "other_brand_feature_yes_no",
+          "label": "Other Brand have feature in product"
+        },
+        {
+          "type": "text",
+          "id": "other_brand_feature_yes_no_2",
+          "label": "Other Brand have feature in product"
+        }
+      ]
+    }
+    ],
+    "presets": [{"name": "Comparison Table"}]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

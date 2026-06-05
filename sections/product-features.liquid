@@ -1,0 +1,166 @@
+{% style %}
+  @media (max-width:767px){
+    .product-features .flickity-viewport{ width: 100%; }
+    .feature-blocks .feature-block{ padding-bottom: 10px; }
+    .product-features .flickity-page-dots{ bottom: 0; }
+  }
+
+
+  .product-features h2{ font-family: 'IvyPresto_Display_medium' !important;}
+{% endstyle %}
+
+{% comment %}
+{% if product.metafields.custom.product_feature %}
+{% endcomment %}
+
+<section class="product-features">
+
+  <div class="common-shap">
+        <img src="https://cdn.shopify.com/s/files/1/0880/4912/3648/files/shap_right.svg?v=1739257435" height="" width="">
+      </div>
+  
+  <div class="container page-width">
+    <!-- Heading & Description -->
+      {% if section.settings.heading != blank %}
+        <h2>{{ section.settings.heading }}</h2>
+      {% endif %}
+      
+      {% if section.settings.description != blank %}
+        <div class="description">
+          {{ section.settings.description }}
+        </div>
+      {% endif %}
+    
+    <!-- Main Image -->
+    {% if section.settings.image != blank %}
+      <div class="feature-image">
+        {%- render 'image-element',
+          img: section.settings.image,
+          loading: false,
+          classes: 'product-image',
+          animation: 'none',
+        -%}
+      </div>
+    {% endif %}
+    
+    <!-- Feature Blocks -->
+    <div class="feature-blocks ffblocks">
+
+      
+      
+      {% for block in section.blocks %}
+        <div class="feature-block">
+          {% if block.settings.icon != blank %}
+            {%- render 'image-element',
+              img: block.settings.icon,
+              loading: false,
+              classes: 'feature-icon',
+              animation: 'none',
+            -%}
+          {% endif %}
+          
+          {% if block.settings.title != blank %}
+            <h3>{{ block.settings.title }}</h3>
+          {% endif %}
+          
+          {% if block.settings.content != blank %}
+            <p>{{ block.settings.content }}</p>
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+  <script>
+                    document.addEventListener("shopify:section:load", function () {
+  initializeFlickity1();
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+  initializeFlickity1();
+});
+
+function initializeFlickity1() {
+  let carousel = document.querySelector(".ffblocks");
+  if (!carousel) return;
+
+  let flickityInstance1 = null;
+
+  function toggleFlickity1() {
+    let isMobile = window.innerWidth <= 767;
+
+    if (isMobile && !flickityInstance1) {
+      flickityInstance1 = new Flickity(carousel, {
+        contain: true,
+        cellAlign: "left",
+        wrapAround: true,
+        autoPlay: 3000,
+        prevNextButtons: false,
+        adaptiveHeight: true,
+        pageDots: true
+      });
+    } else if (!isMobile && flickityInstance1) {
+      flickityInstance1.destroy();
+      flickityInstance1 = null;
+    }
+  }
+
+  toggleFlickity1();
+  window.addEventListener("resize", toggleFlickity1);
+}
+
+                  </script>
+{% comment %}
+{% endif %}
+{% endcomment %}
+{% schema %}
+{
+  "name": "Product Features",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Feature",
+      "limit": 4,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Icon"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "Content"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product Features",
+    }
+  ]
+}
+{% endschema %}

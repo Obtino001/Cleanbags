@@ -1,0 +1,75 @@
+{% schema %}
+{
+  "name": "Often Purchased With",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Often Purchased With"
+    },
+    {
+      "type": "product_list",
+      "id": "chosen_product",
+      "label": "Choose Product"
+    }
+  ],
+  
+  "presets": [
+    {
+      "name": "Often Purchased With",
+    }
+  ]
+}
+{% endschema %}
+{% if section.settings.chosen_product.count > 0  %}
+  
+<style>
+
+  .often-purchased .carousel-cell{width: 25%;}
+  .often-purchased .grid__item {padding-left: 0;padding-right: 16px;}
+  .often-purchased .flickity-previous {left: -50px;}
+  .often-purchased .flickity-next {right: -50px;}
+
+  @media(max-width:1250px){
+    .often-purchased .flickity-previous {left: -18px;}
+    .often-purchased .flickity-next {right: -18px;}
+  }
+  
+  @media(max-width:767px){
+    .often-purchased  .flickity-button {position: relative;margin-top: 15px;}
+    .often-purchased .flickity-previous {left:0px;}
+    .often-purchased .flickity-next {right: -5px;}
+    .often-purchased .carousel-cell {width: 50%;}
+    .often-purchased h2 {padding: 20px 0;}
+    .often-purchased .grid__item {padding-right: 0;}
+  }
+
+  @media(max-width:457px){
+    .often-purchased .carousel-cell {width: 100%;}
+  }
+  
+</style>
+<div class="often-purchased">
+  <div class="container page-width">
+    {% if section.settings.heading != blank %}
+      <h2>{{ section.settings.heading }}</h2>
+    {% endif %}
+    <div class="purchased-products">
+      <div class="carousel" data-flickity='{ "contain": true, "adaptiveHeight": true, "cellAlign": "left", "wrapAround": true, "prevNextButtons": true, "pageDots": false }'>
+        {% for rproduct in section.settings.chosen_product %}
+          <div class="carousel-cell">
+            {%- render 'product-grid-item',
+              product: rproduct,
+              per_row: 1,
+              link: true,
+              fallback: '66vw',
+            -%}
+          </div>
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+</div>
+  {% endif %}
+

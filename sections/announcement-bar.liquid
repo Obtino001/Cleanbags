@@ -1,0 +1,99 @@
+{% if section.blocks.size > 0  %}
+  <div class="announcement">
+    <div class="announcement-bar-slider page-width">
+      {% for block in section.blocks %}
+        <div class="announcement-block">
+          {%- if block.settings.link != blank -%}
+            <a href="{{ block.settings.link }}" class="announcement-link">
+          {%- endif -%}
+        
+          {%- if block.settings.icon != blank -%}
+            {%- render 'image-element',
+              img: block.settings.icon,
+              loading: false,
+              classes: 'ann-icon',
+              animation: 'none',
+            -%}
+          {%- endif -%}
+        
+          {%- if block.settings.announcement != blank -%}
+            <span class="announcement-text">{{ block.settings.announcement }}</span>
+          {%- endif -%}
+        
+          {%- if block.settings.link != blank -%}
+            </a>
+          {%- endif -%}
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+  
+{% endif %}
+{% schema %}
+  {
+    "name": "t:sections.header.settings.header_announcement_bar",
+    "settings": [],
+    "blocks": [
+    {
+      "type": "announcement",
+      "name": "Announcement",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Icon"
+        },
+        {
+          "type": "text",
+          "id": "announcement",
+          "label": "Announcement Text",
+          "default": "This is an announcement!"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link (optional)"
+        }
+      ]
+    }
+  ],
+  }
+{% endschema %}
+
+
+<style>
+
+  .announcement .announcement-bar-slider {display: flex;align-items: center;flex-wrap: wrap;padding: 7px 40px;}
+  .announcement .announcement-bar-slider .announcement-block img.ann-icon.image-element {max-width: 100px;height: 18px;}
+  .announcement .announcement-bar-slider .announcement-block span.announcement-text {font-size: 14px;}
+  .announcement .announcement-bar-slider .announcement-block a.announcement-link{display: flex;align-items: center;gap: 8px;color:#fff;}
+  .announcement .announcement-bar-slider .announcement-block {display: flex;align-items: center;justify-content: center;gap: 8px;flex: 1 33.33%;}
+  .announcement .announcement-bar-slider .announcement-block:last-child {justify-content: flex-end;}
+  .announcement .announcement-bar-slider .announcement-block:first-child {justify-content: flex-start;}
+  .announcement-block:nth-child(2) img {
+      max-width: 24px !important;
+      height: auto !important;
+  }
+  .announcement-block:nth-child(3) img {
+      max-width: 18px !important;
+      height: auto !important;
+  }
+  @media(max-width:767px){
+    
+    .announcement .announcement-bar-slider {display: block;align-items: normal;}
+    .announcement .announcement-bar-slider .announcement-block:first-child {justify-content: center;}
+    .announcement .announcement-bar-slider .announcement-block:last-child {justify-content: center;}
+    .announcement .announcement-bar-slider .announcement-block {width: 100%;}
+    .announcement .announcement-bar-slider .announcement-block span.announcement-text {font-size: 10px;}
+
+    .announcement-block:nth-child(2) img {
+      max-width: 20px !important;
+    }
+    .announcement-block:nth-child(3) img {
+        max-width: 14px !important;
+    }
+  }
+  
+</style>
+
+

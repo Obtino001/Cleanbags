@@ -1,0 +1,78 @@
+{% style %}
+  .home-reviews{
+    background: #B2CFFC;
+    padding: 30px 0;
+    text-align: center;
+  }
+  .home-reviews__container{
+    max-width: 700px;
+    margin: auto;
+  }
+  .home-reviews .home-reviews__review{ padding-inline: 20px; }
+  .home-reviews .home-reviews__name{ margin: 0; }
+  .home-reviews .home-reviews__text{
+    font-family: 'IvyPresto_Display_medium' !important;
+    font-size: 22px;
+  }
+  .home-reviews .home-reviews__text p{
+    font-family: 'IvyPresto_Display_medium' !important;
+    font-size: 22px;
+  }
+  .home-reviews__review.is-selected {
+  transform: scale(1.1);
+  opacity: 1;
+}
+
+.home-reviews__review:not(.is-selected) {
+  opacity: 0;
+  transform: scale(0.9);
+}
+
+{% endstyle %}
+
+
+<div class="home-reviews__container">
+  <div class="home-reviews-wrap" data-flickity='{ "contain": true, "adaptiveHeight": true, "cellAlign": "left", "autoPlay": 4200, "wrapAround": true, "prevNextButtons": false, "pageDots": false }'>
+    {% for block in section.blocks %}
+      <div class="home-reviews__review" id="review-{{ block.id }}">
+        <div class="home-reviews__text">{{ block.settings.review }}</div>
+                <p class="home-reviews__name">{{ block.settings.name }}</p>
+
+      </div>
+    {% endfor %}
+  </div>
+</div>
+{% schema %}
+{
+  "name": "Home Reviews",
+  "tag": "section",
+  "class": "home-reviews",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Review",
+      "settings": [
+        {
+          "id": "name",
+          "type": "text",
+          "label": "Name"
+        },
+        {
+          "id": "review",
+          "type": "richtext",
+          "label": "Review"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Home Reviews",
+      
+    }
+  ]
+}
+{% endschema %}
+
+

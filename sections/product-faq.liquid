@@ -1,0 +1,318 @@
+{% if product.metafields.custom.faqs %}
+
+{% style %}
+  .{{ section.id }} .wrap_faqs{ display: flex; width: 100%; align-items: center }
+  .{{ section.id }} .wrap_faqs .left{ width: 50% }
+  .{{ section.id }} .wrap_faqs .right{ width: 50% }
+  .{{ section.id }} .wrap_faqs video{ width: 100%; border-radius: 16px; overflow: hidden; }
+  .{{ section.id }} .section-header{
+    text-align: left;
+    margin-bottom: 35px;
+  }
+  .{{ section.id }} .section-header .section-header__title{ margin-bottom: 20px; }
+  .{{ section.id }} .collapsible-trigger--inline{ padding-left: 0; }
+
+  .{{ section.id }} .collapsible-trigger__icon{
+    --collapsibleIconWidth: 5px;
+    left: -15px;
+    background: #000;
+    border-radius: 100%;
+  }
+  .{{ section.id }} [aria-expanded="false"] .collapsible-trigger__icon{
+    opacity: 0;
+  }
+  .{{ section.id }} [aria-expanded="false"]{
+    opacity: 0.5;
+  }
+  .{{ section.id }} .collapsible-trigger{
+    font-family: 'IvyPresto_Display_medium' !important;
+    font-size: 24px;
+    letter-spacing: 0;
+    font-weight: 400;
+  }
+   #shopify-section-{{ section.id }}.index-section {
+    margin: 0px 0px !important;
+    background-color: #f0f9fd !important;
+    padding-bottom:80px !important;
+}
+  .{{ section.id }} .collapsible-trigger[aria-expanded="true"]{
+    text-decoration: underline;
+  }
+
+  @media(max-width:767px){
+    .{{ section.id }} .wrap_faqs {
+    flex-wrap: wrap;
+    }
+
+    .{{ section.id }} .wrap_faqs .left {
+      width: 100%;
+      padding-left: 10px;
+    }
+
+    .{{ section.id }} .wrap_faqs .right {
+    width: 100%;
+}
+    .{{ section.id }} .collapsible-trigger {
+   
+    font-size: 20px;
+}
+    .{{ section.id }} .rte.collapsible-content__inner--faq {
+    padding-bottom: 12px;
+}
+
+
+
+
+    
+  }
+
+
+
+  
+{% endstyle %}
+
+
+
+
+
+{%- if section.settings.divider -%}<div class="section--divider ">{%- endif -%}
+
+<div class="page-width {{ section.id }} product_faq">
+
+  
+
+  {%- if section.blocks.size > 0 -%}
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {% for block in section.blocks %}
+            {% case block.type %}
+              {% when 'question' %}
+                {
+                  "@type": "Question",
+                  "name": {{ block.settings.title | json }},
+                  "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": {{ block.settings.text | json }}
+                  }
+                }{% unless forloop.last %},{% endunless %}
+            {% endcase %}
+          {% endfor %}
+        ]
+      }
+    </script>
+    <div class="wrap_faqs ">
+      <div class="left">
+        {%- if section.settings.title != blank or section.settings.sub_title != blank -%}
+          <header class="section-header">
+            {%- if section.settings.title != blank -%}
+              <h2 class="section-header__title">
+                {{ section.settings.title | escape }}
+              </h2>
+            {%- endif -%}
+            {%- if section.settings.title != blank -%}
+              <h5 class="section-header__subtitle">
+                {{ section.settings.sub_title | escape }}
+              </h5>
+            {% endif %}
+          </header>
+        {%- endif -%}
+        {%- for block in section.blocks -%}
+          <div {{ block.shopify_attributes }}>
+            {% case block.type %}
+              {% when 'rich-text'%}
+                <div class="index-section index-section--faq">
+                  <div class="text-{{ block.settings.align_text }}">
+                    <div class="grid">
+                      <div class="grid__item{% if block.settings.narrow_column %} medium-up--three-quarters medium-up--push-one-eighth{% endif %}">
+                        {%- if block.settings.title != blank -%}
+                          <p class="h2">
+                            {{ block.settings.title | escape }}
+                          </p>
+                        {% endif %}
+                        {% if block.settings.text != blank %}
+                          <div class="rte">
+                            {% if block.settings.enlarge_text %}<div class="enlarge-text">{% endif %}
+                              {{ block.settings.text }}
+                            {% if block.settings.enlarge_text %}</div>{% endif %}
+                          </div>
+                        {% endif %}
+                        {%- if block.settings.link_text != blank -%}
+                          <div class="rte">
+                            <a href="{{ block.settings.link }}" class="btn">
+                              {{ block.settings.link_text }}
+                            </a>
+                          </div>
+                        {%- endif -%}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              {% when 'question'%}
+                <div>
+                  <button type="button" class="collapsible-trigger collapsible-trigger--inline collapsible--auto-height text-left" aria-controls="FAQ-content-{{ block.id }}">
+                    {%- render 'collapsible-icons-alt', no_circle: true -%}
+                    <span>{{ block.settings.title }}</span>
+                  </button>
+                  <div id="FAQ-content-{{ block.id }}" class="collapsible-content collapsible-content--all">
+                    <div class="collapsible-content__inner collapsible-content__inner--faq rte">
+                      {{ block.settings.text }}
+                    </div>
+                  </div>
+                </div>
+            {% endcase %}
+          </div>
+        {%- endfor -%}
+      </div>
+      {% if section.settings.image != blank or section.settings.video != blank %}
+        
+        <div class="right">
+          {% if section.settings.video != blank %}
+            {{ section.settings.video | video_tag: 
+              autoplay: true, 
+              loop: true, 
+              muted: true, 
+              controls: false
+            }}
+          {% elsif section.settings.image != blank %}
+            {%- render 'image-element',
+              img: section.settings.image,
+              loading: false,
+              classes: 'right-image',
+              animation: 'none',
+            -%}
+          {% endif %}
+        </div>
+      {% endif %}
+    </div>
+  {%- endif -%}
+
+  {%- if section.blocks.size == 0 -%}
+    <div class="placeholder-noblocks">
+      {{ 'home_page.onboarding.no_content' | t }}
+    </div>
+  {%- endif -%}
+</div>
+
+{%- if section.settings.divider -%}</div>{%- endif -%}
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+  // Select the first collapsible-trigger inside .product_faq
+  const firstTrigger = document.querySelector(".product_faq .collapsible-trigger");
+
+  // Check if the element exists before triggering a click
+  if (firstTrigger) {
+    firstTrigger.dispatchEvent(new Event("click")); // Simulate a click event
+  }
+});
+
+</script>
+
+{% endif %}
+{% schema %}
+{
+  "name": "Product FAQs",
+  "class": "index-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "t:sections.faq.settings.title.label",
+      "default": "FAQs"
+    },
+    {
+      "type": "text",
+      "id": "sub_title",
+      "label": "Sub title",
+      "default": "Why choose EasyBrush"
+    },
+    {
+      "type": "video",
+      "id": "video",
+      "label": "Video",
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image",
+    }
+  ],
+  "blocks": [
+    {
+      "type": "rich-text",
+      "name": "t:sections.faq.blocks.rich_text.name",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "t:sections.faq.blocks.rich_text.settings.title.label",
+          "default": "Rich text"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "t:sections.faq.blocks.rich_text.settings.text.label",
+          "default": "<p>Use this section for any descriptive text you need to fill out your pages or to add introductory headings between other blocks.</p>"
+        },
+        {
+          "type": "select",
+          "id": "align_text",
+          "label": "t:sections.faq.blocks.rich_text.settings.align_text.label",
+          "default": "left",
+          "options": [
+            {
+              "value": "left",
+              "label": "t:sections.faq.blocks.rich_text.settings.align_text.options.left.label"
+            },
+            {
+              "value": "center",
+              "label": "t:sections.faq.blocks.rich_text.settings.align_text.options.center.label"
+            },
+            {
+              "value": "right",
+              "label": "t:sections.faq.blocks.rich_text.settings.align_text.options.right.label"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "question",
+      "name": "t:sections.faq.blocks.question.name",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "t:sections.faq.blocks.question.settings.title.label",
+          "default": "Frequently asked question"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "t:sections.faq.blocks.question.settings.text.label",
+          "default": "<p>Use this text to answer questions in as much detail as possible for your customers.</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product FAQs",
+      "blocks": [
+        {
+          "type": "question"
+        },
+        {
+          "type": "question"
+        }
+      ]
+    }
+  ],
+  "disabled_on": {
+    "groups": ["footer", "header", "custom.popups"]
+  }
+}
+{% endschema %}

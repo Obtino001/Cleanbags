@@ -1,0 +1,436 @@
+{% comment %}{% if product.metafields.custom.customer_reviews %}{% endcomment %}
+
+{%- style -%}
+  .testimonials-{{ section.id }} {
+    background-color: {{ section.settings.color_background }};
+    color: {{ section.settings.color_text }};
+  }
+
+  .customer-reviews-wrap {
+    display: flex;
+    align-items: start;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+  .customer-reviews-wrap .section-header {
+    width: 30%;
+    text-align: left;
+}
+  .customer-reviews-wrap  .slideshow-wrapper {
+    width: calc(70% - 10px);
+}
+  /* .customer-reviews-wrap button.flickity-button {
+    display: none;
+} */
+  .customer-reviews-wrap .section-header a.btn.readmore_review_btn.js-no-transition {
+    float: inherit;
+}
+  .customer-reviews-wrap .testimonials-slide.is-selected .testimonials-slider__text {
+       box-shadow: none;
+   
+    transform: none;
+}
+  .customer-reviews-wrap .testimonials-slide .testimonials-slider__text {
+    transform: none;
+    transition: initial;
+    margin-right: 0px;
+}
+ .customer-reviews-wrap .testimonials-slider__text {
+    background: transparent;
+}
+  .customer-reviews-wrap .testimonials-slider__text {
+    padding: 7px 10px 10px;
+}
+
+  /* .text-spacing .metafield-rich_text_field {
+    text-align: left;
+} */
+  .customer-reviews-wrap .text-spacing .metafield-rich_text_field p {
+    font-size: 14px;
+    color: #000000c2;
+    line-height: 1.3;
+  text-align: left;
+}
+    .customer-reviews-wrap .testimonial-meta {
+    margin-top: 0;
+    text-align: left;
+}
+    .customer-reviews-wrap .testimonial-meta author {
+    position: relative;
+    padding-left: 35px;
+    font-size: 14px;
+}
+   .customer-reviews-wrap  .testimonial-meta author::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: 24px;
+    height: 1px;
+    background-color: currentColor;
+    transform: translateY(-50%);
+    left: 0;
+}
+
+ .customer-reviews-wrap .testimonials-slide {
+    padding: 0px 0 55px;
+    width: 25%;
+}
+
+ .customer-reviews-wrap .rating span.rating-star {
+    position: relative;
+    display: block;
+}
+
+ .customer-reviews-wrap .review-image-el {
+    padding-bottom: 40px;
+}
+  .customer-reviews-wrap .review-image-el image-element {
+    border-radius: 12px;
+    display: block;
+    overflow: hidden;
+}
+  
+
+  .customer-reviews-wrap .rating span.rating-star[star="1"]::before {
+    content: '';
+    background-image: url(https://cdn.shopify.com/s/files/1/0880/4912/3648/files/Star_1.svg?v=1739432488);
+    position: absolute;
+    top: -26px;
+    left: 0;
+    height: 26px;
+    width: 20px;
+    background-repeat: no-repeat;
+    background-size: 16px;
+}
+.customer-reviews-wrap .rating span.rating-star[star="2"]::before {
+    content: '';
+    background-image: url(https://cdn.shopify.com/s/files/1/0880/4912/3648/files/Star_1.svg?v=1739432488);
+    position: absolute;
+    top: -26px;
+    left: 20px;
+    height: 26px;
+    width: 20px;
+    background-repeat: no-repeat;
+        background-size: 16px;
+}
+
+  .customer-reviews-wrap .rating span.rating-star[star="3"]::before {
+    content: '';
+    background-image: url(https://cdn.shopify.com/s/files/1/0880/4912/3648/files/Star_1.svg?v=1739432488);
+    position: absolute;
+    top: -26px;
+    left: 40px;
+    height: 26px;
+    width: 20px;
+    background-repeat: no-repeat;
+        background-size: 16px;
+}
+
+   .customer-reviews-wrap .rating span.rating-star[star="4"]::before {
+    content: '';
+    background-image: url(https://cdn.shopify.com/s/files/1/0880/4912/3648/files/Star_1.svg?v=1739432488);
+    position: absolute;
+    top: -26px;
+    left: 60px;
+    height: 26px;
+    width: 20px;
+    background-repeat: no-repeat;
+        background-size: 16px;
+}
+
+  .customer-reviews-wrap .rating span.rating-star[star="5"]::before {
+    content: '';
+    background-image: url(https://cdn.shopify.com/s/files/1/0880/4912/3648/files/Star_1.svg?v=1739432488);
+    position: absolute;
+    top: -26px;
+    left: 80px;
+    height: 26px;
+    width: 20px;
+    background-repeat: no-repeat;
+    background-size: 16px;
+}
+.rte-setting.text-spacing p:empty {
+    display: none;
+}
+
+  .customer-reviews-wrap .flickity-previous {
+    left: -50px;
+}
+
+  .customer-reviews-wrap .flickity-next {
+    right: -50px;
+}
+
+   @media(max-width:1250px){
+     .customer-reviews-wrap .flickity-previous {
+    left: -18px;
+}
+     .customer-reviews-wrap .flickity-next {
+    right: -18px;
+}
+  }
+  @media(max-width:767px){
+       .customer-reviews-wrap .flickity-previous {
+    left: 0px;
+}
+     .customer-reviews-wrap .flickity-next {
+    right: 0px;
+}
+
+    .customer-reviews-wrap .section-header {
+        width: 100%;
+        text-align: center;
+    }
+    .customer-reviews-wrap  .slideshow-wrapper {
+      width: 100%;
+    }
+    .customer-reviews-wrap .testimonials-slide {
+      padding: 0px 0 10px;
+      width: 50%;
+    }
+    .customer-reviews-wrap .testimonials-slider__text {
+    margin: 0 0px;
+}
+    
+    
+  }
+
+   @media(max-width:457px){
+
+      .customer-reviews-wrap .testimonials-slide {
+  
+    width: 100%;
+    }
+   }
+
+{%- assign padding_bottom_mobile = section.settings.padding_bottom_mobile -%}
+  {%- if padding_bottom_mobile == 0 -%}
+    {%- assign padding_bottom_mobile = section.settings.padding_bottom -%}
+  {%- endif -%}
+
+  {%- assign padding_top_mobile = section.settings.padding_top_mobile -%}
+  {%- if padding_top_mobile == 0 -%}
+    {%- assign padding_top_mobile = section.settings.padding_top -%}
+  {%- endif -%}
+
+  .testimonials-{{ section.id }} {
+    padding-top: {{ padding_top_mobile }}px;
+    padding-bottom: {{ padding_bottom_mobile }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .testimonials-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+  
+{%- endstyle -%}
+
+<div
+  class="text-center testimonials-sections testimonials-{{ section.id }}{% if section.settings.color_background == settings.color_body_bg %} testimonials-section--with-divider{% endif %}"
+  data-section-id="{{ section.id }}"
+  data-section-type="testimonials"
+  data-aos>
+  <div class="page-width">
+    <div class="customer-reviews-wrap">
+      <div class="section-header">
+        {%- if section.settings.title != blank -%}
+          <h2>{{ section.settings.title | escape }}</h2>
+        {%- endif -%}
+        {%- if section.settings.button_link != blank or section.settings.button_label != blank -%}
+          <a class="btn readmore_review_btn" href="{{ section.settings.button_link }}">{{ section.settings.button_label }}</a>
+        {% endif %}
+      </div>
+    
+      {%- if section.blocks.size > 0 -%}
+        <div class="slideshow-wrapper">
+          <div class="testimonials-slider" id="Testimonials-{{ section.id }}" data-count="{{ section.blocks.size }}">
+            {%- for block in section.blocks -%}
+              <div
+                class="testimonials-slide testimonials-slide--{{ block.id }}"
+                data-index="{{ forloop.index0 }}"
+                {{ block.shopify_attributes }}>
+    
+                
+                <blockquote class="testimonials-slider__text">
+                  
+                  {% if block.settings.image != blank %}
+                    <div class="review-image-el">
+                      {%- render 'image-element',
+                        img: block.settings.image,
+                        loading: false,
+                        classes: 'review-image',
+                        animation: 'none',
+                      -%}
+                    </div>
+                  {% endif %}
+                  {% assign noofstars = block.settings.rating | round %}
+                  {% if noofstars  > 0 %}
+                  <div class="rating">
+                    {% for i in (1..noofstars) %}
+                      <span star="{{ i }}" class="rating-star"></span>
+                    {% endfor %}
+                  </div>
+                {% endif %}
+    
+                  {%- if block.settings.testimonial != blank -%}
+                    <div class="rte-setting text-spacing">{{ block.settings.testimonial }}</div>
+                  {%- endif -%}
+    
+                  {%- if block.settings.author != blank -%}
+                    <div class="testimonial-meta">
+                      
+                      {%- if block.settings.author != blank -%}
+                        <author>{{ block.settings.author | escape }}</author>
+                      {%- endif -%}
+                    </div>
+                  {%- endif -%}
+    
+                </blockquote>
+              </div>
+            {%- endfor -%}
+          </div>
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+{% comment %}{% endif %}{% endcomment %}
+{% schema %}
+{
+  "name": "Customer Reviews",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "t:sections.testimonials.settings.title.label",
+      "default": "Don't take our word for it"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Read all reviews"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link",
+    },
+    {
+      "type": "checkbox",
+      "id": "round_images",
+      "label": "t:sections.testimonials.settings.round_images.label",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding Top",
+      "unit": "px",
+      "min": 0,
+      "max": 100,
+      "step": 10,
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding Bottom",
+      "unit": "px",
+      "min": 0,
+      "max": 100,
+      "step": 10,
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 40,
+      "label": "Padding Top Mobile"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 40,
+      "label": "Padding Bottom Mobile"
+    },
+    {
+      "type": "color",
+      "id": "color_background",
+      "label": "t:sections.testimonials.settings.color_background.label",
+      "default": "#f9f9f9"
+    },
+    {
+      "type": "color",
+      "id": "color_text",
+      "label": "t:sections.testimonials.settings.color_text.label",
+      "default": "#1c1d1d"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "testimonial",
+      "name": "t:sections.testimonials.blocks.testimonial.name",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "rating",
+          "label": "Rating",
+          "default": "0",
+        },
+        {
+          "type": "richtext",
+          "id": "testimonial",
+          "label": "t:sections.testimonials.blocks.testimonial.settings.testimonial.label",
+          "default": "<p>Add customer reviews and testimonials to showcase your store’s happy customers.</p>"
+        },
+        {
+          "type": "text",
+          "id": "author",
+          "label": "t:sections.testimonials.blocks.testimonial.settings.author.label",
+          "default": "Author name"
+        },
+        
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Customer Reviews",
+      "blocks": [
+        {
+          "type": "testimonial"
+        },
+        {
+          "type": "testimonial"
+        },
+        {
+          "type": "testimonial"
+        },
+        {
+          "type": "testimonial"
+        },
+        {
+          "type": "testimonial"
+        }
+      ]
+    }
+  ],
+  "disabled_on": {
+    "groups": ["footer", "header", "custom.popups"]
+  }
+}
+{% endschema %}

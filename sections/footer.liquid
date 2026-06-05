@@ -1,0 +1,603 @@
+{%- liquid
+  assign show_selectors = false
+  assign currency_selector = false
+  assign locale_selector = false
+
+  if section.settings.show_currency_selector and shop.enabled_currencies.size > 1
+    assign currency_selector = true
+  endif
+
+  if section.settings.show_locale_selector and shop.enabled_locales.size > 1
+    assign locale_selector = true
+  endif
+
+  if currency_selector or locale_selector
+    assign show_selectors = true
+  endif
+-%}
+
+<footer class="site-footer" data-section-id="{{ section.id }}" data-section-type="footer">
+  <div class="page-width">
+
+    <div class="grid">
+      {%- assign row_width = 0 -%}
+      {%- for block in section.blocks -%}
+        {%- assign row_width = row_width | plus: block.settings.container_width -%}
+        {%- style -%}
+        @media only screen and (min-width: 769px) {
+          .footer__item--{{ block.id }} {
+            width: {{ block.settings.container_width }}%;
+          }
+        }
+        {%- endstyle -%}
+
+        {%- if row_width > 100 -%}
+          <div class="footer__clear small--hide"></div>
+          {%- assign row_width = row_width | minus: 100 -%}
+        {%- endif -%}
+
+        {%- case block.type -%}
+        {%- when 'logo_social' -%}
+          <div {{ block.shopify_attributes }} class="grid__item footer__item--{{ block.id }}">
+            {%- render 'footer-logo-social', block: block -%}
+            {% if block.settings.social_footer_content %}
+              <div class="social_footer_content">{{ block.settings.social_footer_content }}</div>
+            {% endif %}
+          </div>
+        {%- when 'custom' -%}
+          <div {{ block.shopify_attributes }} class="grid__item footer__item--{{ block.id }}">
+            {%- render 'footer-custom-text', block: block -%}
+          </div>
+        {%- when 'newsletter' -%}
+          <div {{ block.shopify_attributes }} class="grid__item grid-newsletter footer__item--{{ block.id }}">
+            {%- render 'footer-newsletter', block: block -%}
+          </div>
+        {%- when 'menu' -%}
+          <div {{ block.shopify_attributes }} class="grid__item footer__item--{{ block.id }}">
+            {%- render 'footer-menu', block: block -%}
+          </div>
+        {%- when 'follow_shop_cta' -%}
+          <div {{ block.shopify_attributes }} class="grid__item footer__item--{{ block.id }}">
+            {%- render 'follow-shop-cta', block: block -%}
+          </div>
+        {%- endcase -%}
+      {%- endfor -%}
+    </div>
+
+    <div class="site-footer__bottom">
+      {%- if show_selectors -%}
+        {%- form 'localization', class: 'multi-selectors site-footer__bottom-block', data-disclosure-form: '' -%}
+          {%- if locale_selector -%}
+            <div class="multi-selectors__item">
+              <h2 class="visually-hidden" id="LangHeading">
+                {{ 'general.language.dropdown_label' | t }}
+              </h2>
+
+              <div id="FooterLocale" class="disclosure">
+                <button type="button" class="faux-select disclosure__toggle" aria-expanded="false" aria-controls="LangList" aria-describedby="LangHeading" data-disclosure-toggle>
+                  {{ form.current_locale.endonym_name | capitalize }}
+                  <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon--wide icon-chevron-down" viewBox="0 0 28 16"><path d="m1.57 1.59 12.76 12.77L27.1 1.59" stroke-width="2" stroke="#000" fill="none"/></svg>
+                </button>
+                <ul id="LangList" class="disclosure-list" data-disclosure-list>
+                  {%- for locale in form.available_locales -%}
+                    <li class="disclosure-list__item {% if locale.iso_code == form.current_locale.iso_code %}disclosure-list__item--current{% endif %}">
+                      <a class="disclosure-list__option" href="#" lang="{{ locale.iso_code }}" {% if locale.iso_code == form.current_locale.iso_code %}aria-current="true"{% endif %} data-value="{{ locale.iso_code }}" data-disclosure-option>
+                        {{ locale.endonym_name | capitalize }}
+                      </a>
+                    </li>
+                  {%- endfor -%}
+                </ul>
+                <input type="hidden" name="locale_code" id="LocaleSelector" value="{{ form.current_locale.iso_code }}" data-disclosure-input/>
+              </div>
+            </div>
+          {%- endif -%}
+
+          {%- if currency_selector -%}
+            <div class="multi-selectors__item">
+              <h2 class="visually-hidden" id="CurrencyHeading">
+                {{ 'general.currency.dropdown_label' | t }}
+              </h2>
+
+              <div id="FooterCurrency" class="disclosure">
+                <button type="button" class="faux-select disclosure__toggle" aria-expanded="false" aria-controls="CurrencyList" aria-describedby="CurrencyHeading" data-disclosure-toggle>
+                  {%- if section.settings.show_currency_flags -%}
+                    <span class="currency-flag currency-flag--{{ localization.country.iso_code | downcase }}" data-flag="{{ localization.country.currency.iso_code }}" aria-hidden="true"></span>
+                  {%- endif -%}
+                  <span class="currency-options__label currency-options__label--inline">
+                    {{ localization.country.name }} ({{ localization.country.currency.iso_code }} {{ localization.country.currency.symbol }})
+                  </span>
+                  <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon--wide icon-chevron-down" viewBox="0 0 28 16"><path d="m1.57 1.59 12.76 12.77L27.1 1.59" stroke-width="2" stroke="#000" fill="none"/></svg>
+                </button>
+                <ul id="CurrencyList" class="disclosure-list" data-disclosure-list>
+                  {%- for country in localization.available_countries-%}
+                    <li class="disclosure-list__item {% if country.iso_code == localization.country.iso_code %}disclosure-list__item--current{% endif %}">
+                      <a class="disclosure-list__option" href="#" {% if country.iso_code == localization.country.iso_code %}aria-current="true"{% endif %} data-value="{{ country.iso_code }}" data-disclosure-option>
+                        {%- if section.settings.show_currency_flags -%}
+                          <span class="currency-flag currency-flag--{{ country.iso_code | downcase }}" data-flag="{{ country.currency.iso_code }}" aria-hidden="true"></span>
+                        {%- endif -%}
+                        <span class="currency-options__label currency-options__label--inline">
+                          {{ country.name }} ({{ country.currency.iso_code }} {{ country.currency.symbol }})
+                        </span>
+                      </a>
+                    </li>
+                  {%- endfor -%}
+                </ul>
+                <input type="hidden" name="country_code" value="{{ localization.country.iso_code }}" data-disclosure-input>
+              </div>
+            </div>
+          {%- endif -%}
+        {%- endform -%}
+      {%- endif -%}
+      <div class="bottom_footer">
+        <div class="footer__copyright site-footer__bottom-block">
+          {%- if section.settings.show_copyright -%}
+            <span>
+              &copy; {{ 'now' | date: '%Y' }} {{ shop.name }}
+              {%- if section.settings.copyright_text != blank -%}
+                {% if section.settings.link_to_copyright != blank %}
+                  <a href="{{ section.settings.link_to_copyright }}" target="_blank">
+                {% endif %}
+                {{ section.settings.copyright_text }}
+                {% if section.settings.link_to_copyright != blank %}
+                  </a>
+                {% endif %}
+              {%- endif -%}
+            </span>
+          {%- endif -%}
+          {% comment %}
+          <span class="footer__powered_by">{{ powered_by_link }}</span>
+          {% endcomment %}
+        </div>
+
+        {%- if section.settings.show_payment_icons -%}
+            <ul class="inline-list payment-icons site-footer__bottom-block{% unless section.settings.colorize_payment_icons %} payment-icons--greyscale{% endunless %} text-center">
+              {% assign enabled_payment_types = 'master,visa,mobilepay' | remove: ' ' | split: ',' %}
+              {% for type in enabled_payment_types %}
+                <li class="icon--payment">{{- type | payment_type_svg_tag -}}</li>
+              {% endfor %}
+            </ul>
+        {%- endif -%}
+        {% render 'social-icons', additional_classes: 'footer__social' %}
+
+      </div>
+    </div>
+
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "t:sections.footer.name",
+  "max_blocks": 12,
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:sections.footer.settings.header_language_selector",
+      "info": "t:sections.footer.settings.header_language_selector"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_locale_selector",
+      "label": "t:sections.footer.settings.show_locale_selector.label",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "t:sections.footer.settings.header_currency_selector",
+      "info": "t:sections.footer.settings.header_currency_selector"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_currency_selector",
+      "label": "t:sections.footer.settings.show_currency_selector.label",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_currency_flags",
+      "label": "t:sections.footer.settings.show_currency_flags.label",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "t:sections.footer.settings.header_additional_footer_content"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_payment_icons",
+      "label": "t:sections.footer.settings.show_payment_icons.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "colorize_payment_icons",
+      "label": "t:sections.footer.settings.colorize_payment_icons.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_copyright",
+      "label": "t:sections.footer.settings.show_copyright.label"
+    },
+    {
+      "type": "text",
+      "id": "copyright_text",
+      "label": "t:sections.footer.settings.copyright_text.label"
+    },
+    {
+      "type": "url",
+      "id": "link_to_copyright",
+      "label": "Link to copyright"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "logo_social",
+      "name": "t:sections.footer.blocks.logo_and_social.name",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "logo",
+          "label": "t:sections.footer.blocks.logo_and_social.settings.logo.label"
+        },
+        {
+          "type": "range",
+          "id": "desktop_logo_height",
+          "label": "t:sections.footer.blocks.logo_and_social.settings.desktop_logo_height.label",
+          "default": 50,
+          "min": 20,
+          "max": 120,
+          "unit": "px"
+        },
+        {
+          "type": "paragraph",
+          "content": "t:sections.footer.blocks.logo_and_social.settings.content"
+        },
+        {
+          "type": "range",
+          "id": "container_width",
+          "label": "t:sections.footer.blocks.logo_and_social.settings.container_width.label",
+          "default": 20,
+          "min": 15,
+          "max": 95,
+          "unit": "%"
+        },
+        {
+          "type": "richtext",
+          "id": "social_footer_content",
+          "label": "Content"
+        },
+      ]
+    },
+    {
+      "type": "menu",
+      "name": "t:sections.footer.blocks.menu.name",
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "show_footer_title",
+          "label": "t:sections.footer.blocks.menu.settings.show_footer_title.label",
+          "default": true
+        },
+        {
+          "type": "link_list",
+          "id": "menu",
+          "label": "t:sections.footer.blocks.menu.settings.menu.label",
+          "default": "footer",
+          "info": "t:sections.footer.blocks.menu.settings.menu.info"
+        },
+        {
+          "type": "range",
+          "id": "container_width",
+          "label": "t:sections.footer.blocks.menu.settings.container_width.label",
+          "default": 20,
+          "min": 15,
+          "max": 95,
+          "unit": "%"
+        }
+      ]
+    },
+    {
+      "type": "newsletter",
+      "name": "t:sections.footer.blocks.newsletter.name",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "show_footer_title",
+          "label": "t:sections.footer.blocks.newsletter.settings.show_footer_title.label",
+          "default": true
+        },
+        {
+          "type": "paragraph",
+          "content": "t:sections.footer.blocks.newsletter.settings.content"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "t:sections.footer.blocks.newsletter.settings.title.label",
+          "default": "Sign up and save"
+        },
+        {
+          "type": "richtext",
+          "id": "richtext",
+          "label": "t:sections.footer.blocks.newsletter.settings.richtext.label",
+          "info": "t:sections.footer.blocks.newsletter.settings.richtext.info",
+          "default": "<p>Subscribe to get special offers, free giveaways, and once-in-a-lifetime deals.</p>"
+        },
+        {
+          "type": "range",
+          "id": "container_width",
+          "label": "t:sections.footer.blocks.newsletter.settings.container_width.label",
+          "default": 20,
+          "min": 15,
+          "max": 95,
+          "unit": "%"
+        }
+      ]
+    },
+    {
+      "type": "custom",
+      "name": "t:sections.footer.blocks.custom_text.name",
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "show_footer_title",
+          "label": "t:sections.footer.blocks.custom_text.settings.show_footer_title.label",
+          "default": true
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "t:sections.footer.blocks.custom_text.settings.title.label",
+          "default": "Custom text"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "t:sections.footer.blocks.custom_text.settings.text.label",
+          "default": "<p>Add your own custom text here.</p>"
+        },
+        {
+          "type": "range",
+          "id": "container_width",
+          "label": "t:sections.footer.blocks.custom_text.settings.container_width.label",
+          "default": 20,
+          "min": 15,
+          "max": 95,
+          "unit": "%"
+        }
+      ]
+    },
+    {
+      "type": "follow_shop_cta",
+      "name": "t:common.follow_shop_cta.name",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "t:common.follow_shop_cta.paragraph.content"
+        },
+        {
+          "type": "range",
+          "id": "container_width",
+          "label": "t:sections.footer.blocks.custom_text.settings.container_width.label",
+          "default": 20,
+          "min": 20,
+          "max": 95,
+          "unit": "%"
+        }
+      ]
+    }
+  ],
+  "default": {
+    "settings": {},
+    "blocks": [
+      {
+        "type": "menu",
+        "settings": {}
+      },
+      {
+        "type": "logo_social",
+        "settings": {}
+      }
+    ]
+  }
+}
+{% endschema %}
+
+{% style %}
+  .grid-product .grid-product__content{
+    text-align: center;
+  }
+  .grid-product .grid-product__title {
+    font-size: calc(var(--typeBaseSize)*1);
+  }
+  .grid-product .btn{
+    width: 100%;
+  }
+  .grid-product .grid-product__image-mask{
+    border-radius: 12px;
+  }
+  .section-header__title .section-header__link{ text-decoration: underline; }
+
+
+  .dr_reviews .carousel-cell{
+    display: flex;
+    background: #1B2F5A0D;
+    gap: 15px;
+    border-radius: 12px;
+    padding: 15px;
+    align-items: center;
+    margin-right: 2%;
+    width: 100%;
+  }
+  .dr_reviews .image{ width: 64px; aspect-ratio: 1; border-radius: 100%; overflow: hidden; min-width: 64px;
+  background: #eee; }
+  .dr_reviews .image img{ width: 100%; height: 100%; object-fit: cover; }
+  .dr_reviews .rating{ margin-top: 30px; }
+  .dr_reviews .rating span.rating-star::before{
+    background-image: url(https://cdn.shopify.com/s/files/1/0880/4912/3648/files/Star_1.svg?v=1739432488);
+  }
+
+  .sticky-cart__details .sticky-cart__title, .sticky-cart__details .sticky-cart__price{ margin: 0; }
+  .cd-image-grid-row-trustBg img{
+    background-color: transparent !important;
+  }
+  .cd-image-grid-row-trustBg{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+  .cd-image-grid-row-trustBg .cd-wrap-trust-badge-icon{
+    width: auto;
+  }
+
+  .site-header__search{ transform: none; }
+  .btn--close-search {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+  }
+  .rec_products{
+    position: absolute;
+    top: calc(100% + 15px);
+    padding: 30px;
+    background-color: var(--colorBody);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    overflow-y: auto;
+    max-height: calc(100vh - 140px);
+    width: 100vw;
+  left: 50%;
+  transform: translateX(-50%);
+  }
+  .rec_products .grid__item{
+    padding-left: 0;
+    width: calc(25% - 8px);
+  }
+  .rec_products .grid__item .grid-product__content{
+    margin-bottom: 0;
+  }
+  predictive-search.have-results .rec_products{ display: none; }  
+
+  body:has(.site-header__search-container.is-active) .sticky-add-to-cart{
+    display: none;
+  }
+  .search__results {
+	width: 100vw;
+	left: 50%;
+	transform: translateX(-50%);
+  }
+  .rec_products .sugg_collection{
+     width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+  }
+  .rec_products .rec_collections{
+    /* width: 100%; */
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    padding: 0;
+    margin: 0;
+  }
+  .rec_products .rec_collections li{
+    margin: 0;
+  }
+  .rec_products .image-element{
+    animation: none;
+    opacity: 1;
+  }
+  .custom-badges .custom-badges-left {
+    position:absolute;
+    max-width:45%;
+    z-index:2;
+    display:flex;
+    flex-wrap:wrap;
+    gap:5px;
+    left:5px;
+    top:5px
+  }
+  .custom-badges .custom-badge {
+    padding:6px 8px 6px 10px;
+    font-size:12px;
+    border-radius:5px;
+    line-height:1
+  }
+  .custom-badges {
+    position:relative
+  }
+  .custom-badges .custom-badges-right {
+    position:absolute;
+    max-width:45%;
+    z-index:2;
+    display:flex;
+    flex-wrap:wrap;
+    gap:5px;
+    right:5px;
+    top:5px;
+    justify-content:flex-end
+  }
+  .custom-badges .custom-badges-right .grid-product__tag {
+    position:unset
+  }
+  .product-section .custom-badges .custom-badges-left {
+    left:10px;
+    top:10px
+  }
+  .product-section .custom-badges .custom-badges-right {
+    right:10px;
+    top:10px
+  }
+  .product-section .custom-badges .custom-badge {
+    padding:6px 10px;
+    font-size:14px;
+    border-radius:12px;
+    line-height:1.7
+  }
+
+  @media only screen and (max-width: 589px) {
+    predictive-search .search__results {
+      margin-left: -5px;
+      margin-right: 0;
+      width: 100vw;
+      margin-top: 8px;
+    }
+    .rec_products {
+      top: calc(100% + 7px);
+      left: calc(50% - 5px);
+    }
+    .rec_products .grid__item {
+      width: calc(50% - 5px);
+    }
+    .rec_products .rec_collections {
+    	gap: 0 15px;
+    }
+    .rec_products .sugg_collection{
+      gap: 0 15px;
+    }
+  }
+
+  .product-section .fbt .grid-product__content .custom-badges{
+    display: none;
+  }
+  .product-section .fbt .grid-product__content  .btn{
+    width: 160px;
+  }
+  
+  @media (min-width:768px){
+    .mobile_only{ display: none !important }
+  }
+  @media (max-width:767px){
+    .desktop_only{ display: none !important }
+  }
+{% endstyle %}
+                    

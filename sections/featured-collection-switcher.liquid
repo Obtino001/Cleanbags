@@ -1,0 +1,396 @@
+{% style %}
+  #CollectionSection-{{ section.id }} .tabWrap{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  #CollectionSection-{{ section.id }} .section-header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  #CollectionSection-{{ section.id }} .section-header h2{ margin-bottom: 0; }
+  #CollectionSection-{{ section.id }} .collection-switcher__trigger {
+	border: 1px solid;
+	border-radius: 12px;
+	padding: 6px 18px;
+  }
+  #CollectionSection-{{ section.id }} .collection-switcher__trigger.is-active{
+    background: #B2CFFC;
+    border-color: #B2CFFC;
+  }
+  #CollectionSection-{{ section.id }} .collection-switcher__trigger.is-active::after {
+    transform: scale(0);
+    transition: transform 0.5s ease;
+  }
+
+  #CollectionSection-{{ section.id }} .flickity-page-dots {
+   
+    display: none;
+}
+
+  @media (max-width:991px){
+
+    #CollectionSection-{{ section.id }} .section-header {
+    flex-wrap: wrap;
+    row-gap: 20px;
+}
+  }
+  @media (max-width:767px){
+
+    .index-section {
+    margin: 16px 0 !important;
+}
+
+    
+   #CollectionSection-{{ section.id }} .medium-up--one-quarter {
+    width: 100%;
+}
+
+
+     #CollectionSection-{{ section.id }} .collection-switcher__collection-grid {
+    margin-bottom: 60px;
+}
+    #CollectionSection-{{ section.id }} .section-header{
+      flex-direction: column;
+      align-items: start;
+      gap: 20px;
+      justify-content: start;
+    }
+    #CollectionSection-{{ section.id }} .tabWrap{
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+     #CollectionSection-{{ section.id }} .collection-switcher__trigger {
+    font-size: 12px;
+    }
+
+     #CollectionSection-{{ section.id }} .section-header {
+    margin-bottom: 10px;
+}
+     #CollectionSection-{{ section.id }} .collection-switcher__trigger {
+    border-radius: 8px;
+    padding: 3px 8px;
+}
+ 
+  }
+
+  @media()
+{% endstyle %}
+
+
+{%- liquid
+  assign per_row = section.settings.per_row
+  assign product_limit = per_row | times: 3
+  assign collection1 = collections[section.settings.collection1]
+  assign collection2 = collections[section.settings.collection2]
+  assign collection3 = collections[section.settings.collection3]
+  assign collection4 = collections[section.settings.collection4]
+
+
+  assign emptyState = false
+  if collection1.empty? and collection2.empty? and collection3.empty? and collection4.empty?
+    assign emptyState = true
+  endif
+-%}
+
+{%- if section.settings.divider -%}<div class="section--divider">{%- endif -%}
+
+<div
+  id="CollectionSection-{{ section.id }}"
+  data-section-id="{{ section.id }}"
+  data-section-type="collection-switcher"
+  data-per-row="{{ per_row }}">
+  {%- if section.settings.title != blank -%}
+    <div class="page-width">
+      <div class="section-header">
+        <div class="larger-text">
+          <h2>{{ section.settings.title }}</h2>
+        </div>
+        <div class="tabWrap">
+        {%- unless collection1.empty? -%}
+          <!-- <h3 class="collection-switcher__title"> -->
+            <a href="{{ collection1.url }}"
+              class="collection-switcher__trigger is-active js-no-transition"
+              aria-controls="collection1-{{ section.id }}">
+              {{ collection1.title }}
+            </a>
+          <!-- </h3> -->
+        {%- endunless -%}
+        {%- unless collection2.empty? -%}
+          <!-- <h3 class="collection-switcher__title"> -->
+            <a href="{{ collection2.url }}"
+              class="collection-switcher__trigger js-no-transition"
+              aria-controls="collection2-{{ section.id }}">
+              {{ collection2.title }}
+            </a>
+          <!-- </h3> -->
+        {%- endunless -%}
+        {%- unless collection3.empty? -%}
+          <!-- <h3 class="collection-switcher__title"> -->
+            <a href="{{ collection3.url }}"
+              class="collection-switcher__trigger js-no-transition"
+              aria-controls="collection3-{{ section.id }}">
+              {{ collection3.title }}
+            </a>
+          <!-- </h3> -->
+        {%- endunless -%}
+        {%- unless collection4.empty? -%}
+          <!-- <h3 class="collection-switcher__title"> -->
+            <a href="{{ collection4.url }}"
+              class="collection-switcher__trigger js-no-transition"
+              aria-controls="collection4-{{ section.id }}">
+              {{ collection4.title }}
+            </a>
+          <!-- </h3> -->
+        {%- endunless -%}
+
+        {%- if emptyState -%}
+          {%- for i in (1..2) -%}
+            <!-- <h3 class="collection-switcher__title"> -->
+              <a href="#"
+                class="collection-switcher__trigger js-no-transition{% if i == 1 %} is-active {% endif %}"
+                aria-controls="collection{{ i }}-{{ section.id }}">
+                {{ 'home_page.onboarding.collection_title' | t }} {{ i }}
+              </a>
+            <!-- </h3> -->
+          {%- endfor -%}
+        {%- endif -%}
+      </div>
+    </div>
+  {% endif %}
+    </div>
+
+  {%- liquid
+    capture gridView
+      render 'products_per_row', products_per_row: per_row, style: 'fractions'
+    endcapture
+  -%}
+
+  <div class="page-width">
+    {%- unless collection1.empty? -%}
+      <div id="collection1-{{ section.id }}" class="collection-switcher__collection" data-index="0">
+        <div
+          id="CollectionSwitcher1-{{ section.id }}"
+          class="grid collection-switcher__collection-grid"
+          data-per-row="{{ per_row }}">
+          {%- for product in collection1.products limit: product_limit -%}
+            {%- render 'product-grid-item',
+              product: product,
+              collection: collection,
+              per_row: per_row,
+              disable_quick_view_output: true,
+            -%}
+          {%- endfor -%}
+        </div>
+
+        {%- if section.settings.view_all -%}
+          <p class="text-center">
+            <a href="{{ collection1.url }}" class="btn">{{ 'collections.general.all_of_collection' | t }}</a>
+          </p>
+        {%- endif -%}
+      </div>
+    {%- endunless -%}
+
+    {%- unless collection2.empty? -%}
+      <div id="collection2-{{ section.id }}" class="collection-switcher__collection hide" data-index="1">
+        <div
+          id="CollectionSwitcher2-{{ section.id }}"
+          class="grid collection-switcher__collection-grid"
+          data-per-row="{{ per_row }}">
+          {%- for product in collection2.products limit: product_limit -%}
+            {%- render 'product-grid-item',
+              product: product,
+              collection: collection,
+              per_row: per_row,
+              disable_quick_view_output: true,
+            -%}
+          {%- endfor -%}
+        </div>
+
+        {%- if section.settings.view_all -%}
+          <p class="text-center">
+            <a href="{{ collection2.url }}" class="btn">{{ 'collections.general.all_of_collection' | t }}</a>
+          </p>
+        {%- endif -%}
+      </div>
+    {%- endunless -%}
+    {%- unless collection3.empty? -%}
+      <div id="collection3-{{ section.id }}" class="collection-switcher__collection hide" data-index="2">
+        <div
+          id="CollectionSwitcher2-{{ section.id }}"
+          class="grid collection-switcher__collection-grid"
+          data-per-row="{{ per_row }}">
+          {%- for product in collection3.products limit: product_limit -%}
+            {%- render 'product-grid-item',
+              product: product,
+              collection: collection,
+              per_row: per_row,
+              disable_quick_view_output: true,
+            -%}
+          {%- endfor -%}
+        </div>
+
+        {%- if section.settings.view_all -%}
+          <p class="text-center">
+            <a href="{{ collection3.url }}" class="btn">{{ 'collections.general.all_of_collection' | t }}</a>
+          </p>
+        {%- endif -%}
+      </div>
+    {%- endunless -%}
+    {%- unless collection4.empty? -%}
+      <div id="collection4-{{ section.id }}" class="collection-switcher__collection hide" data-index="3">
+        <div
+          id="CollectionSwitcher2-{{ section.id }}"
+          class="grid collection-switcher__collection-grid"
+          data-per-row="{{ per_row }}">
+          {%- for product in collection4.products limit: product_limit -%}
+            {%- render 'product-grid-item',
+              product: product,
+              collection: collection,
+              per_row: per_row,
+              disable_quick_view_output: true,
+            -%}
+          {%- endfor -%}
+        </div>
+
+        {%- if section.settings.view_all -%}
+          <p class="text-center">
+            <a href="{{ collection4.url }}" class="btn">{{ 'collections.general.all_of_collection' | t }}</a>
+          </p>
+        {%- endif -%}
+      </div>
+    {%- endunless -%}
+
+    {%- if emptyState -%}
+      {%- for i in (1..2) -%}
+        <div id="collection{{i}}-{{ section.id }}" class="collection-switcher__collection{% if i == 2 %} hide{% endif %}">
+          <div
+            id="CollectionSwitcher{{ i }}-{{ section.id }}"
+            class="grid"
+            data-per-row="{{ per_row }}">
+            {%- for i in (1..per_row) -%}
+              <div class="grid__item grid-product {{ gridView }}" data-aos="row-of-{{ per_row }}">
+                <div class="grid-product__content">
+                  <a href="#" class="grid-product__link">
+                    <div class="grid-product__image-mask">
+                      {%- capture current -%}{% cycle 1, 2, 3, 4, 5, 6 %}{%- endcapture -%}
+                      <div class="image-wrap">{{ 'product-' | append: current | placeholder_svg_tag: 'placeholder-svg' }}</div>
+                    </div>
+                    <div class="grid-product__meta">
+                      <div class="grid-product__title">{{ 'home_page.onboarding.product_title' | t }}</div>
+                      <div class="grid-product__price">$29</div>
+                    </div>
+                  </a>
+                </div>
+              </div>
+            {%- endfor -%}
+          </div>
+
+          {%- if section.settings.view_all -%}
+            <p class="text-center">
+              <a href="#" class="btn">{{ 'collections.general.all_of_collection' | t }}</a>
+            </p>
+          {%- endif -%}
+        </div>
+      {%- endfor -%}
+    {%- endif -%}
+  </div>
+</div>
+
+{% comment %}
+  This section loads product-grid-item inside a slider, which breaks the
+  `position: fixed` layout since it's inside an element with `transform: translateX`.
+
+  Output the quick shop modal outside of the section, and pass
+  `disable_quick_view_output: true` to `product-grid-item` above.
+{% endcomment %}
+{%- if settings.quick_shop_enable -%}
+  {%- unless collection1.empty? -%}
+    {%- for product in collection1.products limit: product_limit -%}
+      {%- render 'quick-shop-modal', product: product -%}
+    {%- endfor -%}
+  {%- endunless -%}
+  {%- unless collection2.empty? -%}
+    {%- for product in collection2.products limit: product_limit -%}
+      {%- render 'quick-shop-modal', product: product -%}
+    {%- endfor -%}
+  {%- endunless -%}
+  {%- unless collection3.empty? -%}
+    {%- for product in collection3.products limit: product_limit -%}
+      {%- render 'quick-shop-modal', product: product -%}
+    {%- endfor -%}
+  {%- endunless -%}
+  {%- unless collection4.empty? -%}
+    {%- for product in collection4.products limit: product_limit -%}
+      {%- render 'quick-shop-modal', product: product -%}
+    {%- endfor -%}
+  {%- endunless -%}
+{%- endif -%}
+
+{%- if section.settings.divider -%}</div>{%- endif -%}
+
+{% schema %}
+{
+  "name": "t:sections.featured-collection-switcher.name",
+  "class": "index-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "t:sections.featured-collection-switcher.settings.title.label",
+      "default": "Most popular"
+    },
+    {
+      "id": "collection1",
+      "type": "collection",
+      "label": "t:sections.featured-collection-switcher.settings.collection1.label"
+    },
+    {
+      "id": "collection2",
+      "type": "collection",
+      "label": "t:sections.featured-collection-switcher.settings.collection2.label"
+    },
+    {
+      "id": "collection3",
+      "type": "collection",
+      "label": "Collection 3"
+    },
+    {
+      "id": "collection4",
+      "type": "collection",
+      "label": "Collection 4"
+    },
+    {
+      "type": "range",
+      "id": "per_row",
+      "label": "t:sections.featured-collection-switcher.settings.per_row.label",
+      "default": 4,
+      "min": 1,
+      "max": 5,
+      "step": 1
+    },
+    {
+      "type": "checkbox",
+      "id": "view_all",
+      "label": "t:sections.featured-collection-switcher.settings.view_all.label",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "divider",
+      "label": "t:sections.featured-collection-switcher.settings.divider.label",
+      "default": false
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.featured-collection-switcher.presets.collection_switcher.name"
+    }
+  ],
+  "blocks": [],
+  "disabled_on": {
+    "groups": ["footer", "header", "custom.popups"]
+  }
+}
+{% endschema %}

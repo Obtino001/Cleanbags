@@ -1,0 +1,452 @@
+{% assign review_limit = section.settings.limit_reviews %}
+{% assign reviews = shop.metaobjects.trustpilot_reviews.values  %}
+
+{%- if reviews.count > 0 -%}
+{%- style -%}
+  .testimonials-{{ section.id }} {
+    background-color: {{ section.settings.color_background }};
+    color: {{ section.settings.color_text }};
+  }
+
+  {%- assign padding_bottom_mobile = section.settings.padding_bottom_mobile -%}
+  {%- if padding_bottom_mobile == 0 -%}
+    {%- assign padding_bottom_mobile = section.settings.padding_bottom -%}
+  {%- endif -%}
+
+  {%- assign padding_top_mobile = section.settings.padding_top_mobile -%}
+  {%- if padding_top_mobile == 0 -%}
+    {%- assign padding_top_mobile = section.settings.padding_top -%}
+  {%- endif -%}
+
+  .section-{{ section.id }} {
+    padding-top: {{ padding_top_mobile }}px;
+    padding-bottom: {{ padding_bottom_mobile }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+
+  .trustpilot--section-testimonials {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+  .trustpilot--section-testimonials .section-header {
+    width: 30%;
+}
+  .trustpilot--section-testimonials .slideshow-wrapper {
+    width: calc(70% - 10px);
+}
+
+  .trustpilot--section-testimonials .section-header image-element img.tp_star_image {
+    max-width: 140px;
+    margin: 0 auto;
+}
+  .trustpilot--section-testimonials .section-header .tp_text {
+    padding: 10px 0;
+    font-size: 12px;
+}
+.trustpilot--section-testimonials .section-header a image-element img.tp_logo_image {
+    max-width: 140px;
+    margin: 0 auto;
+}
+  /* .trustpilot--section-testimonials .section-header .trustpilot-testimonials-content {
+    max-width: 700px;
+    margin-left: auto;
+    padding-left: 60px;
+} */
+
+    .trustpilot--section-testimonials .section-header .trustpilot-testimonials-content {
+    max-width: 420px;
+    margin-left: auto;
+    padding-left: 60px;
+}
+
+  /* .trustpilot--section-testimonials .slideshow-wrapper .trustpilot--section-slideshow {
+    max-width: 1750px;
+    width: 100%;
+    margin-left: auto;
+} */
+   .trustpilot--section-testimonials .slideshow-wrapper .trustpilot--section-slideshow {
+    max-width: auto;
+    width: 100%;
+    margin-left: auto;
+}
+
+ .trustpilot--section-testimonials .testimonials-slide.is-selected .testimonials-slider__text {
+    transform: none;
+   box-shadow: none;
+}
+  .trustpilot--section-testimonials .testimonials-slide .testimonials-slider__text {
+    transform: none;
+    transition: none;
+    margin-left: 18px;
+    text-align: left;
+    border: 1px solid #E4E4E4;
+}
+
+  .trustpilot--section-testimonials .testimonials-slide {
+    width: 42%;
+}
+
+
+ .trustpilot--section-testimonials .flickity-previous {
+    left: -250px;
+    top: 290px;
+}
+ .trustpilot--section-testimonials .flickity-next {
+    left: -190px;
+    top: 290px;
+}
+
+  .trustpilot--section-testimonials .flickity-button {
+    background: transparent;
+    border: none;
+    border-radius: 50%;
+    color: #000;
+    position: absolute;
+    border: 1px solid #D0D0D0;
+}
+   .rating span.rating-star {
+    position: relative;
+}
+  /* .rating span.rating-star::before {
+    content: '';
+    background-image: url(https://cdn.shopify.com/s/files/1/0880/4912/3648/files/tp_star-img.png?v=1739269750);
+    position: absolute;
+    top: -26px;
+    left: 0;
+    height: 100px;
+    width: 106px;
+    background-repeat: no-repeat;
+    background-size: 100px;
+} */
+
+ .rating span.rating-star[star="1"]::before {
+    content: '';
+    background-image: url(https://cdn.shopify.com/s/files/1/0880/4912/3648/files/stars1.svg?v=1739431725);
+    position: absolute;
+    top: -26px;
+    left: 0;
+    height: 26px;
+    width: 20px;
+    background-repeat: no-repeat;
+    background-size: 20px;
+}
+.rating span.rating-star[star="2"]::before {
+    content: '';
+    background-image: url(https://cdn.shopify.com/s/files/1/0880/4912/3648/files/stars1.svg?v=1739431725);
+    position: absolute;
+    top: -26px;
+    left: 21px;
+    height: 26px;
+    width: 20px;
+    background-repeat: no-repeat;
+        background-size: 20px;
+}
+
+  .rating span.rating-star[star="3"]::before {
+    content: '';
+    background-image: url(https://cdn.shopify.com/s/files/1/0880/4912/3648/files/stars1.svg?v=1739431725);
+    position: absolute;
+    top: -26px;
+    left: 42px;
+    height: 26px;
+    width: 20px;
+    background-repeat: no-repeat;
+        background-size: 20px;
+}
+
+   .rating span.rating-star[star="4"]::before {
+    content: '';
+    background-image: url(https://cdn.shopify.com/s/files/1/0880/4912/3648/files/stars1.svg?v=1739431725);
+    position: absolute;
+    top: -26px;
+    left: 63px;
+    height: 26px;
+    width: 20px;
+    background-repeat: no-repeat;
+        background-size: 20px;
+}
+
+  .rating span.rating-star[star="5"]::before {
+    content: '';
+    background-image: url(https://cdn.shopify.com/s/files/1/0880/4912/3648/files/stars1.svg?v=1739431725);
+    position: absolute;
+    top: -26px;
+    left: 84px;
+    height: 26px;
+    width: 20px;
+    background-repeat: no-repeat;
+    background-size: 20px;
+}
+
+  .trustpilot--section-testimonials .testimonials-slide .testimonials-slider__text .rating {
+    padding-top: 20px;
+}
+
+  @media(max-width:1075px){
+
+    .trustpilot--section-testimonials .flickity-next {
+          left: -110px;
+      }
+    .trustpilot--section-testimonials .flickity-previous {
+        left: -170px;
+      }
+  }
+
+  @media(max-width:767px){
+ .trustpilot--section-testimonials .flickity-button {
+    
+    position: unset;
+    margin-top: 20px;
+    margin-right: 9px;
+}
+
+    .trustpilot--section-testimonials .section-header {
+    width: 100%;
+}
+    .trustpilot--section-testimonials .slideshow-wrapper {
+    width: 100%;
+}
+    .trustpilot--section-testimonials .testimonials-slide {
+    width: 100%;
+}
+
+    .trustpilot--section-testimonials .section-header .trustpilot-testimonials-content {
+    max-width: 100%;
+    padding-left: 0;
+}
+
+    .trustpilot--section-testimonials .section-header .trustpilot-testimonials-content {
+    max-width: 100%;
+    padding-left: 0;
+    padding-top: 8px;
+}
+
+    .trustpilot--section-testimonials .testimonials-slide .testimonials-slider__text {
+    margin-right: 18px;
+}
+    
+
+
+
+    
+  }
+
+  
+{%- endstyle -%}
+
+<div
+  class="text-center  trustpilot--section-testimonials section-{{ section.id }}">
+  
+  <div class="section-header">
+    <div class="trustpilot-testimonials-content">
+      {%- if section.settings.title != blank -%}
+        <h2>{{ section.settings.title | escape }}</h2>
+      {% endif %}
+      {%- if section.settings.tp_star_image != blank -%}
+        {%- render 'image-element',
+          img: section.settings.tp_star_image,
+          loading: false,
+          classes: 'tp_star_image',
+          animation: 'none',
+        -%}
+      {% endif %}
+      {%- if section.settings.tp_text != blank -%}
+        <div class="tp_text">{{ section.settings.tp_text }}</div>
+      {% endif %}
+      {%- if section.settings.tp_logo_image != blank -%}
+        {%- if section.settings.tp_link != blank -%}
+          <a href="{{ section.settings.tp_link }}">
+        {% endif %}
+          {%- render 'image-element',
+            img: section.settings.tp_logo_image,
+            loading: false,
+            classes: 'tp_logo_image',
+            animation: 'none',
+          -%}
+        {%- if section.settings.tp_link != blank -%}
+          </a>
+        {% endif %}
+      {% endif %}
+    </div>
+  </div>
+
+  {%- if reviews.count > 0 -%}
+    <div class="slideshow-wrapper">
+      <div class="trustpilot--section-slideshow">
+        <div class="testimonials-slider"  data-flickity='{ "contain": true, "adaptiveHeight": true, "cellAlign": "left", "wrapAround": true, "autoPlay": false, "prevNextButtons": true, "pageDots": false }'>
+          {%- for block in reviews limit:review_limit -%}
+            <div
+              class="testimonials-slide testimonials-slide--{{ block.id }}"
+              data-index="{{ forloop.index0 }}"
+              {{ block.shopify_attributes }}>
+              <blockquote class="testimonials-slider__text">
+              {% comment %}
+                {%- if block.settings.icon == 'quote' -%}
+                  <span class="quote-icon"><svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-quote" viewBox="0 0 41 35"><path d="M10.208 17.711h6.124v16.332H0V21.684C0 8.184 5.444.956 16.332 0v6.125c-4.083 1.14-6.124 4.414-6.124 9.82v1.766Zm24.498 0h6.124v16.332H24.498V21.684C24.498 8.184 29.942.956 40.83 0v6.125c-4.083 1.14-6.124 4.414-6.124 9.82v1.766Z" fill-rule="evenodd"/></svg></span>
+                {%- elsif block.settings.icon == '5-stars' -%}
+                  <span class="testimonial-stars">★★★★★</span>
+                {%- elsif block.settings.icon == '4-stars' -%}
+                  <span class="testimonial-stars">★★★★</span>
+                {%- elsif block.settings.icon == '3-stars' -%}
+                  <span class="testimonial-stars">★★★</span>
+                {%- elsif block.settings.icon == '2-stars' -%}
+                  <span class="testimonial-stars">★★</span>
+                {%- elsif block.settings.icon == '1-star' -%}
+                  <span class="testimonial-stars">★</span>
+                {%- endif -%}
+                {% endcomment %}
+                    
+                {% assign value = block.rating.value %}
+                                {% assign noofstars = value| remove: '"' | round %}
+                  {% if noofstars  > 0 %}
+                  <div class="rating">
+                    {% for i in (1..noofstars) %}
+                      <span star="{{ i }}" class="rating-star"></span>
+                    {% endfor %}
+                  </div>
+                {% endif %}
+                
+                {% if block.title %}
+                  <p class="high-rec">{{ block.title }}</p>
+                {% endif %}
+                {%- if block.review != blank -%}
+                  <div class="rte-setting text-spacing">{{ block.review | metafield_tag }}</div>
+                {%- endif -%}
+  
+                {%- if block.name != blank -%}
+                  <div class="testimonial-meta">
+                    
+                    {%- if block.name != blank -%}
+                      <cite>{{ block.name | escape }}</cite>
+                    {%- endif -%}
+                    <p>{{ 'general.verified' | t }}</p>
+                    
+                  </div>
+                {%- endif -%}
+  
+              </blockquote>
+            </div>
+          {%- endfor -%}
+        </div>
+
+      </div>
+    
+    </div>
+  {%- endif -%}
+</div>
+{% endif %}
+{% schema %}
+{
+  "name": "Trustpilot Reviews",
+  "settings": [
+    {
+      "type": "range",
+      "id": "limit_reviews",
+      "label": "Limit Reviews",
+      "min": 5,
+      "max": 20,
+      "step": 1,
+      "default" : 10
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "t:sections.testimonials.settings.title.label",
+      "default": "Fremragende"
+    },
+    {
+      "type": "image_picker",
+      "id": "tp_star_image",
+      "label": "Star Image",
+    },
+    {
+      "type": "inline_richtext",
+      "id": "tp_text",
+      "label": "Truspilot text",
+    },
+    {
+      "type": "image_picker",
+      "id": "tp_logo_image",
+      "label": "Trustpilot logo",
+    },
+    {
+      "type": "url",
+      "id": "tp_link",
+      "label": "Trustpilot link",
+    },
+    {
+      "type": "checkbox",
+      "id": "round_images",
+      "label": "t:sections.testimonials.settings.round_images.label",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding Top",
+      "unit": "px",
+      "min": 0,
+      "max": 100,
+      "step": 10,
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding Bottom",
+      "unit": "px",
+      "min": 0,
+      "max": 100,
+      "step": 10,
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 0,
+      "label": "Padding Top"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 0,
+      "label": "Padding Bottom"
+    },   
+    {
+      "type": "color",
+      "id": "color_background",
+      "label": "t:sections.testimonials.settings.color_background.label",
+      "default": "#f9f9f9"
+    },
+    {
+      "type": "color",
+      "id": "color_text",
+      "label": "t:sections.testimonials.settings.color_text.label",
+      "default": "#1c1d1d"
+    }
+  ],
+  
+  "presets": [
+    {
+      "name": "Trustpilot Reviews",
+    }
+  ],
+  "disabled_on": {
+    "groups": ["footer", "header", "custom.popups"]
+  }
+}
+{% endschema %}

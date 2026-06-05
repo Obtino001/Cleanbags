@@ -1,0 +1,78 @@
+{% style %}
+  {%- assign padding_bottom_mobile = section.settings.padding_bottom_mobile -%}
+  {%- if padding_bottom_mobile == 0 -%}
+    {%- assign padding_bottom_mobile = section.settings.padding_bottom -%}
+  {%- endif -%}
+
+  {%- assign padding_top_mobile = section.settings.padding_top_mobile -%}
+  {%- if padding_top_mobile == 0 -%}
+    {%- assign padding_top_mobile = section.settings.padding_top -%}
+  {%- endif -%}
+
+  .divider-{{ section.id }} {
+    padding-top: {{ padding_top_mobile }}px;
+    padding-bottom: {{ padding_bottom_mobile }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .divider-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{% endstyle %}
+<div class="divider-{{ section.id }}" style="border-top: 1px solid #ccc; /* Light gray color */
+                           max-width: 1250px;
+                           margin: 20px auto; /* Add some top and bottom margin and center horizontally */">
+</div>
+{% schema %}
+  {
+    "name": "Divider",
+    "settings": [      
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding Top",
+      "unit": "px",
+      "min": 0,
+      "max": 100,
+      "step": 10,
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding Bottom",
+      "unit": "px",
+      "min": 0,
+      "max": 100,
+      "step": 10,
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 40,
+      "label": "Padding Top Mobile"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 40,
+      "label": "Padding Bottom Mobile"
+    }
+    ],
+    "presets": [
+      {"name": "Divider"}
+  ],
+  "disabled_on": {
+    "groups": ["custom.popups"]
+  }
+  }
+{% endschema %}

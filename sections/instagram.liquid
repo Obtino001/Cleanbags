@@ -1,0 +1,290 @@
+{% assign review_limit = section.settings.limit_reviews %}
+{% assign reviews = section.blocks %}
+{% style %}
+  .trustpilot--section-testimonials-wrapper {
+  display: flex;
+  justify-content: center;
+  background-color: #f9f9f9;
+}
+
+.layout-four-column {
+  display: flex;
+  flex-wrap: nowrap;
+  max-width: 1200px;
+  width: 100%;
+  gap: 30px;
+}
+
+/* LEFT COLUMN (1/4) */
+.left-column {
+  flex: 1 1 25%;
+  min-width: 220px;
+}
+
+.review-title {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+/* RIGHT COLUMN (3/4) */
+.right-column-slider {
+  flex: 3 1 75%;
+  /*overflow: hidden;*/
+}
+
+.review-slider {
+  width: 100%;
+  text-align:center;
+}
+
+.testimonial-slide {
+  border-radius: 12px;
+  width: 100%;
+  max-width: 280px;
+  margin-right: 15px;
+}
+
+.review-image-el {
+  text-align: center;
+}
+
+.review-image {
+  width: 100%;
+  max-width: 100%;
+  object-fit: cover;
+}
+
+/* MOBILE */
+@media screen and (max-width: 768px) {
+  .layout-four-column {
+    flex-direction: column;
+  }
+
+  .right-column-slider {
+    width: 100%;
+  }
+
+  .left-column {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  .instagram .trustpilot--section-testimonials .flickity-button{
+    margin-top: 40px;
+  }
+  .instagram .trustpilot--section-testimonials-wrapper{
+    flex-wrap: wrap;
+    text-align: center;
+  }
+}
+
+  .flickity-prev-next-button {
+    opacity: 1; /* Make the buttons always visible */
+    visibility: visible;
+  }
+  .instagram .trustpilot--section-testimonials .flickity-next{
+    left: -250px;
+  }
+  .instagram .trustpilot--section-testimonials .flickity-previous{
+    left: -320px;
+  }
+
+  {%- assign padding_bottom_mobile = section.settings.padding_bottom_mobile -%}
+  {%- if padding_bottom_mobile == 0 -%}
+    {%- assign padding_bottom_mobile = section.settings.padding_bottom -%}
+  {%- endif -%}
+
+  {%- assign padding_top_mobile = section.settings.padding_top_mobile -%}
+  {%- if padding_top_mobile == 0 -%}
+    {%- assign padding_top_mobile = section.settings.padding_top -%}
+  {%- endif -%}
+
+  .instagram {
+    padding-top: {{ padding_top_mobile }}px;
+    padding-bottom: {{ padding_bottom_mobile }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .instagram {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+
+  
+{% endstyle %}
+<div class="trustpilot--section-testimonials-wrapper instagram" style="background-color: {{ section.settings.color_background}}">
+  <div class="trustpilot--section-testimonials layout-four-column">
+
+    <!-- LEFT COLUMN (1/4 width) -->
+    <div class="left-column">
+      {% if section.settings.title != blank %}
+        <h2 class="review-title">{{ section.settings.title | escape }}</h2>
+      {% endif %}
+      {% if section.settings.tp_link != blank and section.settings.button_label != blank %}
+        <a class="btn readmore_review_btn" href="{{ section.settings.tp_link }}">{{ section.settings.button_label }}</a>
+      {% endif %}
+    </div>
+
+    <!-- RIGHT COLUMN (3/4 width scrollable slider) -->
+    <div class="right-column-slider">
+      <div class="trustpilot--section-slideshow">
+      <div class="review-slider testimonials-slider" data-flickity='{
+        "cellAlign": "left",
+        "contain": true,
+        "wrapAround": false,
+        "groupCells": 3,
+        "pageDots": false,
+        "prevNextButtons": true
+      }'>
+        {% for block in reviews limit: review_limit %}
+          <div
+            class="testimonial-slide testimonials-slide--{{ block.id }}"
+            data-index="{{ forloop.index0 }}"
+            {{ block.shopify_attributes }}>
+            {% if block.settings.image != blank %}
+              <div class="review-image-el">
+                <img
+                  src="{{ block.settings.image | image_url: width: 400 }}"
+                  alt="Review Image"
+                  class="review-image"
+                  loading="lazy">
+              </div>
+            {% endif %}
+          </div>
+        {% endfor %}
+      </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+{% schema %}
+{
+  "name": "Instagram Reviews",
+  "settings": [
+    {
+      "type": "range",
+      "id": "limit_reviews",
+      "label": "Limit Reviews",
+      "min": 5,
+      "max": 20,
+      "step": 1,
+      "default" : 10
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "t:sections.testimonials.settings.title.label",
+      "default": "Fremragende"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Read all reviews"
+    },
+    {
+      "type": "url",
+      "id": "tp_link",
+      "label": "Trustpilot link",
+    },
+    {
+      "type": "checkbox",
+      "id": "round_images",
+      "label": "t:sections.testimonials.settings.round_images.label",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "color_background",
+      "label": "t:sections.testimonials.settings.color_background.label",
+      "default": "#f9f9f9"
+    },
+    {
+      "type": "color",
+      "id": "color_text",
+      "label": "t:sections.testimonials.settings.color_text.label",
+      "default": "#1c1d1d"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding Top",
+      "unit": "px",
+      "min": 0,
+      "max": 100,
+      "step": 10,
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding Bottom",
+      "unit": "px",
+      "min": 0,
+      "max": 100,
+      "step": 10,
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 0,
+      "label": "Padding Top Mobile"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 0,
+      "label": "Padding Bottom Mobile"
+    }
+  ],
+  
+ "blocks": [
+    {
+      "type": "testimonial",
+      "name": "t:sections.testimonials.blocks.testimonial.name",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },        
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Instagram Reviews",
+      "blocks": [
+        {
+          "type": "testimonial"
+        },
+        {
+          "type": "testimonial"
+        },
+        {
+          "type": "testimonial"
+        },
+        {
+          "type": "testimonial"
+        },
+        {
+          "type": "testimonial"
+        }
+      ]
+    }
+  ],
+  "disabled_on": {
+    "groups": ["footer", "header", "custom.popups"]
+  }
+}
+{% endschema %}

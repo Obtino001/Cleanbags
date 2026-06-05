@@ -1,0 +1,376 @@
+{% style %}
+  .three-step-wrapper {
+    background-color: {{ section.settings.background_color }};
+  }
+
+  {%- assign padding_bottom_mobile = section.settings.padding_bottom_mobile -%}
+  {%- if padding_bottom_mobile == 0 -%}
+    {%- assign padding_bottom_mobile = section.settings.padding_bottom -%}
+  {%- endif -%}
+
+  {%- assign padding_top_mobile = section.settings.padding_top_mobile -%}
+  {%- if padding_top_mobile == 0 -%}
+    {%- assign padding_top_mobile = section.settings.padding_top -%}
+  {%- endif -%}
+
+  .section-{{ section.id }} {
+    padding-top: {{ padding_top_mobile }}px;
+    padding-bottom: {{ padding_bottom_mobile }}px;
+    
+    background-image: url('{{ section.settings.bg_image | img_url: 'master' }}');
+    /* You might want to add other background properties like: */
+    background-size: cover; /* Or contain, auto, etc. */
+    background-repeat: no-repeat; /* Or repeat, repeat-x, repeat-y */
+    background-position: center center; /* Or top, bottom, left, right, percentages */
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+  .three-step-grid{
+    display: flex;
+    grid-template-columns: repeat(3, 1fr);
+    gap: {{ section.settings.column_gap }}px;
+  }
+
+  .step-image-wrapper {
+    margin-bottom: 15px;
+  }
+
+  .step-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: {{ block.settings.image_border_radius }}px; /* Optional: for rounded image corners */
+  }
+
+  .step-title {
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: {{ block.settings.title_color }};
+  }
+
+  .step-text {
+    color: {{ block.settings.text_color }};
+    font-size: 0.9em;
+  }
+  .watchBtn{
+    margin-top: 50px;
+  }
+  @media screen and (max-width: 768px) {
+    .three-step-grid {
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      flex-direction: column;
+    }
+  }
+{% endstyle %}
+
+<div class="index-sectionss three-step-wrapper section-{{ section.id }}">
+  {% if section.settings.title != blank %}
+  <div class="section-header text-center">
+        <h2>{{ section.settings.title | escape }}</h2>
+        {% if section.settings.subtitle != blank %}
+        <p class="text-center">{{ section.settings.subtitle | escape }}</p>
+        {% endif %}
+  </div>
+  {% endif %}
+  <div class="page-width three-step-grid">
+    {% for block in section.blocks %}
+      {% style %}
+        .step-item {
+    background-color: {{ block.settings.column_background }};
+    padding: {{ block.settings.column_padding }}px;
+    text-align: left; /* Center align content like in the image */
+    border-radius: {{ block.settings.column_border_radius }}px; /* Optional: for rounded corners */
+          
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex-grow: 1;
+
+  }
+  .three-step-item {
+    flex: 1 1 calc(33.333% - 20px); /* 3 items per row with gap */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    height: 100%;
+  }
+
+        .three-steps-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px; /* optional space between steps */
+}
+
+
+  .step-number {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 60px; /* Adjust as needed */
+    height: 60px; /* Adjust as needed */
+    border-radius: 50%;
+    background-color: {{ block.settings.number_background_color }};
+    color: {{ block.settings.number_text_color }};
+    margin-bottom: 15px;
+    font-weight: bold;
+    margin-left: auto;
+    margin-right: auto;
+  }
+        
+        {% endstyle %}
+        
+        <div class="three-step-item" {{ block.shopify_attributes }}>
+        {% if block.settings.step_number != blank %}
+          <div class="step-number">{{ block.settings.step_number }}</div>
+        {% endif %}
+        <div class="step-item">
+          {% if block.settings.image != blank %}
+            <div class="step-image-wrapper">
+              <img
+                src="{{ block.settings.image | image_url: width: 400 }}"
+                alt="{{ block.settings.image.alt | escape }}"
+                class="step-image"
+                loading="lazy"
+              >
+            </div>
+          {% endif %}
+          {% if block.settings.sub_text != blank %}
+            <p class="step-text">{{ block.settings.sub_text }}</p>
+          {% endif %}
+          {% if block.settings.title != blank %}
+            <h3>{{ block.settings.title | escape }}</h3>
+          {% endif %}
+          {% if block.settings.text != blank %}
+            <div class="step-text">{{ block.settings.text }}</div>
+          {% endif %}
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+  {%- if section.settings.button_label != blank -%}
+          <div class="appear-delay{% cycle '','-1','-2','-3','-4' %} text-center watchBtn">
+            <a href="{{ section.settings.button_link }}" class="btn{% if section.settings.button_style == 'secondary' %} btn--tertiary{% endif %}">
+              {{ section.settings.button_label }}
+            </a>
+          </div>
+        {%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "Three Step Process",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "t:sections.text-and-image.settings.title.label",
+      "default": "Title"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "t:sections.text-and-image.settings.subtitle.label",
+      "default": "Sub Title"
+    },
+        
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background Image"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "t:sections.text-and-image.settings.button_label.label"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "t:sections.text-and-image.settings.button_link.label"
+    },
+    {
+      "type": "range",
+      "id": "column_gap",
+      "label": "Column Gap",
+      "unit": "px",
+      "min": 0,
+      "max": 50,
+      "step": 5,
+      "default": 20
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding Top",
+      "unit": "px",
+      "min": 0,
+      "max": 100,
+      "step": 10,
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding Bottom",
+      "unit": "px",
+      "min": 0,
+      "max": 100,
+      "step": 10,
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 0,
+      "label": "Padding Top"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 0,
+      "label": "Padding Bottom"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Step",
+      "settings": [
+        {
+          "type": "text",
+          "id": "step_number",
+          "label": "Step Number",
+          "default": "1"
+        },
+        {
+          "type": "color",
+          "id": "number_background_color",
+          "label": "Number Background Color",
+          "default": "#1e70bf"
+        },
+        {
+          "type": "color",
+          "id": "number_text_color",
+          "label": "Number Text Color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "range",
+          "id": "image_border_radius",
+          "label": "Image Border Radius",
+          "unit": "px",
+          "min": 0,
+          "max": 20,
+          "step": 2,
+          "default": 2
+        },
+        {
+          "type": "text",
+          "id": "sub_text",
+          "label": "Sub Title"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text"
+        },
+        {
+          "type": "color",
+          "id": "column_background",
+          "label": "Column Background Color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "range",
+          "id": "column_padding",
+          "label": "Column Padding",
+          "unit": "px",
+          "min": 0,
+          "max": 50,
+          "step": 5,
+          "default": 20
+        },
+        {
+          "type": "range",
+          "id": "column_border_radius",
+          "label": "Column Border Radius",
+          "unit": "px",
+          "min": 0,
+          "max": 20,
+          "step": 2,
+          "default": 4
+        },
+        {
+          "type": "color",
+          "id": "title_color",
+          "label": "Title Color"
+        },
+        {
+          "type": "color",
+          "id": "text_color",
+          "label": "Text Color"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Three Step Process",
+      "blocks": [
+        {
+          "type": "step",
+          "settings": {
+            "step_number": "1",
+            "sub_text": "<p>Description for step one.</p>",
+            "title": "Step One Title",
+            "text": "<p>Description for step one.</p>"
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "step_number": "2",
+            "sub_text": "<p>Description for step one.</p>",
+            "title": "Step Two Title",
+            "text": "<p>Description for step two.</p>"
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "step_number": "3",
+            "sub_text": "<p>Description for step one.</p>",
+            "title": "Step Three Title",
+            "text": "<p>Description for step three.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

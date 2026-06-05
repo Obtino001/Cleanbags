@@ -1,0 +1,210 @@
+<!doctype html>
+<html class="no-js" lang="{{ request.locale.iso_code }}" dir="{{ settings.text_direction }}">
+<head>
+
+<!-- Google Tag Manager --> 
+<script> !function(){"use strict";function l(e){for(var t=e,r=0,n=document.cookie.split(";");r<n.length;r++){var o=n[r].split("=");if(o[0].trim()===t)return o[1]}}function s(e){return localStorage.getItem(e)}function u(e){return window[e]}function A(e,t){e=document.querySelector(e);return t?null==e?void 0:e.getAttribute(t):null==e?void 0:e.textContent}var e=window,t=document,r="script",n="dataLayer",o="https://gtm1.cleanbags.dk",a="",i="npAwtrrafbz",c="W=aWQ9R1RNLVRISzRKN1FE&page=3",g="cookie",v=["_y","_shopify_y"],E="",d=!1;try{var d=!!g&&(m=navigator.userAgent,!!(m=new RegExp("Version/([0-9._]+)(.*Mobile)?.*Safari.*").exec(m)))&&16.4<=parseFloat(m[1]),f="stapeUserId"===g,I=d&&!f?function(e,t,r){void 0===t&&(t="");var n={cookie:l,localStorage:s,jsVariable:u,cssSelector:A},t=Array.isArray(t)?t:[t];if(e&&n[e])for(var o=n[e],a=0,i=t;a<i.length;a++){var c=i[a],c=r?o(c,r):o(c);if(c)return c}else console.warn("invalid uid source",e)}(g,v,E):void 0;d=d&&(!!I||f)}catch(e){console.error(e)}var m=e,g=(m[n]=m[n]||[],m[n].push({"gtm.start":(new Date).getTime(),event:"gtm.js"}),t.getElementsByTagName(r)[0]),v=I?"&bi="+encodeURIComponent(I):"",E=t.createElement(r),f=(d&&(i=8<i.length?i.replace(/([a-z]{8}$)/,"kp$1"):"kp"+i),!d&&a?a:o);E.async=!0,E.src=f+"/"+i+".js?"+c+v,null!=(e=g.parentNode)&&e.insertBefore(E,g)}(); </script> 
+<!-- End Google Tag Manager --> 
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="{{ settings.color_button }}">
+  <link rel="canonical" href="{{ canonical_url }}">
+  <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.shopifycdn.com" crossorigin>
+  <link rel="dns-prefetch" href="https://productreviews.shopifycdn.com">
+  <link rel="dns-prefetch" href="https://ajax.googleapis.com">
+  <link rel="dns-prefetch" href="https://maps.googleapis.com">
+  <link rel="dns-prefetch" href="https://maps.gstatic.com">
+  <!-- <script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="72f8f7b2-b84a-4647-8feb-e4817909ba60" type="text/javascript" defer></script> -->
+  {%- if settings.favicon != blank -%}
+    <link rel="shortcut icon" href="{{ settings.favicon | img_url: '32x32' }}" type="image/png" />
+  {%- endif -%}
+
+  {%- render 'seo-title' -%}
+
+  {%- if page_description -%}
+  <meta name="description" content="{{ page_description | escape }}">
+  {%- endif -%}
+
+  {%- render 'social-meta-tags' -%}
+
+  {%- render 'font-face' -%}
+  {{ 'theme.css' | asset_url | stylesheet_tag: preload: true }}
+  {%- render 'css-variables' -%}
+
+  <script>
+    document.documentElement.className = document.documentElement.className.replace('no-js', 'js');
+
+    window.theme = window.theme || {};
+    theme.routes = {
+      home: "{{ routes.root_url }}",
+      cart: "{{ routes.cart_url | append: '.js' }}",
+      cartPage: "{{ routes.cart_url }}",
+      cartAdd: "{{ routes.cart_add_url | append: '.js' }}",
+      cartChange: "{{ routes.cart_change_url | append: '.js' }}",
+      search: "{{ routes.search_url }}",
+      predictiveSearch: "{{ routes.predictive_search_url }}"
+    };
+    theme.strings = {
+      soldOut: {{ 'products.product.sold_out' | t | json }},
+      unavailable: {{ 'products.product.unavailable' | t | json }},
+      inStockLabel: {{ 'products.product.in_stock_label' | t | json }},
+      oneStockLabel: {{ 'products.product.stock_label.one' | t: count: '[count]' | json }},
+      otherStockLabel: {{ 'products.product.stock_label.other' | t: count: '[count]' | json }},
+      willNotShipUntil: {{ 'products.product.will_not_ship_until' | t: date: '[date]' | json }},
+      willBeInStockAfter: {{ 'products.product.will_be_in_stock_after' | t: date: '[date]' | json }},
+      waitingForStock: {{ 'products.product.waiting_for_stock' | t | json }},
+      cartSavings: {{ 'cart.general.savings_html' | t: savings: '[savings]' | json }},
+      cartEmpty: {{ 'cart.general.empty' | t | json }},
+      cartTermsConfirmation: {{ 'cart.general.terms_confirm' | t | json }},
+      searchCollections: {{ 'general.search.collections' | t | json }},
+      searchPages: {{ 'general.search.pages' | t | json }},
+      searchArticles: {{ 'general.search.articles' | t | json }},
+      maxQuantity: {{ 'cart.general.max_quantity' | t: quantity: '[quantity]', title: '[title]' | json }}
+    };
+    theme.settings = {
+      cartType: {{ settings.cart_type | json }},
+      isCustomerTemplate: {% if request.page_type contains 'customers/' %}true{% else %}false{% endif %},
+      moneyFormat: {{ shop.money_format | json }},
+      predictiveSearch: {{ settings.predictive_search_enabled }},
+      predictiveSearchType: {{ settings.search_type | json }},
+      quickView: {{ settings.quick_shop_enable }},
+      themeName: 'Motion',
+      themeVersion: "10.6.1"
+    };
+  </script>
+
+  {{ content_for_header }}
+  {% comment %} {% render 'cookie-consent' %} {% endcomment %}
+
+
+  <script src="{{ 'vendor-scripts-v14.js' | asset_url | split: '?' | first }}" defer="defer"></script>
+
+  {%- if shop.enabled_currencies.size > 1 -%}
+    <link rel="stylesheet" href="{{ 'country-flags.css' | asset_url | split: '?' | first }}">
+  {%- endif -%}
+
+  <script src="{{ 'theme.js' | asset_url }}" defer="defer"></script>
+
+  {%- if request.page_type contains 'customers/' -%}
+    <script src="{{ 'shopify_common.js' | shopify_asset_url }}" defer="defer"></script>
+  {%- endif -%}
+
+  {% if request.design_mode %}
+    <script>theme.settings.email = {{ shop.email | json }}</script>
+    <script src="https://api.archetypethemes.co/design-mode.js" defer="defer"></script>
+  {% endif %}
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.4/gsap.min.js?ver=1.0.0" id="phase2-gsap-js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body class="template-{{ template | replace: '.', ' ' | truncatewords: 1, '' | handle }}{% if request.path == '/challenge' %} template-challange{% endif %}" data-transitions="{{ settings.animate_page_transitions }}" data-type_header_capitalize="{{ settings.type_header_capitalize }}" data-type_base_accent_transform="{{ settings.type_base_accent_transform }}" data-type_header_accent_transform="{{ settings.type_header_accent_transform }}" data-animate_sections="{{ settings.animate_sections }}" data-animate_underlines="{{ settings.animate_underlines }}" data-animate_buttons="{{ settings.animate_buttons }}" data-animate_images="{{ settings.animate_images }}" data-animate_page_transition_style="{{ settings.animate_page_transition_style }}" data-type_header_text_alignment="{{ settings.type_headers_align_text }}" data-animate_images_style="{{ settings.animate_images_style | default: "zoom-fade" }}">
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-THK4J7QD"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+  {% if settings.animate_page_transitions %}
+    <script type="text/javascript">window.setTimeout(function() { document.body.className += " loaded"; }, 25);</script>
+  {% endif %}
+
+  <a class="in-page-link visually-hidden skip-link" href="#MainContent">{{ 'general.accessibility.skip_to_content' | t }}</a>
+
+  <div id="PageContainer" class="page-container">
+    <div class="transition-body">
+
+      {%- sections 'header-group' -%}
+      {%- sections 'popup-group' -%}
+
+      <main class="main-content" id="MainContent">
+        {{ content_for_layout }}
+      </main>
+
+      {%- sections 'footer-group' -%}
+
+    </div>
+  </div>
+
+  {%- liquid
+    render 'video-modal'
+    render 'photoswipe-template'
+    render 'tool-tip'
+  -%}
+
+  {% comment %} Image markup used when building product grid item via JS {% endcomment %}
+  <template id="predictiveImageMarkup">
+    <image-element>
+      <img width height src loading="lazy" sizes="(min-width: 769px) 100px, 60px">
+    </image-element>
+  </template>
+  <script>
+    function observeElement(selector, callback) {
+      const observer = new MutationObserver((mutations, obs) => {
+          const element = document.querySelector(selector);
+          if (element) {
+              obs.disconnect();
+              callback(element);
+          }
+      });
+  
+      observer.observe(document.body, { childList: true, subtree: true });
+  }
+  observeElement(".kaching-bundles__block", (element) => {
+      document.querySelector(".product-block--price").style.display = "none";
+    
+  });
+
+  </script>
+  <script>
+    document.addEventListener("shopify:section:load", function () {
+      initializeFlickity_ann();
+    });
+    document.addEventListener("DOMContentLoaded", function () {
+      initializeFlickity_ann();
+    });
+    function initializeFlickity_ann() {
+      let carousel_ann = document.querySelector(".announcement-bar-slider");
+      if (!carousel_ann) return;
+      let flickityInstance_ann = null;
+      function toggleFlickity_ann() {
+        let isMobile = window.innerWidth <= 767;
+    
+        if (isMobile && !flickityInstance_ann) {
+          flickityInstance_ann = new Flickity(carousel_ann, {
+            contain: true,
+            cellAlign: "left",
+            wrapAround: true,
+            autoPlay: 3000,
+            prevNextButtons: true,
+            adaptiveHeight: true,
+            pageDots: true
+          });
+        } else if (!isMobile && flickityInstance_ann) {
+          flickityInstance_ann.destroy();
+          flickityInstance_ann = null;
+        }
+      }
+      toggleFlickity_ann();
+      window.addEventListener("resize", toggleFlickity_ann);
+    }
+  </script>
+
+  <!-- Start e-maerket widget -->
+  <script type="text/javascript" src="https://widget.emaerket.dk/js/ca95cbba8484c0cc06ef0b603aff43b2" async></script>
+  <script type="text/javascript" src="https://widget.emaerket.dk/js/star/ca95cbba8484c0cc06ef0b603aff43b2" async></script>
+  <!-- // end e-maerket widget -->
+</body>
+</html>

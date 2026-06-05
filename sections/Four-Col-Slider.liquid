@@ -1,0 +1,528 @@
+{% assign image_limit = section.settings.limit_images %}
+{% assign images = section.blocks %}
+{% style %}
+  .image-slider--section-wrapper {
+    display: flex;
+    justify-content: center;
+    background-color: {{ section.settings.color_background }};
+  }
+
+  .layout-four-column-slider {
+    max-width: 1200px;
+    width: 100%;
+  }
+
+  .image-slide {
+    border-radius: 12px;
+    width: calc(25% - 22.5px); /* Adjust for gap */
+    margin-right: 30px;
+  }
+
+  /*.image-slide:last-child {
+    margin-right: 0;
+  }*/
+
+  .slide-image-el {
+    text-align: center;
+  }
+
+  .slide-image {
+    width: 100%;
+    max-width: 100%;
+    border-radius: 10px;
+    object-fit: cover;
+  }
+  .section-{{ section.id }} .flickity-page-dots .dot{
+    height: 3px;
+    margin: 0 5px;
+    width: 50px;
+    border-color: rgb(189 184 184);
+    border-radius: 0px;
+  }
+  .section-{{ section.id }} .flickity-page-dots{
+    bottom: -65px;
+  }
+  .section-{{section.id}} .flickity-page-dots .dot.is-selected{
+    border-color: #000;
+  }
+  .section-{{ section.id }} .flickity-prev-next-button{
+    background: transparent;
+    border: none;
+    border-radius: 50%;
+    color: #000;
+    position: absolute;
+    border: 1px solid #D0D0D0;
+  }
+  
+  /* MOBILE */
+  @media screen and (max-width: 768px) {
+    .image-slide {
+      width: calc(50% - 15px); /* Two columns on mobile */
+      margin-right: 30px;
+    }
+
+    .image-slide:nth-child(even) {
+      margin-right: 0;
+    }
+    
+    .section-{{ section.id }} .flickity-page-dots{
+      bottom: -35px;
+    }
+  }
+
+  @media screen and (max-width: 480px) {
+    .image-slide {
+      width: 100%; /* Single column on smaller mobiles */
+      margin-right: 0;
+    }
+  }
+  {%- assign padding_bottom_mobile = section.settings.padding_bottom_mobile -%}
+  {%- if padding_bottom_mobile == 0 -%}
+    {%- assign padding_bottom_mobile = section.settings.padding_bottom -%}
+  {%- endif -%}
+
+  {%- assign padding_top_mobile = section.settings.padding_top_mobile -%}
+  {%- if padding_top_mobile == 0 -%}
+    {%- assign padding_top_mobile = section.settings.padding_top -%}
+  {%- endif -%}
+
+  .section-{{ section.id }} {
+    padding-top: {{ padding_top_mobile }}px;
+    padding-bottom: {{ padding_bottom_mobile }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+    .section-{{ section.id }} .flickity-next {
+        right: -70px;
+    }
+    .section-{{ section.id }} .flickity-previous {
+        left: -70px;
+    }
+  }
+
+{% endstyle %}
+<div class="section-{{ section.id }}"  style="background-color: {{ section.settings.color_background}}">
+{% if section.settings.title != blank %}
+  <div class="section-header text-center">
+        <h2>{{ section.settings.title | escape }}</h2>
+  </div>
+      {% endif %}
+<div class="image-slider--section-wrapper">
+  
+  <div class="image-slider layout-four-column-slider">
+    <div class="review-slider" data-flickity='{
+      "cellAlign": "left",
+      "contain": true,
+      "wrapAround": true,
+      "groupCells": 1,
+      "pageDots": true,
+      "prevNextButtons": true,
+      "imagesLoaded": true 
+    }'>
+      {% for block in section.blocks %}
+        <div
+          class="image-slide slide video-slide--{{ block.id }} image-slide--{{ block.id }}"
+          {{ block.shopify_attributes }}>
+          {% if block.settings.image != blank %}
+            <div class="slide-image-el">
+              <img
+                src="{{ block.settings.image | image_url: width: 400 }}"
+                alt="{{ block.settings.image.alt | escape }}"
+                class="slide-image">
+            </div>
+          {% elsif block.settings.video != blank and block.settings.cover_image != blank %}
+            <div class="video-container">
+              <div class="video-cover" data-video-id="{{ block.id }}">
+                <img
+                  src="{{ block.settings.cover_image | image_url: width: 400 }}"
+                  alt="Video Cover"
+                  class="cover-image">
+                <div class="play-icon">
+                  <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M8 5v14l11-7z"/>
+                  </svg>
+                </div>
+              </div>
+            </div>
+          {% endif %}
+        <div class="video-popup" id="video-popup-{{ block.id }}">
+                <div class="video-popup-inner">
+                  <button class="close-popup">&times;</button>
+                  {{ block.settings.video | video_tag:
+                    autoplay: false,
+                    loop: block.settings.loop,
+                    muted: false,
+                    controls: true,
+                    class: 'popup-video'
+                  }}
+                </div>
+              </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+</div>
+{% schema %}
+{
+  "name": "Image Slider",
+  "settings": [
+    {
+      "type": "range",
+      "id": "limit_images",
+      "label": "Limit Images",
+      "min": 4,
+      "max": 20,
+      "step": 1,
+      "default" : 8
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "t:sections.testimonials.settings.title.label",
+      "default": "Our Happy Customers"
+    },
+    {
+      "type": "color",
+      "id": "color_background",
+      "label": "Background Color",
+      "default": "#f9f9f9"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding Top",
+      "unit": "px",
+      "min": 0,
+      "max": 100,
+      "step": 10,
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding Bottom",
+      "unit": "px",
+      "min": 0,
+      "max": 100,
+      "step": 10,
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 0,
+      "label": "Padding Top Mobile"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 0,
+      "label": "Padding Bottom Mobile"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image",
+      "name": "Image",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        }
+      ]
+    },
+    {
+    "type": "video",
+    "name": "Video",
+    "settings": [
+      {
+        "type": "video",
+        "id": "video",
+        "label": "Video"
+      },
+      {
+        "type": "image_picker",
+        "id": "cover_image",
+        "label": "Cover Image"
+      },
+      {
+        "type": "checkbox",
+        "id": "autoplay",
+        "label": "Autoplay",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "loop",
+        "label": "Loop video",
+        "default": false
+      }
+    ]
+  }
+  ],
+  "presets": [
+    {
+      "name": "Image Slider",
+      "blocks": [
+        { "type": "image" },
+        { "type": "image" },
+        { "type": "image" },
+        { "type": "image" }
+      ]
+    }
+  ],
+  "disabled_on": {
+    "groups": ["footer", "header", "custom.popups"]
+  }
+}
+{% endschema %}
+
+{% javascript %}
+  document.addEventListener('DOMContentLoaded', function() {
+    const videoCovers = document.querySelectorAll('.video-cover');
+    const closeButtons = document.querySelectorAll('.close-popup');
+  
+    videoCovers.forEach(cover => {
+      cover.addEventListener('click', function() {
+        const videoId = this.dataset.videoId;
+        const popup = document.getElementById(`video-popup-${videoId}`);
+        if (popup) {
+          popup.classList.add('open');
+        }
+      });
+    });
+  
+    closeButtons.forEach(button => {
+      button.addEventListener('click', function() {
+        const popup = this.closest('.video-popup');
+        if (popup) {
+          popup.classList.remove('open');
+          // Optional: Pause the video when closing
+          const video = popup.querySelector('.popup-video');
+          if (video) {
+            video.pause();
+          }
+        }
+      });
+    });
+  
+    const reviewSlider = document.querySelector('.review-slider');
+    if (reviewSlider) {
+      new Flickity(reviewSlider, {
+        cellAlign: 'left',
+        contain: true,
+        wrapAround: true,
+        groupCells: 4,
+        pageDots: true,
+        prevNextButtons: true
+      });
+    }
+  });
+
+    window.addEventListener('load', function () {
+    const slider = document.querySelector('.review-slider');
+    if (!slider) return;
+
+    // Wait for all images inside the slider to load
+    const images = slider.querySelectorAll('img');
+    let loaded = 0;
+
+    images.forEach(img => {
+      if (img.complete) {
+        loaded++;
+      } else {
+        img.addEventListener('load', () => {
+          loaded++;
+          if (loaded === images.length) {
+            initializeFlickity();
+          }
+        });
+        img.addEventListener('error', () => loaded++);
+      }
+    });
+
+    if (loaded === images.length) {
+      initializeFlickity();
+    }
+
+    function initializeFlickity() {
+      const flkty = new Flickity(slider, {
+        cellAlign: 'left',
+        contain: true,
+        wrapAround: true,
+        groupCells: 1,
+        pageDots: true,
+        prevNextButtons: true,
+        imagesLoaded: true
+      });
+
+      // Force height recalc
+      flkty.resize();
+    }
+  });
+
+
+
+{% endjavascript %}
+
+{% style %}
+  .video-container {
+    position: relative;
+  }
+  
+  .video-cover {
+    position: relative;
+    cursor: pointer;
+  }
+  
+  .cover-image {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 10px; /* Optional: match image border-radius */
+  }
+  
+  .play-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 2em; /* Adjust size */
+    color: white;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 50%;
+    width: 50px; /* Adjust size */
+    height: 50px; /* Adjust size */
+    line-height: 50px;
+    text-align: center;
+    opacity: 0.8;
+  }
+  
+  .video-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease-in-out;
+  }
+  
+  .video-popup.open {
+    opacity: 1;
+    visibility: visible;
+  }
+  
+  .video-popup-inner {
+    position: relative;
+    background-color: white;
+    border-radius: 10px;
+    max-width: 80%; /* Adjust as needed */
+    max-height: 80%; /* Adjust as needed */
+  }
+  
+  .popup-video {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 10px;
+  }
+  
+  .close-popup {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 2em;
+    color: black;
+    background: none;
+    border: none;
+    cursor: pointer;
+    z-index: 1001;
+  }
+  .video-popup {
+  position: fixed; /* Crucial for covering the viewport */
+  top: 0;
+  left: 0;
+  width: 100%; /* Covers the entire viewport width */
+  height: 100%; /* Covers the entire viewport height */
+  background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent background */
+  display: flex; /* For centering the content */
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  z-index: 1000; /* Ensure it's on top of other content */
+  opacity: 0; /* Initially hidden */
+  visibility: hidden; /* Initially hidden */
+  transition: opacity 0.3s ease-in-out; /* Smooth fade-in/out */
+}
+
+.video-popup.open {
+  opacity: 1; /* Make it visible when the 'open' class is added */
+  visibility: visible;
+}
+
+.video-popup-inner {
+  position: relative; /* For positioning the close button */
+  background-color: white;
+  border-radius: 10px;
+  width: 90%; /* Adjust as needed (relative to viewport) */
+  height: 90%; /* Adjust as needed (relative to viewport) */
+  max-width: none; /* Override any potential max-width */
+  max-height: none; /* Override any potential max-height */
+}
+
+.popup-video {
+  width: 100%; /* Fill the inner container width */
+  height: 100%; /* Fill the inner container height */
+  display: block;
+  border-radius: 10px;
+  object-fit: contain; /* Or 'cover' depending on desired behavior */
+}
+
+.close-popup {
+  position: absolute;
+  top: 20px; /* Adjust position as needed */
+  right: 20px; /* Adjust position as needed */
+  font-size: 2em;
+  color: black;
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: 1001; /* Ensure it's above the video */
+}
+
+  .video-popup-inner {
+  position: relative;
+  background-color: white;
+  border-radius: 10px;
+  width: 95%; /* Adjust as needed (percentage of viewport width) */
+  height: 90%; /* Adjust as needed (percentage of viewport height) */
+  max-width: none; /* Ensure it can expand beyond default max-width */
+  max-height: none; /* Ensure it can expand beyond default max-height */
+}
+
+.popup-video {
+  width: 100%; /* Make it fill the width of .video-popup-inner */
+  height: 100%; /* Make it fill the height of .video-popup-inner */
+  display: block;
+  border-radius: 10px;
+  object-fit: contain; /* Or 'cover' depending on how you want scaling */
+}
+{% endstyle %}

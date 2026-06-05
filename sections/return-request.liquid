@@ -1,0 +1,289 @@
+{% schema %}
+{
+  "name": "Return Section",
+  "tag": "section",
+  "class": "return-section",
+  "settings": [
+    {
+      "type": "color",
+      "id": "heading_color",
+      "default": "#333333",
+      "label": "Heading Color"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "default": "#f8f8f8",
+      "label": "Background Color"
+    },
+    {
+      "type": "range",
+      "id": "section_width",
+      "min": 300,
+      "max": 1200,
+      "step": 10,
+      "unit": "px",
+      "label": "Section Width",
+      "default": 800
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Section Padding Top",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Section Padding Bottom",
+      "default": 36
+    }
+  ],
+  "presets": [
+    {
+      "name": "Return Section"
+    }
+  ]
+}
+{% endschema %}
+
+<style>
+  .return-section {
+    background-color: {{ section.settings.background_color }};
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  }
+  
+  .section-{{ section.id }}-padding {
+    max-width: {{ section.settings.section_width }}px;
+    margin: auto;
+    padding: {{ section.settings.padding_top }}px 20px {{ section.settings.padding_bottom }}px;
+  }
+
+  .section-heading {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 30px;
+    color: {{ section.settings.heading_color }};
+    font-size: 32px;
+    font-weight: 600;
+  }
+
+  .return-info {
+    background: white;
+    border-radius: 8px;
+    padding: 25px;
+    margin-bottom: 30px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  }
+
+  .return-info h3 {
+    color: #2c3e50;
+    margin: 0 0 15px 0;
+    font-size: 20px;
+    font-weight: 600;
+  }
+
+  .return-info-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 15px 0;
+  }
+
+  .return-info-list li {
+    position: relative;
+    padding-left: 28px;
+    margin-bottom: 12px;
+    color: #555;
+    line-height: 1.6;
+  }
+
+  .return-info-list li:before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: #007bff;
+    font-weight: bold;
+  }
+
+  .policy-link {
+    display: block;
+    margin-top: 15px;
+    color: #007bff;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+  }
+
+  .policy-link:hover {
+    color: #0056b3;
+    text-decoration: underline;
+  }
+
+  .return-form {
+    background: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  .form-group {
+    margin-bottom: 20px;
+  }
+
+  .form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #333;
+  }
+
+  .form-group input,
+  .form-group textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+  }
+
+  .form-group input:focus,
+  .form-group textarea:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 0 3px rgba(0,123,255,0.1);
+  }
+
+  .form-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    width: 100%;
+    transition: all 0.3s ease;
+  }
+
+  .form-button:hover {
+    background-color: #0056b3;
+    transform: translateY(-1px);
+  }
+
+  .note {
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 4px;
+  }
+
+  .note--success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+  }
+
+  .note--error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+  }
+
+  @media (max-width: 768px) {
+    .return-form {
+      padding: 20px;
+    }
+    
+    .return-info {
+      padding: 20px;
+    }
+  }
+</style>
+
+<section class="return-section">
+  <div class="section-{{ section.id }}-padding">
+    <h2 class="section-heading">Returner dit produkt</h2>
+    
+    <div class="return-info">
+      <h3>Returinformation</h3>
+      <ul class="return-info-list">
+        <li>Du har 30 dages tilfrehedsgaranti på alle vores produkter</li>
+        <li>Produktet må IKKE være beskadigt, det skal være i virkende stand og i original emballage</li>
+        <li>Returomkostninger er egenbetaling</li>
+        <li>Du modtager instruktioner efter godkendelse af din anmodning</li>
+        <li>Vi gennemgår en inspicering af produktet, og tjekker for mangler og evt. skader</li>
+        <li>Du får dine penge retur efter 3-5 bankdage når vi godkendt produktet</li> 
+      </ul>
+      <a href="https://easyclean.dk/policies/refund-policy" class="policy-link">Læs mere om vores returpolitik her →</a>
+    </div>
+    
+    {%- form 'contact', id: 'returnForm' -%}
+      <div class="return-form">
+        {%- if form.posted_successfully? -%}
+          <p class="note note--success">
+            Tak for din returanmodning. Vi vil behandle den hurtigst muligt og vende tilbage med instruktioner på din e-mail :)
+          </p>
+        {%- endif -%}
+
+        {%- if form.errors -%}
+          <div class="note note--error">
+            {{ form.errors | default_errors }}
+          </div>
+        {%- endif -%}
+
+        <input type="hidden" name="contact[email]" value="info@easyclean.dk" />
+        <input type="hidden" name="contact[subject]" value="Kunderefundering" />
+        
+        <div class="form-group">
+          <label for="customerName">Dit navn:</label>
+          <input type="text" 
+                 id="customerName" 
+                 name="contact[Name]" 
+                 required
+                 value="{% if form['Name'] %}{{ form['Name'] }}{% elsif customer %}{{ customer.name }}{% endif %}">
+        </div>
+
+        <div class="form-group">
+          <label for="orderNumber">Ordrenummer:</label>
+          <input type="text" 
+                 id="orderNumber" 
+                 name="contact[Order Number]" 
+                 required
+                 value="{% if form['Order Number'] %}{{ form['Order Number'] }}{% endif %}">
+        </div>
+        
+        <div class="form-group">
+          <label for="customerEmail">Din E-mail:</label>
+          <input type="email" 
+                 id="customerEmail" 
+                 name="contact[Customer Email]" 
+                 required
+                 value="{% if form['Customer Email'] %}{{ form['Customer Email'] }}{% elsif customer %}{{ customer.email }}{% endif %}">
+        </div>
+        
+        <div class="form-group" id="reasonSection">
+          <label for="reason">Begrundelse for returnering:</label>
+          <textarea id="reason" 
+                    name="contact[Return Reason]" 
+                    rows="4" 
+                    required>{% if form['Return Reason'] %}{{ form['Return Reason'] }}{% endif %}</textarea>
+        </div>
+
+        <button type="submit" class="form-button">Send returanmodning</button>
+
+        {{ 'shopify.online_store.spam_detection.disclaimer_html' | t }}
+      </div>
+    {%- endform -%}
+  </div>
+</section>
