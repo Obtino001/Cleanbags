@@ -81,7 +81,7 @@
                     </div>
         </div>
       </div>
-            <button type="button"   class="btn btn-add-to-cart sticky-cart__button triggerMainButton">{{ 'products.product.add_to_cart' | t }}</button>
+            <button type="button"   class="btn btn-add-to-cart sticky-cart__button triggerMainButton">{{ 'products.product.add_to_cart' | t }}{% if current_variant.available %} - {{ current_variant.price | money | strip_html }}{% endif %}</button>
 
     </div>
   </div>

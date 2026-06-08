@@ -7303,7 +7303,13 @@ if (console && console.log) {
             cartBtn.classList.remove(classes.disabled);
             cartBtn.disabled = false;
             var defaultText = cartBtnText.dataset.defaultText;
-            cartBtnText.textContent = defaultText;
+            
+            var priceHtml = theme.Currency.formatMoney(variant.price, theme.settings.moneyFormat);
+            var temp = document.createElement('div');
+            temp.innerHTML = priceHtml;
+            var priceText = temp.textContent || temp.innerText || '';
+            
+            cartBtnText.textContent = defaultText + ' - ' + priceText;
           } else {
             // Sold out, disable the submit button and change text
             cartBtn.classList.add(classes.disabled);
