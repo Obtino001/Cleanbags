@@ -126,15 +126,15 @@
       "cart-drawer": {
         "type": "cart-drawer",
         "settings": {
-          "complete_look_title": "COMPLETE THE LOOK",
-          "complete_look_add_btn_text": "+ ADD",
-          "you_may_also_like_title": "YOU MAY ALSO LIKE",
-          "bundle_title": "",
-          "bundle_desc": "",
-          "discount_placeholder": "Enter discount code",
-          "discount_btn_text": "APPLY",
-          "discount_applied_btn_text": "APPLIED",
-          "checkout_btn_text": "GO TO CHECKOUT"
+          "complete_look_title": "FULDEND LOOKET",
+          "complete_look_add_btn_text": "+ TILFØJ",
+          "you_may_also_like_title": "DU VIL MÅSKE OGSÅ KUNNE LIDE",
+          "bundle_title": "KØB MERE & SPAR",
+          "bundle_desc": "<p>Spar 15% ved køb af en pakke. Tilføj blot en <a href=\"/collections/tops\">Top</a>, <a href=\"/collections/blouses\">Bluse</a> og <a href=\"/collections/bottoms\">Underdel</a> til din kurv. Nedsatte varer er ikke inkluderet.</p>",
+          "discount_placeholder": "Indtast rabatkode",
+          "discount_btn_text": "BRUG",
+          "discount_applied_btn_text": "ANVENDT",
+          "checkout_btn_text": "GÅ TIL KASSEN"
         }
       }
     },

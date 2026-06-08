@@ -16,7 +16,7 @@
         {% if settings.text_prefix != blank %}
           {{ settings.text_prefix }} <span class="fsb-money">{{ remaining_amount | money }}</span> {{ settings.text_suffix }}
         {% else %}
-          <strong>UNLOCK FREE SHIPPING</strong> Add <span class="fsb-money">{{ remaining_amount | money }}</span> more to your bag
+          <strong>LÅS OP FOR FRI FRAGT</strong> Tilføj for <span class="fsb-money">{{ remaining_amount | money }}</span> mere til din kurv
         {% endif %}
       </p>
     {% else %}
@@ -24,7 +24,7 @@
         {% if settings.text_success != blank %}
           {{ settings.text_success }}
         {% else %}
-          <strong>YOU'VE UNLOCKED FREE SHIPPING!</strong>
+          <strong>DU HAR LÅST OP FOR FRI FRAGT!</strong>
         {% endif %}
       </p>
     {% endif %}
