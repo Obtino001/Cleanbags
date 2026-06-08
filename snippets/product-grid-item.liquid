@@ -371,20 +371,24 @@
         <form method="post" action="/cart/add" accept-charset="UTF-8" class="product-form" enctype="multipart/form-data" data-product-id="{{ product.id }}">
           <input type="hidden" name="form_type" value="product">
           <input type="hidden" name="utf8" value="✓">
-          {%- if product.variants.size > 1 -%}
-            <select name="id" class="grid-product__variant-select">
-              {%- for variant in product.variants -%}
-                <option value="{{ variant.id }}" {% if variant == product.selected_or_first_available_variant %}selected="selected"{% endif %}>
-                  {{ variant.title }} - {{ variant.price | money }}
-                </option>
-              {%- endfor -%}
-            </select>
-          {%- else -%}
-            <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
-          {%- endif -%}
-          <button type="button" class="btn btn--full add-to-cart triggerAddToCart" data-product-id="{{ product.variants.first.id }}">
-            <span data-add-to-cart-text>{{ 'products.product.add_to_cart' | t }}</span>
-          </button>
+          <div class="grid-product__atc-wrapper" style="display: flex; gap: 8px; width: 100%; align-items: stretch;">
+            {%- if product.variants.size > 1 -%}
+              <div class="grid-product__select-wrapper" style="flex: 1 1 50%; position: relative;">
+                <select name="id" class="grid-product__variant-select" style="width: 100%; height: 100%; min-height: 42px; padding: 0 25px 0 10px; border: 1px solid #e8e8e1; border-radius: 4px; background-color: #fff; font-size: 13px; color: #1c1d1d; outline: none; -webkit-appearance: none; -moz-appearance: none; appearance: none; background-image: url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2210%22 height=%226%22 viewBox=%220 0 10 6%22><path fill=%22%231c1d1d%22 d=%22M0 0l5 6 5-6z%22/></svg>'); background-repeat: no-repeat; background-position: right 10px center; background-size: 10px 6px; cursor: pointer; text-overflow: ellipsis; white-space: nowrap; overflow: hidden; box-shadow: 0 1px 2px rgba(0,0,0,0.05);">
+                  {%- for variant in product.variants -%}
+                    <option value="{{ variant.id }}" {% if variant == product.selected_or_first_available_variant %}selected="selected"{% endif %}>
+                      {{ variant.title }}
+                    </option>
+                  {%- endfor -%}
+                </select>
+              </div>
+            {%- else -%}
+              <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+            {%- endif -%}
+            <button type="button" class="btn btn--full add-to-cart triggerAddToCart" data-product-id="{{ product.variants.first.id }}" style="flex: 1 1 {% if product.variants.size > 1 %}50%{% else %}100%{% endif %}; margin: 0; min-height: 42px; padding: 0 10px; display: flex; align-items: center; justify-content: center; font-size: 13px;">
+              <span data-add-to-cart-text>{{ 'products.product.add_to_cart' | t }}</span>
+            </button>
+          </div>
         </form>
       </div>
 
