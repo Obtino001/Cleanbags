@@ -68,6 +68,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
         let buttonDrawer = document.querySelector(".js-drawer-open-cart");
         if (buttonDrawer) buttonDrawer.click(); // Open cart drawer
+        
+        if (typeof window.refreshedCartDrawer === 'function') {
+          window.refreshedCartDrawer(); // Refresh the drawer HTML
+        }
       })
       .catch(error => console.error("Error adding to cart:", error));
   });
