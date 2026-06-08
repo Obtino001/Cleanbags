@@ -1,3 +1,4 @@
+
 <style>
   /* --- Original Popup & Base Styles (Untouched for functionality) --- */
   .video-thumbnails .swiper-slide video{width:100%;height:auto;object-fit:cover;border:2px solid transparent;cursor:pointer;}
@@ -574,4 +575,411 @@ if (popup && popup.parentElement !== document.body) {
 
 
     });
+</script>
+
+<style>
+  /* --- Original Base Styles --- */
+  .video-thumbnails .swiper-slide video{width:100%;height:auto;object-fit:cover;border:2px solid transparent;cursor:pointer;}
+  .swiper-wrapper-md{padding-block:10px;display:flex;align-items:start;gap:10px;margin-top:var(--video-margin-top,20px);margin-bottom:var(--video-margin-bottom,20px);flex-wrap:nowrap;overflow-x:scroll !important;overflow-y:hidden;-webkit-overflow-scrolling:touch;scroll-behavior:smooth;transform:translate3d(0,0,0);right:-100%;scrollbar-width:none;}
+  .preview-title-story{font-size:12px;line-height:16px;max-width:128px !important;font-weight:400;text-align:center;word-wrap:break-word;}
+  
+  /* Modal Overrides for 1-to-1 Story UI */
+  .video-popup {
+    position:fixed;
+    inset:0;
+    z-index:20000;
+    display:none;
+    justify-content:center;
+    align-items:center;
+    background:rgba(0,0,0,0.8);
+    backdrop-filter:blur(15px);
+    -webkit-backdrop-filter:blur(15px);
+    width:100%;
+    height:100%;
+  }
+  .video-popup.active { display:flex !important; }
+  
+  /* FIXED SCROLL JUMP: Removed position:fixed here */
+  body:has(.video-popup.active) { overflow:hidden; }
+  
+  body:has(.video-popup.active) header{display:none !important;}
+  body:has(.video-popup.active) .MA-announcement-container{display:none !important;}
+  body:has(.video-popup.active) .MA-swiper-header{display:none !important;}
+  
+  /* Centered Vertical Story Box */
+  .video-popup .main-video {
+    width: 100%;
+    max-width: 420px; 
+    height: 85vh; 
+    aspect-ratio: 9/16;
+    position: relative; 
+    margin: auto; 
+    padding: 0; 
+  }
+  .video-popup .swiper-main-video { 
+    border-radius: 12px; 
+    overflow: hidden; 
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  }
+  video.mainPopupVideoEl { 
+    height: 100%; 
+    width: 100%; 
+    object-fit: cover; 
+    border-radius: 12px;
+  }
+  
+  /* Hide unnecessary elements from old layout */
+  .thumbnail-strip { display: none !important; } 
+  #closeVideoModal { display: none !important; }
+
+  /* New Story UI Elements */
+  .story-close-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: rgba(0,0,0,0.4);
+    backdrop-filter: blur(5px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 200001;
+    cursor: pointer;
+    transition: background 0.2s ease;
+  }
+  .story-close-btn:hover {
+    background: rgba(0,0,0,0.7);
+  }
+  .story-progress-container {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    right: 55px; /* Leaves space for close button */
+    display: flex;
+    gap: 4px;
+    z-index: 200001;
+  }
+  .story-progress-bar {
+    flex: 1;
+    height: 3px;
+    background: rgba(255,255,255,0.3);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .story-progress-fill {
+    height: 100%;
+    background: #fff;
+    width: 0%;
+  }
+
+  /* Play/Pause & Speaker Elements */
+  .swiper-main-video button{position:absolute;top:60px;right:7px;background-color:transparent;border:1px solid transparent;border-radius:50%;cursor:pointer;display:flex;height:48px;justify-content:center;width:48px;z-index:9999;}
+  .swiper-main-video .speaker-btn .mute-btn{display:none;}
+  .swiper-main-video .speaker-btn.unmuted .unmute-btn{display:none;}
+  .swiper-main-video .speaker-btn.unmuted .mute-btn{display:inline-block;}
+  .swiper-main-video .pause-overlay{position:absolute;top:0;left:0;width:100%;height:100%;display:none;align-items:center;justify-content:center;cursor:pointer;background:rgba(0,0,0,0.3);}
+  .swiper-main-video .pause-overlay svg{width:74px;height:74px;}
+  .swiper-main-video .pause-overlay.show-overlay{display:flex;}
+
+  @media screen and (max-width:1024px){
+    .video-popup .main-video{max-width:100%; height: 100vh; padding: 0; border-radius: 0;}
+    .video-popup .swiper-main-video { border-radius: 0; }
+    video.mainPopupVideoEl { border-radius: 0; }
+  }
+
+  /* --- Grid Thumbs Styling --- */
+  .headingCustom {
+    text-align: left;
+    font-size: 24px;
+    font-weight: 500;
+    color: #2E4643;
+    margin-bottom: 20px;
+  }
+  .swiper-slide-md {
+    flex: 0 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    position: relative; 
+    width: 140px; 
+    height: 215px; 
+    border: 2px solid #2E4643; 
+    border-radius: 10px;
+    padding: 3px;
+    background: #fff;
+    transition: transform 0.2s ease-in-out;
+  }
+  
+  /* FIXED MOBILE CLICK BUG: Invisible shield over the video */
+  .swiper-slide-md::after {
+    content: '';
+    display: block !important;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+    cursor: pointer;
+    border-radius: 10px;
+  }
+
+  .swiper-slide-md video {
+    width: 100% !important;
+    height: 100% !important;
+    margin: 0;
+    border-radius: 6px; 
+    object-fit: cover;
+    pointer-events: none; /* Secondary protection */
+  }
+  .swiper-slide-md:hover { transform: scale(1.02); }
+  @media screen and (max-width: 768px) {
+    .swiper-wrapper-md { justify-content: flex-start; }
+  }
+</style>
+
+<div class="video-thumbnails-container">
+  <div class="headingCustom">
+    {{ block.settings.Heading }}
+  </div>
+  <div class="video-thumbnails" style="--video-margin-top: {{ block.settings.video_margin_top }}px; --video-margin-bottom: {{ block.settings.video_margin_bottom }}px;">
+    <div class="swiper-thumbs">
+      <div class="swiper-wrapper-md">
+        {% if block.settings.use_metafields %}
+          {% assign video_sources = product.metafields.custom.video_thumbnails.value %}
+          {% for video in video_sources %}
+            <div class="swiper-slide-md">
+              {{ video | video_tag: autoplay: true, loop: true, muted: true, controls: false, class: 'desktop-video-md', loading: lazy }}
+            </div>
+          {% endfor %}
+        {% else %}
+          {%- for i in (1..5) -%}
+            {%- capture video_key -%}video_{{ i }}{%- endcapture -%}
+            {%- assign video_file = block.settings[video_key] -%}
+            {%- if video_file != blank -%}
+              <div class="swiper-slide-md">
+                {{ video_file | video_tag: autoplay: true, loop: true, muted: true, controls: false, class: 'desktop-video-md', loading: lazy }}
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  <div class="video-popup" id="videoModal">
+    <div class="main-video swiper swiper-main-video">
+      <div class="story-progress-container" id="storyProgressContainer"></div>
+      <div class="story-close-btn" id="storyCloseBtn">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="white" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"></path></svg>
+      </div>
+      <div class="swiper-wrapper">
+        {% if block.settings.use_metafields %}
+          {% assign videos = product.metafields.custom.video_thumbnails.value %}
+          {% for video in videos %}
+            {% if video %}
+              <div class="swiper-slide">
+                {{ video | video_tag: autoplay: true, loop: false, muted: false, controls: false, class: 'mainPopupVideoEl', loading: lazy }}
+                <div class="pause-overlay">
+                  <svg width="100%" height="100%" viewBox="0 0 80 80" fill="none">
+                    <circle opacity="0.96" cx="40" cy="40" r="40" fill="black"/>
+                    <path d="M31.25 25.5162C31.25 24.7389 32.098 24.2588 32.7645 24.6587L57.6188 39.5713C57.9424 39.7655 57.9424 40.2345 57.6188 40.4287L32.7645 55.3413C32.098 55.7412 31.25 55.2611 31.25 54.4838V25.5162Z" fill="white"/>
+                  </svg>
+                </div>
+                <button class="speaker-btn unmuted" aria-label="Toggle mute">
+                  <span class="unmute-btn">
+                    <svg width="28" height="26" viewBox="0 0 28 26" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M1.5 16.5001H5.64304C6.22014 16.5001 6.77947 16.6997 7.22613 17.0652L15.5 23.8347V2.16542L7.22613 8.93495C6.77948 9.30039 6.22014 9.50005 5.64304 9.50005H1.5V16.5001ZM5.64304 8.00005H1C0.447716 8.00005 0 8.44777 0 9.00005V17.0001C0 17.5523 0.447716 18.0001 1 18.0001H5.64304C5.87388 18.0001 6.09761 18.0799 6.27627 18.2261L15.3668 25.6638C16.0197 26.198 17 25.7334 17 24.8898V1.1103C17 0.266669 16.0197 -0.197879 15.3668 0.336337L6.27627 7.77401C6.09761 7.92019 5.87388 8.00005 5.64304 8.00005ZM24.6488 4.33732C25.0149 4.1434 25.4688 4.28292 25.6627 4.64894C27 7.17317 27.7187 10.0536 27.7499 12.9921L27.75 13.0001L27.7499 13.008C27.7187 15.9465 27 18.8269 25.6627 21.3512C25.4688 21.7172 25.0149 21.8567 24.6488 21.6628C24.2828 21.4689 24.1433 21.015 24.3372 20.6489C25.5575 18.3456 26.2199 15.7045 26.2499 13.0001C26.2199 10.2956 25.5575 7.65448 24.3372 5.35117C24.1433 4.98515 24.2828 4.53123 24.6488 4.33732ZM21.6382 8.60612C21.4206 8.25365 20.9585 8.14427 20.606 8.36184C20.2536 8.5794 20.1442 9.0415 20.3617 9.39398C20.9677 10.3757 21.2924 11.6527 21.2455 12.9735L21.2446 13.0001L21.2455 13.0266C21.2924 14.3474 20.9677 15.6244 20.3617 16.6061C20.1442 16.9586 20.2536 17.4207 20.606 17.6383C20.9585 17.8558 21.4206 17.7465 21.6382 17.394C22.4114 16.1412 22.7965 14.576 22.7455 13.0001C22.7965 11.4241 22.4114 9.85891 21.6382 8.60612Z" fill="white"></path></svg>
+                  </span>
+                  <span class="mute-btn">
+                    <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M1.53033 0.46967C1.23744 0.176777 0.762564 0.176777 0.469669 0.46967C0.176777 0.762563 0.176777 1.23744 0.469669 1.53033L8.06667 9.12733L7.27627 9.77401C7.09761 9.92019 6.87388 10.0001 6.64304 10.0001H2C1.44772 10.0001 1 10.4478 1 11.0001V19.0001C1 19.5523 1.44772 20.0001 2 20.0001H6.64304C6.87388 20.0001 7.09761 20.0799 7.27627 20.2261L16.3668 27.6638C17.0197 28.198 18 27.7334 18 26.8898V19.0607L28.4697 29.5303C28.7626 29.8232 29.2374 29.8232 29.5303 29.5303C29.8232 29.2374 29.8232 28.7626 29.5303 28.4697L18 16.9393V3.1103C18 2.26667 17.0197 1.80212 16.3668 2.33634L9.23339 8.17273L1.53033 0.46967ZM10.2993 9.23868L16.5 4.16542V15.4393L10.2993 9.23868ZM16.5 17.5607V25.8347L8.22613 19.0652C7.77947 18.6997 7.22014 18.5001 6.64304 18.5001H2.5V11.5001H6.64304C7.22014 11.5001 7.77948 11.3004 8.22613 10.9349L9.13262 10.1933L16.5 17.5607ZM26.6627 6.64894C26.4688 6.28292 26.0149 6.1434 25.6488 6.33732C25.2828 6.53123 25.1433 6.98515 25.3372 7.35117C26.5575 9.65448 27.2199 12.2956 27.2499 15.0001C27.2199 17.7045 26.5575 20.3456 25.3372 22.6489C25.1433 23.015 25.2828 23.4689 25.6488 23.6628C26.0149 23.8567 26.4688 23.7172 26.6627 23.3512C28 20.8269 28.7187 17.9465 28.7499 15.008L28.75 15.0001L28.7499 14.9921C28.7187 12.0536 28 9.17317 26.6627 6.64894ZM21.606 10.3618C21.9585 10.1443 22.4206 10.2536 22.6382 10.6061C23.4114 11.8589 23.7965 13.4241 23.7455 15.0001C23.7965 16.576 23.4114 18.1412 22.6382 19.394C22.4206 19.7465 21.9585 19.8558 21.606 19.6383C21.2536 19.4207 21.1442 18.9586 21.3617 18.6061C21.9677 17.6244 22.2924 16.3474 22.2455 15.0266L22.2446 15.0001L22.2455 14.9735C22.2924 13.6527 21.9677 12.3757 21.3617 11.394C21.1442 11.0415 21.2536 10.5794 21.606 10.3618Z" fill="white"></path></svg>
+                  </span>
+                </button>
+              </div>
+            {% endif %}
+          {% endfor %}
+        {% else %}
+          {% for i in (1..5) %}
+            {% assign video_key = 'video_' | append: i %}
+            {% assign video_file = block.settings[video_key] %}
+            {% if video_file %}
+              <div class="swiper-slide">
+                {{ video_file | video_tag: autoplay: true, loop: false, muted: false, controls: false, class: 'mainPopupVideoEl', loading: lazy }}
+                <div class="pause-overlay">
+                  <svg width="100%" height="100%" viewBox="0 0 80 80" fill="none">
+                    <circle opacity="0.96" cx="40" cy="40" r="40" fill="black"/>
+                    <path d="M31.25 25.5162C31.25 24.7389 32.098 24.2588 32.7645 24.6587L57.6188 39.5713C57.9424 39.7655 57.9424 40.2345 57.6188 40.4287L32.7645 55.3413C32.098 55.7412 31.25 55.2611 31.25 54.4838V25.5162Z" fill="white"/>
+                  </svg>
+                </div>
+                <button class="speaker-btn unmuted" aria-label="Toggle mute">
+                  <span class="unmute-btn">
+                    <svg width="28" height="26" viewBox="0 0 28 26" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M1.5 16.5001H5.64304C6.22014 16.5001 6.77947 16.6997 7.22613 17.0652L15.5 23.8347V2.16542L7.22613 8.93495C6.77948 9.30039 6.22014 9.50005 5.64304 9.50005H1.5V16.5001ZM5.64304 8.00005H1C0.447716 8.00005 0 8.44777 0 9.00005V17.0001C0 17.5523 0.447716 18.0001 1 18.0001H5.64304C5.87388 18.0001 6.09761 18.0799 6.27627 18.2261L15.3668 25.6638C16.0197 26.198 17 25.7334 17 24.8898V1.1103C17 0.266669 16.0197 -0.197879 15.3668 0.336337L6.27627 7.77401C6.09761 7.92019 5.87388 8.00005 5.64304 8.00005ZM24.6488 4.33732C25.0149 4.1434 25.4688 4.28292 25.6627 4.64894C27 7.17317 27.7187 10.0536 27.7499 12.9921L27.75 13.0001L27.7499 13.008C27.7187 15.9465 27 18.8269 25.6627 21.3512C25.4688 21.7172 25.0149 21.8567 24.6488 21.6628C24.2828 21.4689 24.1433 21.015 24.3372 20.6489C25.5575 18.3456 26.2199 15.7045 26.2499 13.0001C26.2199 10.2956 25.5575 7.65448 24.3372 5.35117C24.1433 4.98515 24.2828 4.53123 24.6488 4.33732ZM21.6382 8.60612C21.4206 8.25365 20.9585 8.14427 20.606 8.36184C20.2536 8.5794 20.1442 9.0415 20.3617 9.39398C20.9677 10.3757 21.2924 11.6527 21.2455 12.9735L21.2446 13.0001L21.2455 13.0266C21.2924 14.3474 20.9677 15.6244 20.3617 16.6061C20.1442 16.9586 20.2536 17.4207 20.606 17.6383C20.9585 17.8558 21.4206 17.7465 21.6382 17.394C22.4114 16.1412 22.7965 14.576 22.7455 13.0001C22.7965 11.4241 22.4114 9.85891 21.6382 8.60612Z" fill="white"></path></svg>
+                  </span>
+                  <span class="mute-btn">
+                    <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M1.53033 0.46967C1.23744 0.176777 0.762564 0.176777 0.469669 0.46967C0.176777 0.762563 0.176777 1.23744 0.469669 1.53033L8.06667 9.12733L7.27627 9.77401C7.09761 9.92019 6.87388 10.0001 6.64304 10.0001H2C1.44772 10.0001 1 10.4478 1 11.0001V19.0001C1 19.5523 1.44772 20.0001 2 20.0001H6.64304C6.87388 20.0001 7.09761 20.0799 7.27627 20.2261L16.3668 27.6638C17.0197 28.198 18 27.7334 18 26.8898V19.0607L28.4697 29.5303C28.7626 29.8232 29.2374 29.8232 29.5303 29.5303C29.8232 29.2374 29.8232 28.7626 29.5303 28.4697L18 16.9393V3.1103C18 2.26667 17.0197 1.80212 16.3668 2.33634L9.23339 8.17273L1.53033 0.46967ZM10.2993 9.23868L16.5 4.16542V15.4393L10.2993 9.23868ZM16.5 17.5607V25.8347L8.22613 19.0652C7.77947 18.6997 7.22014 18.5001 6.64304 18.5001H2.5V11.5001H6.64304C7.22014 11.5001 7.77948 11.3004 8.22613 10.9349L9.13262 10.1933L16.5 17.5607ZM26.6627 6.64894C26.4688 6.28292 26.0149 6.1434 25.6488 6.33732C25.2828 6.53123 25.1433 6.98515 25.3372 7.35117C26.5575 9.65448 27.2199 12.2956 27.2499 15.0001C27.2199 17.7045 26.5575 20.3456 25.3372 22.6489C25.1433 23.015 25.2828 23.4689 25.6488 23.6628C26.0149 23.8567 26.4688 23.7172 26.6627 23.3512C28 20.8269 28.7187 17.9465 28.7499 15.008L28.75 15.0001L28.7499 14.9921C28.7187 12.0536 28 9.17317 26.6627 6.64894ZM21.606 10.3618C21.9585 10.1443 22.4206 10.2536 22.6382 10.6061C23.4114 11.8589 23.7965 13.4241 23.7455 15.0001C23.7965 16.576 23.4114 18.1412 22.6382 19.394C22.4206 19.7465 21.9585 19.8558 21.606 19.6383C21.2536 19.4207 21.1442 18.9586 21.3617 18.6061C21.9677 17.6244 22.2924 16.3474 22.2455 15.0266L22.2446 15.0001L22.2455 14.9735C22.2924 13.6527 21.9677 12.3757 21.3617 11.394C21.1442 11.0415 21.2536 10.5794 21.606 10.3618Z" fill="white"></path></svg>
+                  </span>
+                </button>
+              </div>
+            {% endif %}
+          {% endfor %}
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const popup = document.querySelector('.video-popup');
+  if (popup && popup.parentElement !== document.body) {
+    document.body.appendChild(popup);
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    let globalMuted = false;
+    let progressBars = [];
+    let animationFrameId;
+
+    // --- Main Swiper Initialization ---
+    const mainSwiper = new Swiper(".swiper-main-video", {
+      slidesPerView: 1,
+      loop: true,
+      direction: "horizontal", 
+      speed: 400,
+    });
+
+    // --- Initialize Progress UI ---
+    function initProgressBars() {
+      const container = document.getElementById('storyProgressContainer');
+      if (!container) return;
+      container.innerHTML = '';
+      progressBars = [];
+      const totalSlides = document.querySelectorAll('.swiper-main-video .swiper-slide:not(.swiper-slide-duplicate)').length;
+      
+      for (let i = 0; i < totalSlides; i++) {
+        const bar = document.createElement('div');
+        bar.className = 'story-progress-bar';
+        const fill = document.createElement('div');
+        fill.className = 'story-progress-fill';
+        bar.appendChild(fill);
+        container.appendChild(bar);
+        progressBars.push(fill);
+      }
+    }
+
+    // --- Smooth Animation loop for Progress bars ---
+    function updateProgressLoop() {
+      const activeVideo = document.querySelector('.swiper-main-video .swiper-slide-active video');
+      if (activeVideo && !activeVideo.paused && activeVideo.duration) {
+        const pct = (activeVideo.currentTime / activeVideo.duration) * 100;
+        const activeIdx = mainSwiper.realIndex;
+        if(progressBars[activeIdx]) {
+           progressBars[activeIdx].style.width = `${pct}%`;
+        }
+      }
+      animationFrameId = requestAnimationFrame(updateProgressLoop);
+    }
+
+    // --- Bind Video Actions & Controls ---
+    function bindVideoControls() {
+      document.querySelectorAll('.swiper-main-video .swiper-slide').forEach(slide => {
+        const video = slide.querySelector('video');
+        const btn = slide.querySelector('.speaker-btn');
+        const overlay = slide.querySelector('.pause-overlay');
+        if (!video || !btn || !overlay) return;
+
+        // Auto Advance to Next Slide
+        video.removeAttribute('loop'); 
+        video.addEventListener('ended', () => {
+          if (video.closest('.swiper-slide-active')) {
+             mainSwiper.slideNext();
+          }
+        });
+
+        // Click to Pause / Play
+        const togglePlay = () => {
+          if (video.paused) video.play().catch(console.warn);
+          else video.pause();
+        };
+        video.addEventListener('click', togglePlay);
+        overlay.addEventListener('click', togglePlay);
+
+        video.addEventListener('pause', () => overlay.classList.add('show-overlay'));
+        video.addEventListener('play', () => overlay.classList.remove('show-overlay'));
+
+        // Toggle Sound State
+        btn.addEventListener('click', e => {
+          e.preventDefault();
+          e.stopPropagation();
+          globalMuted = !globalMuted;
+          applyMuteState();
+        });
+      });
+    }
+
+    function applyMuteState() {
+       document.querySelectorAll('.swiper-main-video .swiper-slide video').forEach(v => v.muted = globalMuted);
+       document.querySelectorAll('.swiper-main-video .speaker-btn').forEach(b => b.classList.toggle('unmuted', !globalMuted));
+    }
+
+    // --- Synchronization & Active Logic ---
+    function syncSlideVideos() {
+      const realIdx = mainSwiper.realIndex;
+      
+      // Reset progress bars completely
+      progressBars.forEach((fill, idx) => {
+        if (idx > realIdx) fill.style.width = '0%';
+        if (idx < realIdx) fill.style.width = '100%';
+      });
+
+      const activeVideo = document.querySelector('.swiper-main-video .swiper-slide-active video');
+      
+      document.querySelectorAll(".swiper-main-video .swiper-slide video").forEach((video) => {
+        if (video === activeVideo) {
+          video.currentTime = 0;
+          video.muted = globalMuted;
+          video.play().catch(() => {});
+        } else {
+          video.pause();
+          video.currentTime = 0;
+        }
+      });
+    }
+
+    // --- Core Listeners ---
+    mainSwiper.on("slideChange", syncSlideVideos);
+
+    window.toggleVideoPopup = function (show) {
+      const modal = document.getElementById("videoModal");
+      if (!modal) return;
+      modal.classList.toggle("active", !!show);
+
+      if (show) {
+        requestAnimationFrame(updateProgressLoop);
+      } else {
+        cancelAnimationFrame(animationFrameId);
+        document.querySelectorAll(".swiper-main-video .swiper-slide video").forEach(v => {
+          v.pause();
+          v.currentTime = 0;
+        });
+      }
+    };
+
+    document.getElementById("storyCloseBtn")?.addEventListener("click", () => toggleVideoPopup(false));
+
+    // --- Open Popup from Thumbnails (FIXED CLICK TARGET) ---
+    document.querySelectorAll(".swiper-slide-md").forEach((card, idx) => {
+      card.addEventListener("click", () => {
+        toggleVideoPopup(true);
+        mainSwiper.slideToLoop(idx, 0); // Jump instantly to slide without transition
+        syncSlideVideos();
+      });
+    });
+
+    // Boot Everything up
+    initProgressBars();
+    bindVideoControls();
+    mainSwiper.init(); 
+  });
 </script>
