@@ -49,18 +49,66 @@
   .swiper-main-video .speaker-btn.unmuted .unmute-btn{display:none;}
   .swiper-main-video .speaker-btn.unmuted .mute-btn{display:inline-block;}
   @media screen and (max-width:1024px){
-    .video-popup .main-video{max-width:100%;}
+    .video-popup .main-video{max-width:100%; height: 100vh; padding: 0;}
     .thumbnail-strip{display:none !important;}
   }
+  
+  /* Story style modal overrides */
+  .video-popup { background: rgba(0,0,0,0.85); backdrop-filter: none; }
+  .video-popup .main-video { max-width: 400px; height: 85vh; position: relative; margin: auto; padding: 0; }
+  .video-popup .swiper-main-video { border-radius: 12px; overflow: hidden; }
+  video.mainPopupVideoEl { border-radius: 12px; }
+  .thumbnail-strip { display: none !important; } /* Hide side thumbnails to match screenshot */
 
-  /* --- NEW UPDATED DESIGN STYLES FOR THE CIRCULAR THUMBNAILS --- */
+  #closeVideoModal { display: none !important; } /* Hide old big close button */
+
+  /* New story UI */
+  .story-close-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: rgba(0,0,0,0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 200001;
+    cursor: pointer;
+  }
+  .story-progress-container {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    right: 55px;
+    display: flex;
+    gap: 4px;
+    z-index: 200001;
+  }
+  .story-progress-bar {
+    flex: 1;
+    height: 3px;
+    background: rgba(255,255,255,0.3);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .story-progress-fill {
+    height: 100%;
+    background: #fff;
+    width: 0%;
+    transition: width 0.1s linear;
+  }
+
+  /* --- NEW UPDATED DESIGN STYLES FOR THE TALL RECTANGLE THUMBNAILS --- */
   
   .headingCustom {
-    text-align: center;
-    font-size: 1.4rem;
+    text-align: left;
+    font-size: 24px;
     font-weight: 500;
-    color: #333;
-    margin-bottom: 25px;
+    color: #2E4643;
+    margin-bottom: 20px;
+    padding-left: 20px;
   }
   .headingCustom span{z-index:2;}
   
@@ -70,47 +118,34 @@
     flex-direction: column;
     align-items: center;
     cursor: pointer;
-    position: relative; /* Required to place the play icon over it */
-    width: 67px;  /* Size of the circle */
-    height: 67px; /* Size of the circle */
+    position: relative; 
+    width: 140px;  /* Size of the vertical rectangle */
+    height: 215px; 
+    border: 2px solid #2E4643; /* Dark green border matching text */
+    border-radius: 10px;
+    padding: 3px;
+    background: #fff;
+    transition: transform 0.2s ease-in-out;
   }
 
   /* The Video Circle */
   .swiper-slide-md video {
-    aspect-ratio: 1 / 1;
     width: 100% !important;
     height: 100% !important;
     margin: 0;
-    border-radius: 50%; /* Makes it a perfect circle */
+    border-radius: 6px; /* Inner radius */
     object-fit: cover;
-    transition: transform 0.2s ease-in-out;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1); /* Optional: gives a nice subtle shadow */
+    box-shadow: none;
   }
 
-  /* The White Play Triangle Overlay */
+  /* Remove play triangle overlay if not in screenshot */
   .swiper-slide-md::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-40%, -50%); /* slightly offset for optical center of a triangle */
-    width: 0;
-    height: 0;
-    border-top: 10px solid transparent;
-    border-bottom: 10px solid transparent;
-    border-left: 16px solid #ffffff;
-    z-index: 2;
-    pointer-events: none; /* Allows the click to pass through to the video */
-    filter: drop-shadow(0px 2px 4px rgba(0,0,0,0.3)); /* Makes it visible on light videos */
-    transition: transform 0.2s ease-in-out;
+    display: none;
   }
 
   /* Hover Animation */
-  .swiper-slide-md:hover video {
-    transform: scale(1.05);
-  }
-  .swiper-slide-md:hover::after {
-    transform: translate(-40%, -50%) scale(1.1);
+  .swiper-slide-md:hover {
+    transform: scale(1.02);
   }
   
   /* Mobile styling adjustment */
@@ -180,12 +215,11 @@
   </div>
 
   <div class="video-popup" id="videoModal">
-    <div class="close-btn" id="closeVideoModal">
-      <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <g filter="url(#filter0_dd_3986_1781)"><path fill-rule="evenodd" clip-rule="evenodd" d="M11.5297 10.4697C11.2368 10.1768 10.762 10.1768 10.4691 10.4697C10.1762 10.7626 10.1762 11.2374 10.4691 11.5303L20.9389 22.0001L10.4692 32.4698C10.1763 32.7627 10.1763 33.2376 10.4692 33.5305C10.7621 33.8234 11.2369 33.8234 11.5298 33.5305L21.9995 23.0608L32.4691 33.5303C32.762 33.8232 33.2368 33.8232 33.5297 33.5303C33.8226 33.2374 33.8226 32.7626 33.5297 32.4697L23.0602 22.0001L33.5298 11.5305C33.8227 11.2376 33.8227 10.7627 33.5298 10.4698C33.2369 10.1769 32.7621 10.1769 32.4692 10.4698L21.9995 20.9395L11.5297 10.4697Z" fill="white"></path></g><defs><filter id="filter0_dd_3986_1781" x="0.249512" y="0.25" width="43.5" height="43.5" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB"><feFlood flood-opacity="0" result="BackgroundImageFix"></feFlood><feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"></feColorMatrix><feOffset></feOffset><feGaussianBlur stdDeviation="5"></feGaussianBlur><feComposite in2="hardAlpha" operator="out"></feComposite><feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.5 0"></feColorMatrix><feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_3986_1781"></feBlend><feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"></feColorMatrix><feOffset dy="1"></feOffset><feGaussianBlur stdDeviation="0.5"></feGaussianBlur><feComposite in2="hardAlpha" operator="out"></feComposite><feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.06 0"></feColorMatrix><feBlend mode="normal" in2="effect1_dropShadow_3986_1781" result="effect2_dropShadow_3986_1781"></feBlend><feBlend mode="normal" in="SourceGraphic" in2="effect2_dropShadow_3986_1781" result="shape"></feBlend></filter></defs>
-      </svg>
-    </div>
     <div class="main-video swiper swiper-main-video">
+      <div class="story-progress-container" id="storyProgressContainer"></div>
+      <div class="story-close-btn" id="storyCloseBtn">
+        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="white" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"></path></svg>
+      </div>
       <div class="swiper-wrapper">
         {% if block.settings.use_metafields %}
           {% assign videos = product.metafields.custom.video_thumbnails.value %}
@@ -395,6 +429,19 @@ if (popup && popup.parentElement !== document.body) {
 
           // If the video starts out paused (e.g. autoplay blocked), show overlay:
           if (video.paused) overlay.classList.add('show-overlay');
+          
+          // Story progress updates
+          video.removeAttribute('loop'); // Let it end to go to next slide
+          video.addEventListener('timeupdate', () => {
+            if (video.closest('.swiper-slide-active')) {
+              updateProgressBars(mainSwiper.realIndex, video.currentTime, video.duration);
+            }
+          });
+          video.addEventListener('ended', () => {
+            if (video.closest('.swiper-slide-active')) {
+              mainSwiper.slideNext();
+            }
+          });
         });
       }
       bindVideoControls();
@@ -425,13 +472,52 @@ if (popup && popup.parentElement !== document.body) {
     },
   });
 
+  // Story UI Initialization
+  let progressBars = [];
+  function initProgressBars() {
+    const container = document.getElementById('storyProgressContainer');
+    if (!container) return;
+    container.innerHTML = '';
+    progressBars = [];
+    const totalSlides = document.querySelectorAll('.swiper-main-video .swiper-slide:not(.swiper-slide-duplicate)').length;
+    for (let i = 0; i < totalSlides; i++) {
+      const bar = document.createElement('div');
+      bar.className = 'story-progress-bar';
+      const fill = document.createElement('div');
+      fill.className = 'story-progress-fill';
+      bar.appendChild(fill);
+      container.appendChild(bar);
+      progressBars.push(fill);
+    }
+  }
+
+  function updateProgressBars(activeIdx, currentTime, duration) {
+    progressBars.forEach((fill, idx) => {
+      if (idx < activeIdx) fill.style.width = '100%';
+      else if (idx > activeIdx) fill.style.width = '0%';
+      else {
+        let pct = duration ? (currentTime / duration) * 100 : 0;
+        fill.style.width = `${pct}%`;
+      }
+    });
+  }
+
   // 3) sync playing/pausing videos in the main slider
   function syncSlideVideos() {
     const realIdx = mainSwiper.realIndex;
+    
+    // Reset all bars beyond the current one
+    progressBars.forEach((fill, idx) => {
+      if (idx > realIdx) fill.style.width = '0%';
+      if (idx < realIdx) fill.style.width = '100%';
+    });
+
+    const activeVideo = document.querySelector('.swiper-main-video .swiper-slide-active video');
+    
     document
       .querySelectorAll(".swiper-main-video .swiper-slide video")
-      .forEach((video, i) => {
-        if (i === realIdx) {
+      .forEach((video) => {
+        if (video === activeVideo) {
           video.currentTime = 0;
           video.play().catch(() => {});
         } else {
@@ -439,8 +525,6 @@ if (popup && popup.parentElement !== document.body) {
           video.currentTime = 0;
         }
       });
-
-
   }
 
   mainSwiper.on("slideChange", syncSlideVideos);
@@ -524,8 +608,16 @@ if (popup && popup.parentElement !== document.body) {
     });
 
   // don't forget to manually init the mainSwiper so your "init" handler fires:
-  mainSwiper.on("init", syncSlideVideos);
+  mainSwiper.on("init", () => {
+    initProgressBars();
+    syncSlideVideos();
+  });
   mainSwiper.init();
+
+  // Attach new close button listener
+  document.getElementById("storyCloseBtn")?.addEventListener("click", () => {
+    toggleVideoPopup(false);
+  });
 
        document.querySelectorAll(".popup-thumb-generated").forEach(img => {
     if (img.getAttribute("src")) return;
