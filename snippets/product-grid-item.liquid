@@ -371,8 +371,8 @@
         <form method="post" action="/cart/add" accept-charset="UTF-8" class="product-form" enctype="multipart/form-data" data-product-id="{{ product.id }}">
           <input type="hidden" name="form_type" value="product">
           <input type="hidden" name="utf8" value="✓">
-          <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
-          <button type="button" class="btn btn--full add-to-cart triggerAddToCart" data-product-id="{{ product.selected_or_first_available_variant.id }}">
+          <input type="hidden" name="id" value="{{ product.variants.first.id }}">
+          <button type="button" class="btn btn--full add-to-cart triggerAddToCart" data-product-id="{{ product.variants.first.id }}">
             <span data-add-to-cart-text>{{ 'products.product.add_to_cart' | t }}</span>
           </button>
         </form>
