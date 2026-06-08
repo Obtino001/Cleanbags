@@ -108,9 +108,8 @@ class WIcartDrawer extends HTMLElement {
             const parsedHTML = new DOMParser().parseFromString(data['cart-drawer'], 'text/html');
 
             // 3. Update the Cart Items Container
-            // We look for your specific class inside the fetched HTML
             let newCartItems = parsedHTML.querySelector('.WI_cartDrawerin_cart');
-            let currentCartItems = this.querySelector('.WI_cartDrawerin_cart');
+            let currentCartItems = document.querySelector('.WI_cartDrawerin_cart');
 
             if (newCartItems && currentCartItems) {
                 currentCartItems.innerHTML = newCartItems.innerHTML;

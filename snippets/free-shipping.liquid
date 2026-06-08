@@ -1,6 +1,7 @@
 
 
-{%- assign threshold = settings.threshold_amount | times: 100 -%}
+{%- assign threshold_amount = settings.threshold_amount | default: 399 -%}
+{%- assign threshold = threshold_amount | times: 100 -%}
 {%- assign cart_total = cart.total_price -%}
 {%- assign remaining_amount = threshold | minus: cart_total -%}
 

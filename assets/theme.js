@@ -1845,26 +1845,6 @@ if (console && console.log) {
   
         // Update subtotal
         this.subtotal.innerHTML = theme.Currency.formatMoney(subtotal, theme.settings.moneyFormat);
-
-        // Update progress bar
-        var freeShippingThreshold = 39900;
-        var amountLeft = freeShippingThreshold - subtotal;
-        var progressPercentage = (subtotal / freeShippingThreshold) * 100;
-        if (progressPercentage > 100) {
-          progressPercentage = 100;
-        }
-
-        var progressText = document.querySelector('.cart-progress-text');
-        var progressFill = document.querySelector('.cart-progress-fill');
-
-        if (progressText && progressFill) {
-          progressFill.style.width = progressPercentage + '%';
-          if (amountLeft > 0) {
-            progressText.innerHTML = 'Køb for <strong class="amount-left-money">' + theme.Currency.formatMoney(amountLeft, theme.settings.moneyFormat) + '</strong> mere for at få fri fragt';
-          } else {
-            progressText.innerHTML = 'Tillykke! Du har <strong>fri fragt</strong>';
-          }
-        }
   
         this.reInit();
   
