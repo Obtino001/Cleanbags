@@ -382,18 +382,7 @@
                       {%- endif -%}
                     </div>
 
-                    <div class="emaerket-widget-container">
-                      <div id="emaerket-widget-bd9xtvuvbm"></div>
-                    </div>
-
-                    {% if block.settings.show_shipping_message or block.settings.show_payment_icons %}
-                      <div class="sp_message_and_payment_icons">
-                        {% if block.settings.show_shipping_message and block.settings.shipping_message != blank %}
-                          <div class="shipping_message shipping-message-container"><span class="plusting_green_dot" style="display:none;"></span>
-                            <img src="https://cdn.shopify.com/s/files/1/0633/0682/5798/files/Box_light.png?v=1746388360" class="shipping-message-icon"/>
-                            {{ block.settings.shipping_message }}
-                          </div>
-                        {% endif %}
+               
                         {% if block.settings.show_payment_icons %}
                           <div class="payment_icons">
                             {% assign enabled_payment_types = 'master,visa,mobilepay' | remove: ' ' | split: ',' %}
@@ -404,8 +393,7 @@
                             </ul>
                           </div>
                         {% endif %}
-                      </div>
-                    {% endif %}
+        
                   {%- when 'bought_together' -%}
                     {%- if product.metafields.custom.relevent.value.count > 0 -%}
                       <div class="fbt">
