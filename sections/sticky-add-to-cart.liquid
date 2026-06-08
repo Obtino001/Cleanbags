@@ -86,7 +86,7 @@
     </div>
   </div>
   <style>
-    .sticky-cart {
+  .sticky-cart {
   position: fixed;
   bottom: 0;
   left: 0;
@@ -94,7 +94,7 @@
   background: #fff;
   box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
   padding: 15px 20px;
-  display: flex;
+  display: none;
   justify-content: space-between;
   align-items: center;
   z-index: 1000;
@@ -162,41 +162,29 @@
   <script>
    document.addEventListener("DOMContentLoaded", function () {
   let stickyCart = document.querySelector(".sticky-cart");
-  let addToCartBtn = document.querySelector(".product-single__form .add-to-cart");
-  let triggerButton = document.querySelector(".triggerMainButton"); // The element you want to click to trigger
+  let addToCartBtn = document.querySelector('form[action^="/cart/add"] [data-add-to-cart]');
+  let triggerButton = document.querySelector(".triggerMainButton");
 
-  // If both elements are found, allow the trigger button to click the Add to Cart button
   if (triggerButton && addToCartBtn) {
     triggerButton.addEventListener("click", function () {
       addToCartBtn.click();
     });
   }
 
-  // Function to check if the addToCartBtn is out of viewport (top or bottom)
-  function isOutOfViewport(element) {
-    const rect = element.getBoundingClientRect();
-    return rect.bottom < 0 || rect.top > window.innerHeight; // Check if above or below the viewport
-  }
-
-  function toggleStickyCart() {
-    if (addToCartBtn) {
-      if (isOutOfViewport(addToCartBtn)) {
-        stickyCart.style.display = "flex"; // Show sticky cart when Add to Cart is out of viewport
+  if (addToCartBtn && stickyCart) {
+    let observer = new IntersectionObserver(function(entries) {
+      if (entries[0].isIntersecting) {
+        // Main button is visible, hide sticky cart
+        stickyCart.style.display = "none";
       } else {
-        stickyCart.style.display = "none"; // Hide sticky cart when Add to Cart is visible
+        // Main button is hidden, show sticky cart
+        stickyCart.style.display = "flex";
       }
-    }
+    }, { threshold: 0 });
+
+    observer.observe(addToCartBtn);
   }
-
-  // Run on scroll
-  window.addEventListener("scroll", toggleStickyCart);
-
-  // Run on load to check initial visibility
-  toggleStickyCart();
 });
-
-
-
   </script>
 {% endif %}
 {% schema %}

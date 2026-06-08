@@ -122,7 +122,7 @@
 
         {%- if on_sale and product.available -%}
           <div class="grid-product__tag grid-product__tag--sale {% if product.handle contains 'bundle' or product.handle contains 'pakke' %}grid-product__tag--save-bundle{% endif %}">
-            Spar {{ product.compare_at_price | minus: product.price | money }}
+            Spar {{ product.compare_at_price | minus: product.price | times: 100.0 | divided_by: product.compare_at_price | round }}%
           </div>
         {%- endif -%}
       </div>

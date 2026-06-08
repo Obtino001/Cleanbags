@@ -7335,8 +7335,8 @@ if (console && console.log) {
             this.cache.priceA11y.setAttribute('aria-hidden', 'false');
             if (this.cache.savingsBadge) {
               this.cache.savingsBadge.classList.remove('hide');
-              var savings = variant.compare_at_price - variant.price;
-              this.cache.savingsBadge.innerHTML = 'Spar ' + theme.Currency.formatMoney(savings, theme.settings.moneyFormat);
+              var savings = Math.round(((variant.compare_at_price - variant.price) * 100) / variant.compare_at_price);
+              this.cache.savingsBadge.innerHTML = 'Spar ' + savings + '%';
             }
           } else {
             if (this.cache.priceWrapper) {
