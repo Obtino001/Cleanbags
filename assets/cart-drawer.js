@@ -24,11 +24,14 @@ class WIcartDrawer extends HTMLElement {
     }
 
     clickOncart() {
-        let cartIcon = document.querySelector('#cart-icon-bubble');
-        if (cartIcon) {
-            cartIcon.addEventListener('click', (e) => {
-                e.preventDefault();
-                this.openCart();
+        let cartIcons = document.querySelectorAll('.js-drawer-open-cart');
+        if (cartIcons.length > 0) {
+            cartIcons.forEach(icon => {
+                icon.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation(); // prevent theme.js from opening old drawer
+                    this.openCart();
+                });
             });
         }
         document.addEventListener('opencart', () => {
@@ -97,8 +100,8 @@ class WIcartDrawer extends HTMLElement {
     // ----------- NEW SEAMLESS UPDATE FUNCTION -----------
     async updateCart() {
         try {
-            // 1. Fetch JSON with both sections (Drawer + Bubble)
-            let res = await fetch('/?sections=cart-drawer,cart-icon-bubble');
+            // 1. Fetch JSON with Drawer section
+            let res = await fetch('/?sections=cart-drawer');
             let data = await res.json();
 
             // 2. Parse the HTML from the JSON response
@@ -120,10 +123,18 @@ class WIcartDrawer extends HTMLElement {
                 currentUpsell.innerHTML = newUpsell.innerHTML;
             }
 
-            // 5. Update the Cart Icon Bubble (using the other section data)
-            const cartBubble = document.querySelector('#cart-icon-bubble');
-            if (cartBubble) {
-                cartBubble.innerHTML = data['cart-icon-bubble'];
+            // 5. Update the Cart Icon Bubble
+            let newCartCount = parsedHTML.querySelector('data-cart-count');
+            if (newCartCount) {
+                let count = parseInt(newCartCount.textContent) || 0;
+                let cartBubbles = document.querySelectorAll('.cart-link__bubble');
+                cartBubbles.forEach(bubble => {
+                    if (count > 0) {
+                        bubble.classList.add('cart-link__bubble--visible');
+                    } else {
+                        bubble.classList.remove('cart-link__bubble--visible');
+                    }
+                });
             }
 
             // 6. Re-run calculations
