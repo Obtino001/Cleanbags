@@ -1019,12 +1019,19 @@ wi-cartdrawer:not(.active) .WI_cartDrawerin_cart_footer {
                     {% endif %}
 
                     {% comment %} EXERCERE BUNDLE promo box {% endcomment %}
-                    <div class="WI_bundle_promo">
-                      <h4 class="WI_bundle_promo_title">{{ section.settings.bundle_title }}</h4>
-                      <div class="WI_bundle_promo_desc">
-                        {{ section.settings.bundle_desc }}
-                      </div>
-                    </div>
+               {% if section.settings.bundle_title != blank or section.settings.bundle_desc != blank %}
+  <div class="WI_bundle_promo">
+    {% if section.settings.bundle_title != blank %}
+      <h4 class="WI_bundle_promo_title">{{ section.settings.bundle_title }}</h4>
+    {% endif %}
+    
+    {% if section.settings.bundle_desc != blank %}
+      <div class="WI_bundle_promo_desc">
+        {{ section.settings.bundle_desc }}
+      </div>
+    {% endif %}
+  </div>
+{% endif %}
 
                     {% comment %} Discount Code Input {% endcomment %}
                     <div class="WI_discount_wrap">
