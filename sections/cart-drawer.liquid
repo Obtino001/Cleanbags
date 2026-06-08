@@ -788,7 +788,7 @@ wi-cartdrawer:not(.active) .WI_cartDrawerin_cart_footer {
                         </g>
                       </svg>
                     </span>
-                    <span class="WI_cartDrawer_count">{{ 'sections.header.cart_count' | t: count: cart.item_count | upcase }}</span>
+                    <span class="WI_cartDrawer_count">{{ 'cart.general.title' | t | upcase }} ({{ cart.item_count }})</span>
                   </div>
                   <span class="WI_cartDrawerCls">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -871,7 +871,7 @@ wi-cartdrawer:not(.active) .WI_cartDrawerin_cart_footer {
                                           </svg>
                                         </button>
                                     </div>
-                                     <button type="button" class="cartDrawerRemove text-remove-btn">{{ 'sections.cart.remove_title' | t: title: '' | strip }}</button>
+                                     <button type="button" class="cartDrawerRemove text-remove-btn">{{ 'cart.general.remove' | t }}</button>
                                 </div>
                             </div>
                             <div class="WI_cartLoading">
@@ -1036,7 +1036,7 @@ wi-cartdrawer:not(.active) .WI_cartDrawerin_cart_footer {
                 
                 <div class="WI_cartDrawerin_cart_footer">
                     <div class="WI_cartDrawer_total">
-                        <h5>{{ 'sections.cart.estimated_total' | t }}</h5>
+                        <h5>{{ 'cart.general.subtotal' | t }}</h5>
                         <h5 class="WI_cartDrawer_total_price">{{ cart.total_price | money }}</h5>
                     </div>
 
@@ -1092,43 +1092,7 @@ wi-cartdrawer:not(.active) .WI_cartDrawerin_cart_footer {
                       </li>
                     </ul>
                     <p class="WI_cartDrawer_subtext">
-                      {%- if cart.duties_included and cart.taxes_included -%}
-                        {%- if shop.shipping_policy.body == blank -%}
-                          {{ 'sections.cart.duties_and_taxes_included_shipping_at_checkout_without_policy' | t }}
-                        {%- else -%}
-                          {{
-                            'sections.cart.duties_and_taxes_included_shipping_at_checkout_with_policy_html'
-                            | t: link: shop.shipping_policy.url
-                          }}
-                        {%- endif -%}
-                      {%- elsif cart.duties_included == false and cart.taxes_included -%}
-                        {%- if shop.shipping_policy.body == blank -%}
-                          {{ 'sections.cart.taxes_included_shipping_at_checkout_without_policy' | t }}
-                        {%- else -%}
-                          {{
-                            'sections.cart.taxes_included_shipping_at_checkout_with_policy_html'
-                            | t: link: shop.shipping_policy.url
-                          }}
-                        {%- endif -%}
-                      {%- elsif cart.duties_included and cart.taxes_included == false -%}
-                        {%- if shop.shipping_policy.body == blank -%}
-                          {{ 'sections.cart.duties_included_taxes_at_checkout_shipping_at_checkout_without_policy' | t }}
-                        {%- else -%}
-                          {{
-                            'sections.cart.duties_included_taxes_at_checkout_shipping_at_checkout_with_policy_html'
-                            | t: link: shop.shipping_policy.url
-                          }}
-                        {%- endif -%}
-                      {%- elsif cart.duties_included == false and cart.taxes_included == false -%}
-                        {%- if shop.shipping_policy.body == blank -%}
-                          {{ 'sections.cart.taxes_at_checkout_shipping_at_checkout_without_policy' | t }}
-                        {%- else -%}
-                          {{
-                            'sections.cart.taxes_at_checkout_shipping_at_checkout_with_policy_html'
-                            | t: link: shop.shipping_policy.url
-                          }}
-                        {%- endif -%}
-                      {%- endif -%}
+                      {{ 'cart.general.shipping_at_checkout' | t }}
                     </p>
                 </div>
                 {% endform %}
