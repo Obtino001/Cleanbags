@@ -99,7 +99,7 @@
         "riders_experience_RmKPLc": {
           "type": "riders_experience",
           "settings": {
-            "Heading": "",
+            "Heading": "Hør hvad andre siger:",
             "video_margin_top": 20,
             "video_margin_bottom": 20,
             "use_metafields": false,
