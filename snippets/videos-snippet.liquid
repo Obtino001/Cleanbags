@@ -54,7 +54,7 @@
   .video-popup .main-video { max-width: 400px; height: 85vh; position: relative; margin: auto; padding: 0; }
   .video-popup .swiper-main-video { border-radius: 12px; overflow: hidden; }
   video.mainPopupVideoEl { border-radius: 12px; }
-  .thumbnail-strip { display: none !important; } /* Hide side thumbnails to match screenshot */
+  .thumbnail-strip { opacity: 0; pointer-events: none; position: absolute; z-index: -1; width: 0; height: 0; overflow: hidden; } /* Hide side thumbnails to match screenshot but keep in DOM for Swiper */
 
   #closeVideoModal { display: none !important; } /* Hide old big close button */
 
@@ -453,6 +453,7 @@ if (popup && popup.parentElement !== document.body) {
 
   // 2) main Swiper with thumbs linkage
   const mainSwiper = new Swiper(".swiper-main-video", {
+    init: false,
     slidesPerView: 1,
     loop:          true,
     direction:     "vertical",
@@ -584,16 +585,20 @@ if (popup && popup.parentElement !== document.body) {
 
   // 8) NEW: static video-thumbnails grid
   document
-    .querySelectorAll(".video-thumbnails video")
-    .forEach((vid, idx) => {
-      vid.addEventListener("click", () => {
-        // 6a) open the popup
-        toggleVideoPopup(true);
-        // 6b) jump both Swipers to that index
-        mainSwiper.slideToLoop(idx);
-        popupThumbs.slideTo(idx);
-        // 6c) restart the video
-        syncSlideVideos();
+    .querySelectorAll(".swiper-wrapper-md .swiper-slide-md")
+    .forEach((slide, idx) => {
+      slide.addEventListener("click", () => {
+        try {
+          // 6a) open the popup
+          toggleVideoPopup(true);
+          // 6b) jump both Swipers to that index
+          if (mainSwiper) mainSwiper.slideToLoop(idx);
+          if (popupThumbs) popupThumbs.slideTo(idx);
+          // 6c) restart the video
+          syncSlideVideos();
+        } catch (e) {
+          console.error("Popup Error: ", e);
+        }
       });
     });
 
