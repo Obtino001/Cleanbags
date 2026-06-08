@@ -96,6 +96,21 @@
             "show_payment_icons": true
           }
         },
+        "riders_experience_RmKPLc": {
+          "type": "riders_experience",
+          "settings": {
+            "Heading": "",
+            "video_margin_top": 20,
+            "video_margin_bottom": 20,
+            "use_metafields": false,
+            "video_1": "shopify://files/videos/9x16_c6e79875-0b6c-4686-ba88-1f084bc10add.mov",
+            "video_text_1": "",
+            "video_text_2": "",
+            "video_text_3": "",
+            "video_text_4": "",
+            "video_text_5": ""
+          }
+        },
         "separator": {
           "type": "separator",
           "settings": {}
@@ -170,6 +185,7 @@
         "price_jWjtne",
         "inventory_status_custom",
         "buy_buttons",
+        "riders_experience_RmKPLc",
         "separator",
         "description",
         "tab",
