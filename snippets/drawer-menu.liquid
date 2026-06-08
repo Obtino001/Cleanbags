@@ -256,10 +256,13 @@
             margin-top: 10px;
             border-top: 1px solid #eee;
             overflow: hidden;
-            width: 100%;
+            width: calc(100% + 50px);
+            margin-left: -25px;
+            margin-right: -25px;
           }
           .marquee-container {
             display: flex;
+            align-items: flex-start;
             gap: 15px;
             width: max-content;
             animation: scrollMarquee 100s linear infinite;
@@ -279,6 +282,7 @@
             opacity: 1 !important;
             padding: 0;
             margin: 0;
+            height: max-content;
           }
           .drawer-tp-slider-wrapper .testimonials-slider__text {
             border: 1px solid #E4E4E4;
