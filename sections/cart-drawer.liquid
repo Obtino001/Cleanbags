@@ -1020,9 +1020,9 @@ wi-cartdrawer:not(.active) .WI_cartDrawerin_cart_footer {
 
                     {% comment %} EXERCERE BUNDLE promo box {% endcomment %}
                     <div class="WI_bundle_promo">
-                      <h4 class="WI_bundle_promo_title">{{ section.settings.bundle_title | default: 'EXERCERE BUNDLE' }}</h4>
+                      <h4 class="WI_bundle_promo_title">{{ section.settings.bundle_title }}</h4>
                       <div class="WI_bundle_promo_desc">
-                        {{ section.settings.bundle_desc | default: '<p>Save 15% off when buying a bundle. Simply add a <a href="/collections/tops">Top</a>, <a href="/collections/blouses">Blouse</a> and <a href="/collections/bottoms">Bottom</a> to your cart. Already discounted items are excluded.</p>' }}
+                        {{ section.settings.bundle_desc }}
                       </div>
                     </div>
 
