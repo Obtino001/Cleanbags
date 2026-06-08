@@ -252,6 +252,13 @@
                           {{ 1999 | money }}
                         {%- endunless -%}
                       </span>
+                      {%- if current_variant.compare_at_price > current_variant.price -%}
+                        <span class="product__savings-badge" data-savings-badge style="display: inline-block; background: #e0f5e7; color: #1e873b; padding: 4px 10px; border-radius: 20px; font-weight: bold; margin-left: 10px; font-size: 0.8em; vertical-align: middle;">
+                          Spar {{ current_variant.compare_at_price | minus: current_variant.price | money }}
+                        </span>
+                      {%- else -%}
+                        <span class="product__savings-badge hide" data-savings-badge style="display: inline-block; background: #e0f5e7; color: #1e873b; padding: 4px 10px; border-radius: 20px; font-weight: bold; margin-left: 10px; font-size: 0.8em; vertical-align: middle;"></span>
+                      {%- endif -%}
 
                       <div data-unit-price-wrapper class="product__unit-price{% unless current_variant.unit_price_measurement %} hide{% endunless %}">
                         {%- capture unit_price_base_unit -%}

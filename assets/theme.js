@@ -7133,7 +7133,8 @@ if (console && console.log) {
           comparePriceA11y: this.container.querySelector(this.selectors.comparePriceA11y),
           comparePrice: this.container.querySelector(this.selectors.comparePrice),
           price: this.container.querySelector(this.selectors.price),
-          priceA11y: this.container.querySelector(this.selectors.priceA11y)
+          priceA11y: this.container.querySelector(this.selectors.priceA11y),
+          savingsBadge: this.container.querySelector('[data-savings-badge]')
         };
       },
   
@@ -7303,13 +7304,7 @@ if (console && console.log) {
             cartBtn.classList.remove(classes.disabled);
             cartBtn.disabled = false;
             var defaultText = cartBtnText.dataset.defaultText;
-            
-            var priceHtml = theme.Currency.formatMoney(variant.price, theme.settings.moneyFormat);
-            var temp = document.createElement('div');
-            temp.innerHTML = priceHtml;
-            var priceText = temp.textContent || temp.innerText || '';
-            
-            cartBtnText.textContent = defaultText + ' - ' + priceText;
+            cartBtnText.textContent = defaultText;
           } else {
             // Sold out, disable the submit button and change text
             cartBtn.classList.add(classes.disabled);
@@ -7338,6 +7333,11 @@ if (console && console.log) {
             this.cache.price.classList.add(classes.onSale);
             this.cache.comparePriceA11y.setAttribute('aria-hidden', 'false');
             this.cache.priceA11y.setAttribute('aria-hidden', 'false');
+            if (this.cache.savingsBadge) {
+              this.cache.savingsBadge.classList.remove('hide');
+              var savings = variant.compare_at_price - variant.price;
+              this.cache.savingsBadge.innerHTML = 'Spar ' + theme.Currency.formatMoney(savings, theme.settings.moneyFormat);
+            }
           } else {
             if (this.cache.priceWrapper) {
               this.cache.priceWrapper.classList.add(classes.hidden);
@@ -7347,6 +7347,9 @@ if (console && console.log) {
               this.cache.comparePriceA11y.setAttribute('aria-hidden', 'true');
             }
             this.cache.priceA11y.setAttribute('aria-hidden', 'true');
+            if (this.cache.savingsBadge) {
+              this.cache.savingsBadge.classList.add('hide');
+            }
           }
         }
       },

@@ -104,9 +104,6 @@
           <div class="grid-product__tag grid-product__tag--custom grid-product__tag--most-popular">
             Mest Populære
           </div>
-          <div class="grid-product__tag grid-product__tag--sale grid-product__tag--save-bundle">
-            Spar 285 kr
-          </div>
         {%- elsif product.handle contains 'hanger' or product.handle contains 'shoelace' or product.handle contains 'snørebånd' or product.handle contains 'bøjle' -%}
           <div class="grid-product__tag grid-product__tag--custom grid-product__tag--perfect-addon">
             Perfekt Tilkøb
@@ -121,18 +118,12 @@
               {{ 'products.product.sold_out' | t }}
             </div>
           {%- endunless -%}
-          {%- if on_sale and product.available -%}
-            {%- if settings.product_save_amount -%}
-              <div class="grid-product__tag grid-product__tag--sale">
-                {%- if settings.product_save_type == 'dollar' -%}
-                  {% capture saved_amount %}{{ product.compare_at_price | minus: product.price | money | remove: '.00' }}{% endcapture %}
-                {%- else -%}
-                  {% capture saved_amount %}{{ product.compare_at_price | minus: product.price | times: 100.0 | divided_by: product.compare_at_price | round }}%{% endcapture %}
-                {%- endif -%}
-                {{ 'products.general.save_html' | t: saved_amount: saved_amount }}
-              </div>
-            {%- endif -%}
-          {%- endif -%}
+        {%- endif -%}
+
+        {%- if on_sale and product.available -%}
+          <div class="grid-product__tag grid-product__tag--sale {% if product.handle contains 'bundle' or product.handle contains 'pakke' %}grid-product__tag--save-bundle{% endif %}">
+            Spar {{ product.compare_at_price | minus: product.price | money }}
+          </div>
         {%- endif -%}
       </div>
       {% comment %}
