@@ -297,10 +297,10 @@
 
         <div class="drawer-tp-slider-wrapper">
           <div class="marquee-container">
-            {% for block in tp_reviews limit:10 %}
+            {% for tp_review in tp_reviews limit: 10 %}
               <div class="testimonials-slide">
                 <blockquote class="testimonials-slider__text">
-                  {% assign value = block.rating.value %}
+                  {% assign value = tp_review.rating.value %}
                   {% assign noofstars = value | remove: '"' | round %}
                   {% if noofstars > 0 %}
                     <div class="rating">
@@ -310,16 +310,16 @@
                     </div>
                   {% endif %}
                   
-                  {% if block.title %}
-                    <p class="high-rec">{{ block.title }}</p>
+                  {% if tp_review.title %}
+                    <p class="high-rec">{{ tp_review.title }}</p>
                   {% endif %}
-                  {% if block.review != blank %}
-                    <div class="rte-setting text-spacing">{{ block.review | metafield_tag }}</div>
+                  {% if tp_review.review != blank %}
+                    <div class="rte-setting text-spacing">{{ tp_review.review | metafield_tag }}</div>
                   {% endif %}
     
-                  {% if block.name != blank %}
+                  {% if tp_review.name != blank %}
                     <div class="testimonial-meta">
-                      <cite>{{ block.name | escape }}</cite>
+                      <cite>{{ tp_review.name | escape }}</cite>
                       <p>{{ 'general.verified' | t }}</p>
                     </div>
                   {% endif %}
@@ -327,10 +327,10 @@
               </div>
             {% endfor %}
             <!-- Duplicate for seamless scrolling -->
-            {% for block in tp_reviews limit:10 %}
+            {% for tp_review in tp_reviews limit: 10 %}
               <div class="testimonials-slide" aria-hidden="true">
                 <blockquote class="testimonials-slider__text">
-                  {% assign value = block.rating.value %}
+                  {% assign value = tp_review.rating.value %}
                   {% assign noofstars = value | remove: '"' | round %}
                   {% if noofstars > 0 %}
                     <div class="rating">
@@ -340,16 +340,16 @@
                     </div>
                   {% endif %}
                   
-                  {% if block.title %}
-                    <p class="high-rec">{{ block.title }}</p>
+                  {% if tp_review.title %}
+                    <p class="high-rec">{{ tp_review.title }}</p>
                   {% endif %}
-                  {% if block.review != blank %}
-                    <div class="rte-setting text-spacing">{{ block.review | metafield_tag }}</div>
+                  {% if tp_review.review != blank %}
+                    <div class="rte-setting text-spacing">{{ tp_review.review | metafield_tag }}</div>
                   {% endif %}
     
-                  {% if block.name != blank %}
+                  {% if tp_review.name != blank %}
                     <div class="testimonial-meta">
-                      <cite>{{ block.name | escape }}</cite>
+                      <cite>{{ tp_review.name | escape }}</cite>
                       <p>{{ 'general.verified' | t }}</p>
                     </div>
                   {% endif %}
