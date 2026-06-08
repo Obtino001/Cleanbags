@@ -47,43 +47,43 @@
       "disabled": true,
       "settings": {}
     },
-    "trust_bar_EappCM": {
+   "trust_bar_EappCM": {
       "type": "trust-bar",
       "blocks": {
-        "usp_GmMGn6": {
+        "usp_rating": {
           "type": "usp",
           "settings": {
-            "text": "Finansiering fra 0%",
-            "icon": "<svg viewbox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\"><circle cx=\"12\" cy=\"12\" r=\"9\" stroke=\"currentColor\" stroke-width=\"1.8\"></circle><path d=\"M8.2 15.8L15.8 8.2\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\"></path><circle cx=\"8.3\" cy=\"8.3\" r=\"1.3\" fill=\"currentColor\"></circle><circle cx=\"15.7\" cy=\"15.7\" r=\"1.3\" fill=\"currentColor\"></circle></svg>"
+            "text": "4.8/5 - Fremragende",
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\"><polygon points=\"12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></polygon></svg>"
           }
         },
-        "usp_jKrUtK": {
+        "usp_delivery": {
           "type": "usp",
           "settings": {
-            "text": "Gratis levering 1-3 hverdage",
-            "icon": "<svg viewbox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\"><path d=\"M3.5 7H14v9H3.5V7Z\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linejoin=\"round\"></path><path d=\"M14 10h3.6l2.9 3v3H14v-6Z\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linejoin=\"round\"></path><circle cx=\"7.2\" cy=\"17.2\" r=\"1.8\" stroke=\"currentColor\" stroke-width=\"1.8\"></circle><circle cx=\"17.3\" cy=\"17.2\" r=\"1.8\" stroke=\"currentColor\" stroke-width=\"1.8\"></circle></svg>"
+            "text": "1-3 dages levering  l  Fri fragt over 399,-",
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\"><path d=\"M3.5 7H14v9H3.5V7Z\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linejoin=\"round\"></path><path d=\"M14 10h3.6l2.9 3v3H14v-6Z\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linejoin=\"round\"></path><circle cx=\"7.2\" cy=\"17.2\" r=\"1.8\" stroke=\"currentColor\" stroke-width=\"1.8\"></circle><circle cx=\"17.3\" cy=\"17.2\" r=\"1.8\" stroke=\"currentColor\" stroke-width=\"1.8\"></circle></svg>"
           }
         },
-        "usp_k3fyXN": {
+        "usp_guarantee": {
           "type": "usp",
           "settings": {
-            "text": "Op til 3 års garanti",
-            "icon": "<svg viewbox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\"><path d=\"M12 3.5l7 3v5.2c0 4.2-2.8 7.8-7 9.4-4.2-1.6-7-5.2-7-9.4V6.5l7-3Z\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linejoin=\"round\"></path><text x=\"12\" y=\"15.4\" text-anchor=\"middle\" font-size=\"8.5\" font-family=\"Arial, sans-serif\" font-weight=\"700\" fill=\"currentColor\">3</text></svg>"
+            "text": "30-dages tilfredshedsgaranti 🇩🇰",
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\"><path d=\"M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path><path d=\"M9 12l2 2 4-4\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linejoin=\"round\" stroke-linecap=\"round\"></path></svg>"
           }
         },
-        "usp_nNcEnL": {
+        "usp_extra": {
           "type": "usp",
           "settings": {
             "text": "10.000+ tilfredse kunder",
-            "icon": "<svg viewbox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\"><path d=\"M9.3 11.2a3.4 3.4 0 1 0 0-6.8 3.4 3.4 0 0 0 0 6.8Z\" stroke=\"currentColor\" stroke-width=\"1.8\"></path><path d=\"M3.8 19.4c.8-3.4 2.8-5.2 5.5-5.2s4.7 1.8 5.5 5.2\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\"></path><path d=\"M15.4 11.2a2.8 2.8 0 1 0 0-5.6\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\"></path><path d=\"M16.3 14.2c2.1.3 3.5 2 4 5.2\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\"></path></svg>"
+            "icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\"><path d=\"M9.3 11.2a3.4 3.4 0 1 0 0-6.8 3.4 3.4 0 0 0 0 6.8Z\" stroke=\"currentColor\" stroke-width=\"1.8\"></path><path d=\"M3.8 19.4c.8-3.4 2.8-5.2 5.5-5.2s4.7 1.8 5.5 5.2\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\"></path><path d=\"M15.4 11.2a2.8 2.8 0 1 0 0-5.6\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\"></path><path d=\"M16.3 14.2c2.1.3 3.5 2 4 5.2\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\"></path></svg>"
           }
         }
       },
       "block_order": [
-        "usp_GmMGn6",
-        "usp_jKrUtK",
-        "usp_k3fyXN",
-        "usp_nNcEnL"
+        "usp_rating",
+        "usp_delivery",
+        "usp_guarantee",
+        "usp_extra"
       ],
       "name": "Trust Announcement Bar",
       "settings": {
@@ -91,8 +91,8 @@
         "text_color": "#ffffff",
         "icon_color": "#ffffff",
         "phone_text": "Info@cleanbags.dk",
-        "phone_url": "",
-        "phone_icon": "<svg viewbox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\"><path d=\"M7.2 4.4l2-.8c.7-.3 1.5.1 1.8.8l.9 2.2c.2.6.1 1.3-.4 1.7l-1.1.9c.8 1.8 2.2 3.2 4 4l.9-1.1c.4-.5 1.1-.7 1.7-.4l2.2.9c.7.3 1.1 1.1.8 1.8l-.8 2c-.3.7-1 1.1-1.8 1-6.1-.7-10.9-5.5-11.6-11.6-.1-.7.3-1.4 1.4-1.8Z\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linejoin=\"round\"></path></svg>",
+        "phone_url": "mailto:Info@cleanbags.dk",
+        "phone_icon": "<svg viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\"><path d=\"M4 7.00005L10.2 11.65C11.2667 12.45 12.7333 12.45 13.8 11.65L20 7\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path><rect x=\"3\" y=\"5\" width=\"18\" height=\"14\" rx=\"2\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\"></rect></svg>",
         "marquee_speed": 22
       }
     },
