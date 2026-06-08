@@ -122,6 +122,20 @@
           "button_label": "Optional button",
           "button_link": ""
         }
+      },
+      "cart-drawer": {
+        "type": "cart-drawer",
+        "settings": {
+          "complete_look_title": "COMPLETE THE LOOK",
+          "complete_look_add_btn_text": "+ ADD",
+          "you_may_also_like_title": "YOU MAY ALSO LIKE",
+          "bundle_title": "",
+          "bundle_desc": "",
+          "discount_placeholder": "Enter discount code",
+          "discount_btn_text": "APPLY",
+          "discount_applied_btn_text": "APPLIED",
+          "checkout_btn_text": "GO TO CHECKOUT"
+        }
       }
     },
     "content_for_index": [],
