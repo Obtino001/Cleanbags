@@ -252,40 +252,83 @@
       {% if tp_reviews.count > 0 %}
         <style>
           .drawer-tp-slider-wrapper {
-            padding: 10px 20px 30px;
+            padding: 15px 0 30px;
             margin-top: 10px;
             border-top: 1px solid #eee;
+            overflow: hidden;
+            width: 100%;
+          }
+          .marquee-container {
+            display: flex;
+            gap: 15px;
+            width: max-content;
+            animation: scrollMarquee 30s linear infinite;
+          }
+          .marquee-container:hover {
+            animation-play-state: paused;
+          }
+          @keyframes scrollMarquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(calc(-50% - 7.5px)); } /* 50% of total width minus half of the gap */
           }
           .drawer-tp-slider-wrapper .testimonials-slide {
-            width: 100%;
+            width: 260px;
+            flex-shrink: 0;
+            white-space: normal;
           }
           .drawer-tp-slider-wrapper .testimonials-slider__text {
             border: 1px solid #E4E4E4;
             padding: 15px;
-            margin: 0 5px;
+            margin: 0;
             border-radius: 8px;
             background: #fff;
+            height: 100%;
           }
-          .drawer-tp-slider-wrapper .rating span.rating-star { position: relative; }
-          .drawer-tp-slider-wrapper .rating span.rating-star[star="1"]::before { content: ''; background-image: url(https://cdn.shopify.com/s/files/1/0880/4912/3648/files/stars1.svg?v=1739431725); position: absolute; top: -26px; left: 0; height: 26px; width: 20px; background-repeat: no-repeat; background-size: 20px; }
-          .drawer-tp-slider-wrapper .rating span.rating-star[star="2"]::before { content: ''; background-image: url(https://cdn.shopify.com/s/files/1/0880/4912/3648/files/stars1.svg?v=1739431725); position: absolute; top: -26px; left: 21px; height: 26px; width: 20px; background-repeat: no-repeat; background-size: 20px; }
-          .drawer-tp-slider-wrapper .rating span.rating-star[star="3"]::before { content: ''; background-image: url(https://cdn.shopify.com/s/files/1/0880/4912/3648/files/stars1.svg?v=1739431725); position: absolute; top: -26px; left: 42px; height: 26px; width: 20px; background-repeat: no-repeat; background-size: 20px; }
-          .drawer-tp-slider-wrapper .rating span.rating-star[star="4"]::before { content: ''; background-image: url(https://cdn.shopify.com/s/files/1/0880/4912/3648/files/stars1.svg?v=1739431725); position: absolute; top: -26px; left: 63px; height: 26px; width: 20px; background-repeat: no-repeat; background-size: 20px; }
-          .drawer-tp-slider-wrapper .rating span.rating-star[star="5"]::before { content: ''; background-image: url(https://cdn.shopify.com/s/files/1/0880/4912/3648/files/stars1.svg?v=1739431725); position: absolute; top: -26px; left: 84px; height: 26px; width: 20px; background-repeat: no-repeat; background-size: 20px; }
-          .drawer-tp-slider-wrapper .rating { padding-top: 20px; margin-bottom: 10px; }
+          .drawer-tp-slider-wrapper .rating span.rating-star { position: relative; display: inline-block; width: 20px; height: 26px; margin-right: 1px; }
+          .drawer-tp-slider-wrapper .rating span.rating-star::before { content: ''; background-image: url(https://cdn.shopify.com/s/files/1/0880/4912/3648/files/stars1.svg?v=1739431725); position: absolute; top: 0; left: 0; height: 26px; width: 20px; background-repeat: no-repeat; background-size: 20px; }
+          
+          .drawer-tp-slider-wrapper .rating { margin-bottom: 10px; display: flex; align-items: center; }
           .drawer-tp-slider-wrapper .high-rec { font-weight: 600; font-size: 14px; margin-bottom: 5px; }
           .drawer-tp-slider-wrapper .rte-setting { font-size: 13px; color: #555; margin-bottom: 10px; }
           .drawer-tp-slider-wrapper .testimonial-meta { font-size: 12px; color: #888; }
-          .drawer-tp-slider-wrapper .testimonial-meta cite { font-style: normal; font-weight: 600; color: #000; }
+          .drawer-tp-slider-wrapper .testimonial-meta cite { font-style: normal; font-weight: 600; color: #000; display: block; margin-bottom: 2px;}
           .drawer-tp-slider-wrapper .testimonial-meta p { margin: 0; }
-          .drawer-tp-slider-wrapper .flickity-page-dots { bottom: -20px; }
-          .drawer-tp-slider-wrapper .flickity-prev-next-button { display: none; } /* Hide arrows on mobile drawer */
         </style>
 
         <div class="drawer-tp-slider-wrapper">
-          <div class="testimonials-slider" data-flickity='{ "contain": true, "adaptiveHeight": true, "cellAlign": "left", "wrapAround": true, "autoPlay": 4000, "prevNextButtons": false, "pageDots": true }'>
+          <div class="marquee-container">
             {% for block in tp_reviews limit:10 %}
               <div class="testimonials-slide">
+                <blockquote class="testimonials-slider__text">
+                  {% assign value = block.rating.value %}
+                  {% assign noofstars = value | remove: '"' | round %}
+                  {% if noofstars > 0 %}
+                    <div class="rating">
+                      {% for i in (1..noofstars) %}
+                        <span star="{{ i }}" class="rating-star"></span>
+                      {% endfor %}
+                    </div>
+                  {% endif %}
+                  
+                  {% if block.title %}
+                    <p class="high-rec">{{ block.title }}</p>
+                  {% endif %}
+                  {% if block.review != blank %}
+                    <div class="rte-setting text-spacing">{{ block.review | metafield_tag }}</div>
+                  {% endif %}
+    
+                  {% if block.name != blank %}
+                    <div class="testimonial-meta">
+                      <cite>{{ block.name | escape }}</cite>
+                      <p>{{ 'general.verified' | t }}</p>
+                    </div>
+                  {% endif %}
+                </blockquote>
+              </div>
+            {% endfor %}
+            <!-- Duplicate for seamless scrolling -->
+            {% for block in tp_reviews limit:10 %}
+              <div class="testimonials-slide" aria-hidden="true">
                 <blockquote class="testimonials-slider__text">
                   {% assign value = block.rating.value %}
                   {% assign noofstars = value | remove: '"' | round %}
