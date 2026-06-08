@@ -321,8 +321,8 @@
       "description": "Beskrivelse",
       "in_stock_label": "På lager. 1-3 dages levering",
       "stock_label": {
-        "one": "Få tilbage på lager - {{ count }} stk tilbage",
-        "other": "Få tilbage på lager - {{ count }} stk tilbage"
+        "one": "Kun {{ count }} tilbage - skynd dig!",
+        "other": "Kun {{ count }} tilbage - skynd dig!"
       },
       "sold_out": "Udsolgt",
       "unavailable": "Udsolgt",
