@@ -19,7 +19,10 @@
     height:100%;
   }
   .video-popup.active { display:flex !important; }
-body:has(.video-popup.active) { overflow: hidden; }
+  
+  /* FIXED SCROLL JUMP: Removed position:fixed here */
+  body:has(.video-popup.active) { overflow:hidden; }
+  
   body:has(.video-popup.active) header{display:none !important;}
   body:has(.video-popup.active) .MA-announcement-container{display:none !important;}
   body:has(.video-popup.active) .MA-swiper-header{display:none !important;}
@@ -130,13 +133,28 @@ body:has(.video-popup.active) { overflow: hidden; }
     background: #fff;
     transition: transform 0.2s ease-in-out;
   }
+  
+  /* FIXED MOBILE CLICK BUG: Invisible shield over the video */
+  .swiper-slide-md::after {
+    content: '';
+    display: block !important;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+    cursor: pointer;
+    border-radius: 10px;
+  }
+
   .swiper-slide-md video {
     width: 100% !important;
     height: 100% !important;
     margin: 0;
     border-radius: 6px; 
     object-fit: cover;
-    pointer-events: none; /* Prevents controls from blocking clicks */
+    pointer-events: none; /* Secondary protection */
   }
   .swiper-slide-md:hover { transform: scale(1.02); }
   @media screen and (max-width: 768px) {
@@ -248,7 +266,7 @@ body:has(.video-popup.active) { overflow: hidden; }
     const mainSwiper = new Swiper(".swiper-main-video", {
       slidesPerView: 1,
       loop: true,
-      direction: "horizontal", // Horizontal swipe feels more natural for stories
+      direction: "horizontal", 
       speed: 400,
     });
 
