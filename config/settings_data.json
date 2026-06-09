@@ -59,7 +59,7 @@
     "product_grid_image_fill": true,
     "quick_shop_enable": false,
     "quick_shop_text": "Add",
-    "cart_type": "drawer",
+    "cart_type": "page",
     "cart_icon": "cart",
     "enable_payment_icons": true,
     "social_facebook_link": "https://www.facebook.com/profile.php?id=61570299453021",
@@ -224,11 +224,6 @@
       },
       "6987625696575125306": {
         "type": "shopify://apps/weglot-translate-your-store/blocks/weglot/3097482a-fafe-42ff-bc33-ea19e35c4a20",
-        "disabled": true,
-        "settings": {}
-      },
-      "7698122941617543805": {
-        "type": "shopify://apps/na-side-cart/blocks/side-cart/0e3f5d04-2a58-4b48-9557-7e4bfd02bf87",
         "disabled": true,
         "settings": {}
       },
