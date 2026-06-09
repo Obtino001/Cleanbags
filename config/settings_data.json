@@ -231,6 +231,16 @@
         "type": "shopify://apps/na-side-cart/blocks/side-cart/0e3f5d04-2a58-4b48-9557-7e4bfd02bf87",
         "disabled": true,
         "settings": {}
+      },
+      "10301360418704718919": {
+        "type": "shopify://apps/assortion/blocks/app-embed/5588d7f9-a5bc-4f4a-9c54-39b7e081dd23",
+        "disabled": false,
+        "settings": {}
+      },
+      "2567389343055140935": {
+        "type": "shopify://apps/microsoft-clarity/blocks/clarity_js/31c3d126-8116-4b4a-8ba1-baeda7c4aeea",
+        "disabled": false,
+        "settings": {}
       }
     }
   },
