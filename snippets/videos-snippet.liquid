@@ -35,7 +35,7 @@
   .swiper-popup-thumbs .swiper-wrapper{flex-direction:column !important;}
   .video-popup .thumbnail-strip{width:auto;margin-left:20px;position:absolute;left:0;top:50%;display:flex;align-items:center;flex-direction:column;gap:6px;}
   .video-popup .thumbnail-strip .swiper-slide video{width:84px;height:84px;object-fit:cover;}
-  #closeVideoModal{position:fixed;top:20px;left:20px;font-size:30px;color:#fff;background:none;border:none;cursor:pointer;z-index:200001;width:40px;height:40px;}
+  .closeVideoModal{position:fixed;top:20px;left:20px;font-size:30px;color:#fff;background:none;border:none;cursor:pointer;z-index:200001;width:40px;height:40px;}
   .swiper-button-prev-thumb,.swiper-button-next-thumb{color:#fff;width:28px;height:28px;border-radius:50%;position:absolute;z-index:10;display:flex;justify-content:center;align-items:center;font-size:18px;cursor:pointer;}
   .swiper-button-prev-thumb{top:-50px;transform:rotate(180deg);}
   .swiper-button-next-thumb{bottom:-45px;}
@@ -56,7 +56,6 @@
   /* --- NEW UPDATED DESIGN STYLES FOR THE CIRCULAR THUMBNAILS --- */
   
   .headingCustom {
-    text-align: center;
     font-size: 1.4rem;
     font-weight: 500;
     color: #333;
@@ -125,7 +124,7 @@
     }
   }
 </style>
-<div class="video-thumbnails-container">
+<div class="video-thumbnails-container" id="video-thumbnails-container-{{ block.id | default: section.id }}">
   <div class="headingCustom">
 {{ block.settings.Heading }}
   </div>
@@ -179,8 +178,8 @@
     </div>
   </div>
 
-  <div class="video-popup" id="videoModal">
-    <div class="close-btn" id="closeVideoModal">
+  <div class="video-popup" id="videoModal-{{ block.id | default: section.id }}">
+    <div class="close-btn closeVideoModal">
       <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
         <g filter="url(#filter0_dd_3986_1781)"><path fill-rule="evenodd" clip-rule="evenodd" d="M11.5297 10.4697C11.2368 10.1768 10.762 10.1768 10.4691 10.4697C10.1762 10.7626 10.1762 11.2374 10.4691 11.5303L20.9389 22.0001L10.4692 32.4698C10.1763 32.7627 10.1763 33.2376 10.4692 33.5305C10.7621 33.8234 11.2369 33.8234 11.5298 33.5305L21.9995 23.0608L32.4691 33.5303C32.762 33.8232 33.2368 33.8232 33.5297 33.5303C33.8226 33.2374 33.8226 32.7626 33.5297 32.4697L23.0602 22.0001L33.5298 11.5305C33.8227 11.2376 33.8227 10.7627 33.5298 10.4698C33.2369 10.1769 32.7621 10.1769 32.4692 10.4698L21.9995 20.9395L11.5297 10.4697Z" fill="white"></path></g><defs><filter id="filter0_dd_3986_1781" x="0.249512" y="0.25" width="43.5" height="43.5" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB"><feFlood flood-opacity="0" result="BackgroundImageFix"></feFlood><feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"></feColorMatrix><feOffset></feOffset><feGaussianBlur stdDeviation="5"></feGaussianBlur><feComposite in2="hardAlpha" operator="out"></feComposite><feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.5 0"></feColorMatrix><feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_3986_1781"></feBlend><feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"></feColorMatrix><feOffset dy="1"></feOffset><feGaussianBlur stdDeviation="0.5"></feGaussianBlur><feComposite in2="hardAlpha" operator="out"></feComposite><feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.06 0"></feColorMatrix><feBlend mode="normal" in2="effect1_dropShadow_3986_1781" result="effect2_dropShadow_3986_1781"></feBlend><feBlend mode="normal" in="SourceGraphic" in2="effect2_dropShadow_3986_1781" result="shape"></feBlend></filter></defs>
       </svg>
@@ -355,82 +354,87 @@
 </div>
 
 <script>
+(function() {
+  const blockId = "{{ block.id | default: section.id }}";
+  const container = document.getElementById(`video-thumbnails-container-${blockId}`);
+  const popup = document.getElementById(`videoModal-${blockId}`);
+  
+  if (popup && popup.parentElement !== document.body) {
+    document.body.appendChild(popup);
+  }
 
-  const popup = document.querySelector('.video-popup');
-if (popup && popup.parentElement !== document.body) {
-  document.body.appendChild(popup);
-}
+  document.addEventListener("DOMContentLoaded", function () {
+    if (!popup || !container) return;
 
-    document.addEventListener("DOMContentLoaded", function () {
-      function bindVideoControls() {
-        document.querySelectorAll('.swiper-main-video .swiper-slide').forEach(slide => {
-          const video   = slide.querySelector('video');
-          const btn     = slide.querySelector('.speaker-btn');
-          const overlay = slide.querySelector('.pause-overlay');
-          if (!video || !btn || !overlay) return;
+    function bindVideoControls() {
+      popup.querySelectorAll('.swiper-main-video .swiper-slide').forEach(slide => {
+        const video   = slide.querySelector('video');
+        const btn     = slide.querySelector('.speaker-btn');
+        const overlay = slide.querySelector('.pause-overlay');
+        if (!video || !btn || !overlay) return;
 
-          // 1) Toggle play/pause when clicking the video or the overlay
-          const togglePlay = () => {
-            if (video.paused) video.play().catch(console.warn);
-            else              video.pause();
-          };
-          video.addEventListener('click', togglePlay);
-          overlay.addEventListener('click', togglePlay);
+        // 1) Toggle play/pause when clicking the video or the overlay
+        const togglePlay = () => {
+          if (video.paused) video.play().catch(console.warn);
+          else              video.pause();
+        };
+        video.addEventListener('click', togglePlay);
+        overlay.addEventListener('click', togglePlay);
 
-          // 2) Show overlay on pause, hide on play
-          video.addEventListener('pause', () => {
-            overlay.classList.add('show-overlay');
-          });
-          video.addEventListener('play', () => {
-            overlay.classList.remove('show-overlay');
-          });
-
-          // 3) Mute/unmute via speaker button
-          btn.addEventListener('click', e => {
-            e.preventDefault();
-            e.stopPropagation();
-            video.muted = !video.muted;
-            btn.classList.toggle('unmuted', !video.muted);
-          });
-
-          // If the video starts out paused (e.g. autoplay blocked), show overlay:
-          if (video.paused) overlay.classList.add('show-overlay');
+        // 2) Show overlay on pause, hide on play
+        video.addEventListener('pause', () => {
+          overlay.classList.add('show-overlay');
         });
-      }
-      bindVideoControls();
+        video.addEventListener('play', () => {
+          overlay.classList.remove('show-overlay');
+        });
 
-      // 1) popup thumbs Swiper (vertical list of 3, freeMode)
-  const popupThumbs = new Swiper(".swiper-popup-thumbs", {
-    direction:           "vertical",
-    slidesPerView:       3,
-    spaceBetween:        10,
-    freeMode:            true,
-    watchSlidesProgress: true,
-    watchSlidesVisibility: true,
-    slideToClickedSlide: true,
-    navigation: {
-      nextEl: ".swiper-button-next-thumb",
-      prevEl: ".swiper-button-prev-thumb",
-    },
-  });
+        // 3) Mute/unmute via speaker button
+        btn.addEventListener('click', e => {
+          e.preventDefault();
+          e.stopPropagation();
+          video.muted = !video.muted;
+          btn.classList.toggle('unmuted', !video.muted);
+        });
 
-  // 2) main Swiper with thumbs linkage
-  const mainSwiper = new Swiper(".swiper-main-video", {
-    slidesPerView: 1,
-    loop:          true,
-    direction:     "vertical",
-    speed:         500,
-    thumbs: {
-      swiper: popupThumbs,
-    },
-  });
+        // If the video starts out paused (e.g. autoplay blocked), show overlay:
+        if (video.paused) overlay.classList.add('show-overlay');
+      });
+    }
+    bindVideoControls();
 
-  // 3) sync playing/pausing videos in the main slider
-  function syncSlideVideos() {
-    const realIdx = mainSwiper.realIndex;
-    document
-      .querySelectorAll(".swiper-main-video .swiper-slide video")
-      .forEach((video, i) => {
+    // 1) popup thumbs Swiper (vertical list of 3, freeMode)
+    const popupThumbsEl = popup.querySelector('.swiper-popup-thumbs');
+    const popupThumbs = new Swiper(popupThumbsEl, {
+      direction:           "vertical",
+      slidesPerView:       3,
+      spaceBetween:        10,
+      freeMode:            true,
+      watchSlidesProgress: true,
+      watchSlidesVisibility: true,
+      slideToClickedSlide: true,
+      navigation: {
+        nextEl: popup.querySelector(".swiper-button-next-thumb"),
+        prevEl: popup.querySelector(".swiper-button-prev-thumb"),
+      },
+    });
+
+    // 2) main Swiper with thumbs linkage
+    const mainSwiperEl = popup.querySelector('.swiper-main-video');
+    const mainSwiper = new Swiper(mainSwiperEl, {
+      slidesPerView: 1,
+      loop:          true,
+      direction:     "vertical",
+      speed:         500,
+      thumbs: {
+        swiper: popupThumbs,
+      },
+    });
+
+    // 3) sync playing/pausing videos in the main slider
+    function syncSlideVideos() {
+      const realIdx = mainSwiper.realIndex;
+      popup.querySelectorAll(".swiper-main-video .swiper-slide video").forEach((video, i) => {
         if (i === realIdx) {
           video.currentTime = 0;
           video.play().catch(() => {});
@@ -439,79 +443,61 @@ if (popup && popup.parentElement !== document.body) {
           video.currentTime = 0;
         }
       });
-
-
-  }
-
-  mainSwiper.on("slideChange", syncSlideVideos);
-
-  // 4) clicking in the popupThumbs still seeks the main & plays
-  popupThumbs.on("click", (swiper) => {
-    const idx = swiper.clickedIndex;
-    if (typeof idx === "number") {
-      mainSwiper.slideToLoop(idx);
-      syncSlideVideos();
     }
-  });
 
-  // 5) popup open/close helpers
-  window.toggleVideoPopup = function (show) {
-    const modal = document.getElementById("videoModal");
-    if (!modal) return;
-    modal.classList.toggle("active", !!show);
+    mainSwiper.on("slideChange", syncSlideVideos);
 
-    if (!show) {
-      document
-        .querySelectorAll(".swiper-main-video .swiper-slide video")
-        .forEach(v => {
+    // 4) clicking in the popupThumbs still seeks the main & plays
+    popupThumbs.on("click", (swiper) => {
+      const idx = swiper.clickedIndex;
+      if (typeof idx === "number") {
+        mainSwiper.slideToLoop(idx);
+        syncSlideVideos();
+      }
+    });
+
+    // 5) popup open/close helpers
+    function toggleVideoPopup(show) {
+      popup.classList.toggle("active", !!show);
+
+      if (!show) {
+        popup.querySelectorAll(".swiper-main-video .swiper-slide video").forEach(v => {
           v.pause();
           v.currentTime = 0;
         });
-    }
-  };
-
-  document
-    .getElementById("closeVideoModal")
-    ?.addEventListener("click", () => {
-      toggleVideoPopup(false);
-    });
-
-  // 6) play any main slide by index
-  function playVideoAt(index) {
-    mainSwiper.slideToLoop(index);
-    syncSlideVideos();
-
-    const videos = document.querySelectorAll(
-      ".swiper-main-video .swiper-slide video"
-    );
-    const video = videos[index];
-    if (video) {
-      video.muted = true;
-      video.currentTime = 0;
-      video.play().catch(console.warn);
-
-      // update input URL if you have one
-      const source = video.querySelector("source");
-      const input = document.getElementById("video-url");
-      if (input && source) {
-        input.value = window.location.origin + source.getAttribute("src");
       }
     }
-  }
 
-  // 7) clicking a thumb inside popupThumbs still works:
-  document
-    .querySelectorAll(".swiper-popup-thumbs .swiper-slide video")
-    .forEach((vid, index) => {
+    const closeBtn = popup.querySelector(".closeVideoModal");
+    if (closeBtn) {
+      closeBtn.addEventListener("click", () => {
+        toggleVideoPopup(false);
+      });
+    }
+
+    // 6) play any main slide by index
+    function playVideoAt(index) {
+      mainSwiper.slideToLoop(index);
+      syncSlideVideos();
+
+      const videos = popup.querySelectorAll(".swiper-main-video .swiper-slide video");
+      const video = videos[index];
+      if (video) {
+        video.muted = true;
+        video.currentTime = 0;
+        video.play().catch(console.warn);
+      }
+    }
+
+    // 7) clicking a thumb inside popupThumbs still works:
+    popup.querySelectorAll(".swiper-popup-thumbs .swiper-slide video").forEach((vid, index) => {
       vid.addEventListener("click", () => {
         playVideoAt(index);
       });
     });
 
-  // 8) NEW: static video-thumbnails grid
-  document
-    .querySelectorAll(".video-thumbnails video")
-    .forEach((vid, idx) => {
+    // 8) NEW: static video-thumbnails grid
+    container.querySelectorAll(".video-thumbnails video").forEach((vid, idx) => {
       vid.addEventListener("click", () => {
         // 6a) open the popup
         toggleVideoPopup(true);
@@ -523,55 +509,53 @@ if (popup && popup.parentElement !== document.body) {
       });
     });
 
-  // don't forget to manually init the mainSwiper so your "init" handler fires:
-  mainSwiper.on("init", syncSlideVideos);
-  mainSwiper.init();
+    // don't forget to manually init the mainSwiper so your "init" handler fires:
+    mainSwiper.on("init", syncSlideVideos);
+    mainSwiper.init();
 
-       document.querySelectorAll(".popup-thumb-generated").forEach(img => {
-    if (img.getAttribute("src")) return;
+    popup.querySelectorAll(".popup-thumb-generated").forEach(img => {
+      if (img.getAttribute("src") && img.getAttribute("src") !== "thumb") return;
 
-    const videoUrl = img.dataset.video;
-    if (!videoUrl) return;
+      const videoUrl = img.dataset.video;
+      if (!videoUrl) return;
 
-    const video = document.createElement("video");
-    video.crossOrigin = "anonymous";
-    video.preload     = "metadata";
-    video.muted       = true;
-    video.playsInline = true;
-    video.src         = videoUrl;
+      const video = document.createElement("video");
+      video.crossOrigin = "anonymous";
+      video.preload     = "metadata";
+      video.muted       = true;
+      video.playsInline = true;
+      video.src         = videoUrl;
 
-    video.addEventListener("loadedmetadata", () => {
-      // jump just a hair into the video so we can grab a real frame
-      video.currentTime = 0.1;
+      video.addEventListener("loadedmetadata", () => {
+        // jump just a hair into the video so we can grab a real frame
+        video.currentTime = 0.1;
+      });
+
+      video.addEventListener("seeked", () => {
+        // calculate scaled dimensions
+        const aspectRatio  = video.videoWidth / video.videoHeight;
+        const targetHeight = 100;
+        const targetWidth  = Math.round(targetHeight * aspectRatio);
+
+        // draw into a canvas of the scaled size
+        const canvas = document.createElement("canvas");
+        canvas.width  = targetWidth;
+        canvas.height = targetHeight;
+        const ctx = canvas.getContext("2d");
+        ctx.drawImage(video, 0, 0, targetWidth, targetHeight);
+
+        // bake the PNG into the <img>
+        img.src = canvas.toDataURL("image/png");
+        img.alt = "Video thumbnail";
+
+        // cleanup
+        video.remove();
+        canvas.remove();
+      });
+
+      // start loading metadata
+      video.load();
     });
-
-    video.addEventListener("seeked", () => {
-      // calculate scaled dimensions
-      const aspectRatio  = video.videoWidth / video.videoHeight;
-      const targetHeight = 100;
-      const targetWidth  = Math.round(targetHeight * aspectRatio);
-
-      // draw into a canvas of the scaled size
-      const canvas = document.createElement("canvas");
-      canvas.width  = targetWidth;
-      canvas.height = targetHeight;
-      const ctx = canvas.getContext("2d");
-      ctx.drawImage(video, 0, 0, targetWidth, targetHeight);
-
-      // bake the PNG into the <img>
-      img.src = canvas.toDataURL("image/png");
-      img.alt = "Video thumbnail";
-
-      // cleanup
-      video.remove();
-      canvas.remove();
-    });
-
-    // start loading metadata
-    video.load();
   });
-
-
-
-    });
+})();
 </script>
