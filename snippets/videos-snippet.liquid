@@ -1,6 +1,3 @@
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-
 <style>
   /* --- Original Popup & Base Styles (Untouched for functionality) --- */
   .video-thumbnails .swiper-slide video{width:100%;height:auto;object-fit:cover;border:2px solid transparent;cursor:pointer;}
@@ -358,9 +355,22 @@
 
 <script>
 (function() {
-  const blockId = "{{ block.id | default: section.id }}";
-  const container = document.getElementById(`video-thumbnails-container-${blockId}`);
-  const popup = document.getElementById(`videoModal-${blockId}`);
+  const scripts = document.getElementsByTagName('script');
+  const currentScript = document.currentScript || scripts[scripts.length - 1];
+  
+  let el = currentScript.previousElementSibling;
+  let popup = null;
+  let container = null;
+  
+  while (el) {
+    if (!popup && el.classList && el.classList.contains('video-popup')) {
+      popup = el;
+    } else if (!container && el.classList && el.classList.contains('video-thumbnails-container')) {
+      container = el;
+      break; 
+    }
+    el = el.previousElementSibling;
+  }
   
   if (popup && popup.parentElement !== document.body) {
     document.body.appendChild(popup);
@@ -561,10 +571,32 @@
     });
   }
 
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", initVideoSnippet);
-  } else {
-    initVideoSnippet();
+  function loadSwiperAndInit() {
+    if (typeof Swiper === 'undefined') {
+      const link = document.createElement('link');
+      link.rel = 'stylesheet';
+      link.href = 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css';
+      document.head.appendChild(link);
+
+      const script = document.createElement('script');
+      script.src = 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js';
+      script.onload = () => {
+        if (document.readyState === "loading") {
+          document.addEventListener("DOMContentLoaded", initVideoSnippet);
+        } else {
+          initVideoSnippet();
+        }
+      };
+      document.head.appendChild(script);
+    } else {
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", initVideoSnippet);
+      } else {
+        initVideoSnippet();
+      }
+    }
   }
+
+  loadSwiperAndInit();
 })();
 </script>
