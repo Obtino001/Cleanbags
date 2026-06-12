@@ -355,22 +355,9 @@
 
 <script>
 (function() {
-  const scripts = document.getElementsByTagName('script');
-  const currentScript = document.currentScript || scripts[scripts.length - 1];
-  
-  let el = currentScript.previousElementSibling;
-  let popup = null;
-  let container = null;
-  
-  while (el) {
-    if (!popup && el.classList && el.classList.contains('video-popup')) {
-      popup = el;
-    } else if (!container && el.classList && el.classList.contains('video-thumbnails-container')) {
-      container = el;
-      break; 
-    }
-    el = el.previousElementSibling;
-  }
+  const blockId = "{{ block.id | default: section.id }}";
+  const container = document.getElementById(`video-thumbnails-container-${blockId}`);
+  const popup = document.getElementById(`videoModal-${blockId}`);
   
   if (popup && popup.parentElement !== document.body) {
     document.body.appendChild(popup);
