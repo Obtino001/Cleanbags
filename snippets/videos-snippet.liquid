@@ -1,3 +1,6 @@
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
 <style>
   /* --- Original Popup & Base Styles (Untouched for functionality) --- */
   .video-thumbnails .swiper-slide video{width:100%;height:auto;object-fit:cover;border:2px solid transparent;cursor:pointer;}
@@ -363,7 +366,7 @@
     document.body.appendChild(popup);
   }
 
-  document.addEventListener("DOMContentLoaded", function () {
+  function initVideoSnippet() {
     if (!popup || !container) return;
 
     function bindVideoControls() {
@@ -556,6 +559,12 @@
       // start loading metadata
       video.load();
     });
-  });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initVideoSnippet);
+  } else {
+    initVideoSnippet();
+  }
 })();
 </script>
