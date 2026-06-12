@@ -96,19 +96,24 @@
             "show_payment_icons": true
           }
         },
-        "riders_experience_RmKPLc": {
+               "riders_experience_nTV8N3": {
           "type": "riders_experience",
           "settings": {
-            "Heading": "Hør hvad andre siger:",
+            "Heading": "",
             "video_margin_top": 20,
             "video_margin_bottom": 20,
             "use_metafields": false,
-            "video_1": "shopify://files/videos/9x16_c6e79875-0b6c-4686-ba88-1f084bc10add.mov",
+            "video_1": "shopify://files/videos/CBA11 - DK - 9-16 - HOOK2.mp4",
+            "thumb_1": "shopify://shop_images/IMG_4643.jpg",
             "video_text_1": "",
-            "video_2": "shopify://files/videos/9x16_d71e3bf6-292c-4ef7-9f49-a7fe6e4ad732.mov",
+            "video_2": "shopify://files/videos/V2 H2.mov",
+            "thumb_2": "shopify://shop_images/Skaermbillede_2025-06-13_kl._22.39.37.png",
             "video_text_2": "",
-            "video_3": "shopify://files/videos/Før og efter med tekst.mp4",
+            "video_3": "shopify://files/videos/CBA10 - DK - 9-16 - HOOK1.mp4",
+            "thumb_3": "shopify://shop_images/Skaermbillede_2025-08-08_kl._09.53.00.png",
             "video_text_3": "",
+            "video_4": "shopify://files/videos/video 6 hook 2.mp4",
+            "thumb_4": "shopify://shop_images/image_2025-05-07_220310883.png",
             "video_text_4": "",
             "video_text_5": ""
           }
@@ -187,7 +192,7 @@
         "price_jWjtne",
         "inventory_status_custom",
         "buy_buttons",
-        "riders_experience_RmKPLc",
+           "riders_experience_nTV8N3",
         "separator",
         "description",
         "tab",
