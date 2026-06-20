@@ -89,7 +89,7 @@
             "show_payment_icons": true
           }
         },
-                "riders_experience_nTV8N3": {
+        "riders_experience_nTV8N3": {
           "type": "riders_experience",
           "settings": {
             "Heading": "",
@@ -184,7 +184,7 @@
         "sales_point_XrHcC8",
         "price_jWjtne",
         "buy_buttons",
-           "riders_experience_nTV8N3",
+        "riders_experience_nTV8N3",
         "separator",
         "description",
         "tab",
@@ -272,15 +272,6 @@
             "author": "Mathias T."
           }
         },
-        "testimonial_x4nehN": {
-          "type": "testimonial",
-          "settings": {
-            "image": "shopify://shop_images/1.png",
-            "rating": "5",
-            "testimonial": "<p>Jeg var altid nervøs for at vaske mine dyre løbesko, men CleanBags beskytter dem fantastisk. Ingen skader!</p>",
-            "author": "Jakob H."
-          }
-        },
         "testimonial_68aEjw": {
           "type": "testimonial",
           "settings": {
@@ -302,7 +293,6 @@
       },
       "block_order": [
         "testimonial_nhCfVf",
-        "testimonial_x4nehN",
         "testimonial_68aEjw",
         "testimonial_Q7JGyn"
       ],
