@@ -15,7 +15,7 @@
         "product_sub_title_CqrYby": {
           "type": "product_sub_title",
           "settings": {
-            "sub_title": "De populære Cleanbags beskytter dine sko under hele vasken og sikre en skånsom og effektiv vask"
+            "sub_title": "CleanBags beskytter dine arbejdssko, sikkerhedssko og støvler – og forlænger deres levetid markant"
           }
         },
         "variant_picker": {
@@ -50,28 +50,28 @@
           "type": "sales_point",
           "settings": {
             "icon": "checkmark",
-            "text": "Beskytter dine sko under vask"
+            "text": "Forlænger levetiden på dine arbejdssko og sikkerhedssko"
           }
         },
         "sales_point_JNMUUA": {
           "type": "sales_point",
           "settings": {
             "icon": "checkmark",
-            "text": "Forlænger levetiden på dine sko"
+            "text": "Beskyt din investering – arbejdssko er dyre"
           }
         },
         "sales_point_BgttXt": {
           "type": "sales_point",
           "settings": {
             "icon": "checkmark",
-            "text": "Slidtstærkt og åndbart materiale"
+            "text": "Eliminér lugt fra beskidte sikkerhedssko"
           }
         },
         "sales_point_XrHcC8": {
           "type": "sales_point",
           "settings": {
             "icon": "checkmark",
-            "text": "Bedste resultat opnås ved brug af 2x CleanBags"
+            "text": "Vask direkte i vaskemaskinen – spar tid"
           }
         },
         "price_jWjtne": {
@@ -234,7 +234,7 @@
           "type": "feature",
           "settings": {
             "icon": "shopify://shop_images/Group_12.svg",
-            "title": "Kraftfuld rengøring",
+            "title": "Beskytter dyre arbejdssko",
             "content": "<p>Fjerner genstridig snavs ubesværet.</p>"
           }
         },
@@ -242,7 +242,7 @@
           "type": "feature",
           "settings": {
             "icon": "shopify://shop_images/Vector_2.svg",
-            "title": "Miljøvenlig og sikker",
+            "title": "Eliminér lugt og bakterier",
             "content": "<p>Nordic Ecolabel-certificeret.</p>"
           }
         },
@@ -250,7 +250,7 @@
           "type": "feature",
           "settings": {
             "icon": "shopify://shop_images/Vector_3.svg",
-            "title": "Holdbar og langtidsholdbar",
+            "title": "Holdbar til daglig brug",
             "content": "<p>Fremstillet af højkvalitetsmaterialer.</p>"
           }
         },
@@ -258,7 +258,7 @@
           "type": "feature",
           "settings": {
             "icon": "shopify://shop_images/Group_13.svg",
-            "title": "Ergonomisk og letvægt",
+            "title": "Hurtig og nem vask",
             "content": "<p>Komfortabelt greb til nem brug.</p>"
           }
         }
@@ -275,7 +275,7 @@
         ".feature-blocks.ffblocks {border-bottom: 1px solid #e1e1e1;}"
       ],
       "settings": {
-        "heading": "Designet til ubesværet rengøring af",
+        "heading": "Designet til professionelle håndværkere",
         "description": "",
         "image": "shopify://shop_images/image_5.png"
       }
@@ -451,7 +451,7 @@
       ],
       "disabled": true,
       "settings": {
-        "title": "Hvordan CleanBags klarer sig mod konkurrenterne",
+        "title": "Hvordan CleanBags klarer sig mod traditionel rengøring",
         "button_link": "",
         "button_text": "",
         "padding_top": 80,
@@ -590,28 +590,28 @@
           "type": "question",
           "settings": {
             "title": "Hvad er CleanBags?",
-            "text": "<p>CleanBags er en specialdesignet skopose, der beskytter dine sko under vask i vaskemaskinen og sikrer en skånsom og effektiv rengøring.</p>"
+            "text": "<p>CleanBags er en vaskepose specielt designet til at beskytte dine arbejdssko, sikkerhedssko og støvler under vask i vaskemaskinen.</p>"
           }
         },
         "question_xLFzrY": {
           "type": "question",
           "settings": {
-            "title": "Hvilke sko kan jeg bruge CleanBags til?",
-            "text": "<p>CleanBags er velegnet til sneakers, sportssko, lette sko og kan også bruges til andre typer sko med gode resultater.<br/><br/><strong>OBS</strong>: vær dog opmærksom på, hvis du vasker sko med velcro, og velcroen ikke er lukket helt tæt sammen, så kan nogle af Cleanbags små vaskefibre smitte lidt af på velcro delen af skoen. </p>"
+            "title": "Hvilke sko kan jeg vaske?",
+            "text": "<p>CleanBags er ideel til arbejdssko, sikkerhedssko, gummistøvler og støvler – alt det du bruger på arbejdspladsen.</p>"
           }
         },
         "question_cL9bWP": {
           "type": "question",
           "settings": {
-            "title": "Hvor mange sko kan jeg vaske ad gangen?",
-            "text": "<p>Vi anbefaler at vaske én sko pr. Cleanbag for optimal beskyttelse og rengøring. Men man kan sagtens vaske ét par sko pr. Cleanbag med gode resultater.<br/><br/>Vi anbefaler også, at du anvender vores justerbare skotræ, da de sikre, at skoen fastholder dens naturlige form efter vask.  </p>"
+            "title": "Hvordan sparer jeg tid?",
+            "text": "<p>Smid skoene direkte i vaskemaskinen med CleanBags – ingen skrubberi, ingen besvær. Rent resultat på én vask.</p>"
           }
         },
         "question_DibYkV": {
           "type": "question",
           "settings": {
-            "title": "Hvordan vasker jeg mine sko med CleanBags?",
-            "text": "<p>Når du bruger CleanBags anbefaler vi, at du vasker dine sko på 30-40 grader på maks 1 times program. (mellem 40 - 60 minutters program) - for at opnå bedste resultat.<br/><br/>Når vasken er færdig, kan du med fordel ligge skoene i tørretumbleren hvis du ønsker dem hurtigt tørre. <br/>Alternativt kan du stille dem udenfor i den friske luft eller placere dem på en varm radiator. </p>"
+            "title": "Forlænger det virkelig levetiden?",
+            "text": "<p>Ja! Ved at vaske skoene skånsomt og regelmæssigt undgår du nedbrydning af materialet, og dine sko holder markant længere.</p>"
           }
         }
       },
@@ -639,10 +639,10 @@
     "background_image_text_3V4Ayz": {
       "type": "background-image-text",
       "settings": {
-        "title": "De populære CleanBags!",
-        "subtitle": "- Den Ultimative skorens",
+        "title": "Beskyt dine arbejdssko!",
+        "subtitle": "- Den ultimative løsning for håndværkere",
         "text": "",
-        "button_label": "Køb nu",
+        "button_label": "Køb nu og spar penge",
         "button_link": "",
         "image": "shopify://shop_images/Design_uden_navn_5.png",
         "layout": "center",
