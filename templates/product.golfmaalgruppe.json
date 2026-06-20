@@ -15,7 +15,7 @@
         "product_sub_title_CqrYby": {
           "type": "product_sub_title",
           "settings": {
-            "sub_title": "Slip for mudret golfsko med CleanBags"
+            "sub_title": "Den bedste og mest effektive måde at holde dine golfsko rene på. Slip for mudret golfsko med CleanBags"
           }
         },
         "variant_picker": {
@@ -50,7 +50,7 @@
           "type": "sales_point",
           "settings": {
             "icon": "checkmark",
-            "text": "Skånsom rengøring af alle materialer"
+            "text": "Egnet til alle golfspillere"
           }
         },
         "sales_point_JNMUUA": {
@@ -64,14 +64,14 @@
           "type": "sales_point",
           "settings": {
             "icon": "checkmark",
-            "text": "Slip for beskidte golfsko på en enkelt vask"
+            "text": "Slip for beskidte golfsko med en enkelt vask"
           }
         },
         "sales_point_XrHcC8": {
           "type": "sales_point",
           "settings": {
             "icon": "checkmark",
-            "text": "Pro-tip: For bedste resultater brug 1x CleanBags pr. sko"
+            "text": "Pro-tip: For bedste resultater brug 1x CleanBags pr. golfsko"
           }
         },
         "price_jWjtne": {
@@ -91,6 +91,7 @@
         },
         "riders_experience_nTV8N3": {
           "type": "riders_experience",
+          "disabled": true,
           "settings": {
             "Heading": "",
             "video_margin_top": 20,
