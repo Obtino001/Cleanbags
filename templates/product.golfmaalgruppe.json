@@ -276,7 +276,7 @@
           "type": "testimonial",
           "settings": {
             "image": "shopify://shop_images/IMG_4123_1.webp",
-            "rating": "0",
+            "rating": "5",
             "testimonial": "<p>Fantastisk måde at vaske ens sko på, super nemt, enkelt, og giver et vildt resultat, UANSET hvilke sko man har og hvor beskidte de er.</p>",
             "author": "Emil F."
           }
@@ -285,7 +285,7 @@
           "type": "testimonial",
           "settings": {
             "image": "shopify://shop_images/liang-zi-kOujrWBBH6Q-unsplash_2.webp",
-            "rating": "0",
+            "rating": "5",
             "testimonial": "<p>Mine sko er nu rene, næsten som de var nye! Super genialt produkt, hurtigt og effektivt Kæmpe ros herfra</p>",
             "author": "Marco S."
           }
