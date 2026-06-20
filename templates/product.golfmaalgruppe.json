@@ -285,7 +285,7 @@
         "testimonial_Q7JGyn": {
           "type": "testimonial",
           "settings": {
-            "image": "shopify://shop_images/liang-zi-kOujrWBBH6Q-unsplash_2.webp",
+            "image": "shopify://shop_images/IMG_3833.jpg",
             "rating": "5",
             "testimonial": "<p>Mine sko er nu rene, næsten som de var nye! Super genialt produkt, hurtigt og effektivt Kæmpe ros herfra</p>",
             "author": "Marco S."
@@ -649,7 +649,7 @@
     "background_image_text_cFcKL4": {
       "type": "background-image-text",
       "settings": {
-        "title": "Få golfsko, som ser spritnye ud, hver gang du går på banen.",
+        "title": "",
         "subtitle": "",
         "text": "",
         "button_label": "Køb nu",
