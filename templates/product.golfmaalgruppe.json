@@ -31,7 +31,7 @@
           "type": "trustpilot_widget",
           "settings": {
             "tp_image": "shopify://shop_images/stars-5-1_1.png",
-            "tp_text": "4,8 stjerner | +5000 glade kunder",
+            "tp_text": "4,8 stjerner | +10.000 glade kunder",
             "tp_link": ""
           }
         },
@@ -567,7 +567,7 @@
         "limit_reviews": 20,
         "title": "Fremragende!",
         "tp_star_image": "shopify://shop_images/stars-5-1_1.png",
-        "tp_text": "4,8 STJERNER AF 5 | +5000 GLADE KUNDER",
+        "tp_text": "4,8 STJERNER AF 5 | +10.000 GLADE KUNDER",
         "tp_logo_image": "shopify://shop_images/Trustpilot.png",
         "tp_link": "#",
         "round_images": true,
