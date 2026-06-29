@@ -98,6 +98,7 @@
         },
         "riders_experience_nTV8N3": {
           "type": "riders_experience",
+          "disabled": true,
           "settings": {
             "Heading": "",
             "video_margin_top": 20,
@@ -217,6 +218,7 @@
     },
     "featured_collection_xEVxBj": {
       "type": "featured-collection",
+      "disabled": true,
       "name": "t:sections.featured-collection.presets.featured_collection.name",
       "settings": {
         "title": "Andre populære CleanBags produkter",
@@ -286,28 +288,28 @@
         "testimonial_nhCfVf": {
           "type": "testimonial",
           "settings": {
-            "image": "shopify://shop_images/3.png",
+            "image": "shopify://shop_images/Design_uden_navn_17.png",
             "rating": "5",
-            "testimonial": "<p>Jeg kan ikke tro, hvor nemt det er at bruge CleanBags. Mine sko bliver rene, og jeg sparer tid.</p>",
-            "author": "Anna K."
+            "testimonial": "<p>Det er super nemt det er at bruge CleanBags. Mine arbejdssko bliver rene, og jeg sparer tid.</p>",
+            "author": "Carsten M."
           }
         },
         "testimonial_33tLaP": {
           "type": "testimonial",
           "settings": {
-            "image": "shopify://shop_images/IMG_2699.jpg",
+            "image": "shopify://shop_images/Design_uden_navn_18.png",
             "rating": "5",
-            "testimonial": "<p>CleanBags lever op til alle mine forventninger. Jeg har allerede købt en ekstra til mine børns sko.</p>",
-            "author": "Pernille"
+            "testimonial": "<p>Cleanbags lever op til alle mine forventninger som murer! Kan godt anbefales til andre håndværkere.</p>",
+            "author": "Kim P."
           }
         },
         "testimonial_MiVGKw": {
           "type": "testimonial",
           "settings": {
-            "image": "shopify://shop_images/IMG_4643.jpg",
+            "image": "shopify://shop_images/For_Cleanbags.png",
             "rating": "5",
-            "testimonial": "<p>CleanBags har gjort det så nemt at holde mine sneakers rene. De er lige så gode som nye efter hver...</p>",
-            "author": "Maria L."
+            "testimonial": "<p>Jeg er tømrer og bruger cleanbags til at holde mine arbejdssko rene til arbejdsdagen. Super nemt at bruge.</p>",
+            "author": "Michael K."
           }
         },
         "testimonial_x4nehN": {
@@ -315,7 +317,7 @@
           "settings": {
             "image": "shopify://shop_images/1.png",
             "rating": "5",
-            "testimonial": "<p>Jeg var altid nervøs for at vaske mine dyre løbesko, men CleanBags beskytter dem fantastisk. Ingen skader!</p>",
+            "testimonial": "<p>Kæmpe stor anbefaling herfra. Jeg bruger Cleanbags til mine arbejdssko som holder dem rene og flotte.</p>",
             "author": "Jakob H."
           }
         }
