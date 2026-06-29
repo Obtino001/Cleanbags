@@ -31,7 +31,7 @@
           "type": "trustpilot_widget",
           "settings": {
             "tp_image": "shopify://shop_images/stars-5-1_1.png",
-            "tp_text": "4,8 stjerner | +5000 glade kunder 🇩🇰",
+            "tp_text": "4,8 stjerner | +10.000 glade kunder 🇩🇰",
             "tp_link": ""
           }
         },
@@ -352,7 +352,7 @@
         "liquid_wnk7mH": {
           "type": "liquid",
           "settings": {
-            "code": "<h2>+5000 RENE ARBEJDSSKO OG GLADE HÅNDVÆRKERE </h2><div>\n  <strong>Hvorfor vælge CleanBags</strong>\n<div>\n  <ul style=\"padding-top:20px;margin:0px;\">\n    <li>\n      <h3>Forlæng levetiden på dine arbejdssko</h3>\n      <hr style=\"border: none; border-top: 1px solid #ccc;\">\n      <p>Vores kunder har fortalt os, at CleanBags gør det nemmere for dem, at vaske og beskytte deres arbejdssko.</p>\n\n<p>Oplev selv, at dine arbejdssko bliver i bedre stand efter en effektiv vask med CleanBags.</p>\n\n<p>Anbefal CleanBags til en god ven, kollega eller familieedlem, som godt kunne bruge et sæt.</p>\n    </li>\n  </ul><br/>\n  <p style=\"color: #aaa;\">⭐⭐⭐⭐⭐ VURDERET 4.8/5 AF OVER 5000 GLADE KUNDER\n</p>\n</div>\n</div>",
+            "code": "<h2>+10.000 RENE ARBEJDSSKO OG GLADE HÅNDVÆRKERE </h2><div>\n  <strong>Hvorfor vælge CleanBags</strong>\n<div>\n  <ul style=\"padding-top:20px;margin:0px;\">\n    <li>\n      <h3>Forlæng levetiden på dine arbejdssko</h3>\n      <hr style=\"border: none; border-top: 1px solid #ccc;\">\n      <p>Vores kunder har fortalt os, at CleanBags gør det nemmere for dem, at vaske og beskytte deres arbejdssko.</p>\n\n<p>Oplev selv, at dine arbejdssko bliver i bedre stand efter en effektiv vask med CleanBags.</p>\n\n<p>Anbefal CleanBags til en god ven, kollega eller familieedlem, som godt kunne bruge et sæt.</p>\n    </li>\n  </ul><br/>\n  <p style=\"color: #aaa;\">⭐⭐⭐⭐⭐ VURDERET 4.8/5 AF OVER 10.000 GLADE KUNDER\n</p>\n</div>\n</div>",
             "width": "50%",
             "alignment": "center"
           }
@@ -574,7 +574,7 @@
         "limit_reviews": 20,
         "title": "Fremragende!",
         "tp_star_image": "shopify://shop_images/stars-5-1_1.png",
-        "tp_text": "4,8 STJERNER AF 5 | +5000 GLADE KUNDER",
+        "tp_text": "4,8 STJERNER AF 5 | +10.000 GLADE KUNDER",
         "tp_logo_image": "shopify://shop_images/Trustpilot.png",
         "tp_link": "#",
         "round_images": true,
