@@ -211,8 +211,8 @@
         "thumbnail_position": "below",
         "thumbnail_height": "flexible",
         "thumbnail_arrows": true,
-        "enable_video_looping": true,
-        "product_video_style": "muted"
+        "enable_video_looping": false,
+        "product_video_style": "unmuted"
       }
     },
     "featured_collection_xEVxBj": {
