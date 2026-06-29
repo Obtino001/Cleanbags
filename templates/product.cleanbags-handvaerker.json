@@ -557,6 +557,7 @@
         "image_HmDedW",
         "image_zmBYBX"
       ],
+      "disabled": true,
       "settings": {
         "limit_images": 8,
         "title": "VORES  GLADE KUNDER!",
@@ -641,12 +642,12 @@
     "background_image_text_3V4Ayz": {
       "type": "background-image-text",
       "settings": {
-        "title": "Beskyt dine arbejdssko!",
-        "subtitle": "- Den ultimative løsning for håndværkere",
+        "title": "",
+        "subtitle": "",
         "text": "",
         "button_label": "Køb nu og spar penge",
         "button_link": "",
-        "image": "shopify://shop_images/Design_uden_navn_5.png",
+        "image": "shopify://shop_images/Design_uden_navn_19.png",
         "layout": "center",
         "height": 450,
         "parallax": false,
